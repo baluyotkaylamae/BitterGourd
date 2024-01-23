@@ -1,0 +1,104 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useParams, useNavigate } from 'react-router-dom';
+
+const UpdateQuestion = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [question, setQuestion] = useState({
+    questionText: '',
+    options: [],
+  });
+
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4001/api/questions/${id}`);
+        const { questionText, options } = response.data.question;
+
+        // Ensure options is an array, if it's a string, split it
+        const optionsArray = Array.isArray(options) ? options : options.split(',');
+
+        setQuestion({
+          questionText,
+          options: optionsArray,
+        });
+      } catch (error) {
+        console.error('Error fetching question:', error);
+        // Handle error (e.g., show an error message to the user)
+      }
+    };
+
+    fetchQuestion();
+  }, [id]);
+
+  const handleInputChange = (e) => {
+    setQuestion({
+      ...question,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleOptionsChange = (e) => {
+    // Split the comma-separated string into an array
+    const optionsArray = e.target.value.split(',');
+    setQuestion({
+      ...question,
+      options: optionsArray,
+    });
+  };
+
+  const handleUpdateQuestion = async () => {
+    try {
+      await axios.put(`http://localhost:4001/api/questions/${id}`, question);
+      // Show success toast
+      toast.success('Question updated successfully');
+      // Optionally, you can redirect to another page or perform other actions.
+      navigate('/questions/list');
+    } catch (error) {
+      console.error('Error updating question:', error);
+      // Handle error (e.g., show an error message to the user)
+      toast.error('Failed to update question');
+    }
+  };
+
+  return (
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-3">
+          {/* Sidebar */}
+        </div>
+        <div className="col-md-9" style={{ color: '#A97155' }}>
+          <h2>Update Question</h2>
+          <div>
+            <label>Question Text:</label>
+            <input
+              type="text"
+              name="questionText"
+              value={question.questionText}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label>Options (comma-separated):</label>
+            <input
+              type="text"
+              name="options"
+              value={question.options.join(',')} // Join options into a string for input
+              onChange={handleOptionsChange} // Use separate handler for options
+            />
+          </div>
+          <div>
+            <button onClick={handleUpdateQuestion}>Update Question</button>
+          </div>
+          <ToastContainer />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UpdateQuestion;
