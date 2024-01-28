@@ -1,107 +1,71 @@
+// src/SurveyForm.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './survey.css'; // Import the CSS file for styling
 
-const AnswerForm = () => {
-  const [surveys, setSurveys] = useState([]);
-  const [selectedSurvey, setSelectedSurvey] = useState('');
+const SurveyForm = () => {
   const [questions, setQuestions] = useState([]);
-  const [selectedQuestion, setSelectedQuestion] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
-    // Fetch surveys when the component mounts
-    axios.get('http://localhost:4001/api/surveys').then((res) => {
-      setSurveys(res.data.surveys);
-    });
+    const fetchQuestions = async () => {
+      try {
+        const response = await axios.get('http://localhost:4001/api/questions');
+        setQuestions(response.data.questions);
+        const initialFormData = {};
+        response.data.questions.forEach((question) => {
+          initialFormData[question._id] = '';
+        });
+        setFormData(initialFormData);
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+      }
+    };
+
+    fetchQuestions();
   }, []);
 
-  useEffect(() => {
-    // Fetch questions based on the selected survey
-    if (selectedSurvey) {
-      axios.get(`http://localhost:4001/api/surveys/${selectedSurvey}/questions`)
-        .then((res) => {
-          setQuestions(res.data.questions);
-        });
-    }
-  }, [selectedSurvey]);
-
-  const handleSurveyChange = (e) => {
-    setSelectedSurvey(e.target.value);
-  };
-
-  const handleQuestionChange = (e) => {
-    setSelectedQuestion(e.target.value);
-  };
-
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    // Submit the answer to the backend
-    axios.post('http://localhost:4001/api/surveys', {
-      surveyId: selectedSurvey,
-      questionId: selectedQuestion,
-      selectedOption,
-    })
-    .then(() => {
-      // Handle success or redirect to another page
-      console.log('Answer submitted successfully');
-    })
-    .catch((error) => {
-      // Handle error
-      console.error('Error submitting answer:', error);
+  const handleInputChange = (questionId, option) => {
+    setFormData({
+      ...formData,
+      [questionId]: option,
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    // Add logic for handling the form submission, e.g., sending answers to the server
   };
 
   return (
-    <div>
-      <div>
-        <label>Select Survey:</label>
-        <select onChange={handleSurveyChange} value={selectedSurvey}>
-          <option value="" disabled>Select Survey</option>
-          {surveys.map((survey) => (
-            <option key={survey._id} value={survey._id}>{survey.title}</option>
+    <div className="survey-container">
+    <h1 className="form-title">Survey Form</h1>
+    <form onSubmit={handleSubmit}>
+      {questions.map((question, index) => (
+        <div key={question._id} className="question-container">
+          <p className="question-text">{question.questionText}</p>
+          {question.options.map((option) => (
+            <label key={option} className="radio-label">
+              <input
+                type="radio"
+                name={question._id}
+                value={option}
+                checked={formData[question._id] === option}
+                onChange={() => handleInputChange(question._id, option)}
+              />
+              {option}
+            </label>
           ))}
-        </select>
-      </div>
-
-      {selectedSurvey && (
-        <div>
-          <label>Select Question:</label>
-          <select onChange={handleQuestionChange} value={selectedQuestion}>
-            <option value="" disabled>Select Question</option>
-            {questions.map((question) => (
-              <option key={question._id} value={question._id}>{question.questionText}</option>
-            ))}
-          </select>
+          {index < questions.length - 1 && <div className="divider" />}
         </div>
-      )}
-
-      {selectedQuestion && (
-        <div>
-          <label>Select Option:</label>
-          {questions
-            .find((question) => question._id === selectedQuestion)
-            .options.map((option) => (
-              <div key={option}>
-                <input
-                  type="radio"
-                  id={option}
-                  name="selectedOption"
-                  value={option}
-                  onChange={handleOptionChange}
-                  checked={selectedOption === option}
-                />
-                <label htmlFor={option}>{option}</label>
-              </div>
-            ))}
-        </div>
-      )}
-
-      <button onClick={handleSubmit}>Submit Answer</button>
-    </div>
-  );
+      ))}
+      <button type="submit" className="submit-button">
+        Submit Survey
+      </button>
+    </form>
+  </div>
+);
 };
 
-export default AnswerForm;
+export default SurveyForm;

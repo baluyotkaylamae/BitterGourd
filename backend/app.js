@@ -1,7 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-// const answer = require('./routes/answer');
 const questions = require('./routes/question');
 
 const app = express();

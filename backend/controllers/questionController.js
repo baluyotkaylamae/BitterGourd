@@ -1,20 +1,20 @@
-const Question = require('../models/questionModel'); // Adjust the path based on your project structure
+const Question = require('../models/question'); // Adjust the path based on your project structure
 
 // Create a new question
 const createQuestion = async (req, res) => {
-    try {
-      const { questionText, options } = req.body;
-  
-      // Split the options string into an array using commas
-      const optionsArray = options.split(',').map(option => option.trim());
-  
-      const newQuestion = await Question.create({ questionText, options: optionsArray });
-      res.status(201).json(newQuestion);
-    } catch (error) {
-      console.error('Error creating question:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  };
+  try {
+    const { questionText, options } = req.body;
+
+    // Split the options string into an array using commas
+    const optionsArray = options.split(',').map(option => option.trim());
+
+    const newQuestion = await Question.create({ questionText, options: optionsArray });
+    res.status(201).json(newQuestion);
+  } catch (error) {
+    console.error('Error creating question:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 // Get all questions
 const getAllQuestions = async (req, res) => {
   try {
@@ -43,36 +43,47 @@ const getAllQuestions = async (req, res) => {
 
 
 const getQuestionById = async (req, res, next) => {
-	const question = await Question.findById(req.params.id);
-	if (!question) {
-		return res.status(404).json({
-			success: false,
-			message: 'question not found'
-		})
-	}
-	res.status(200).json({
-		success: true,
-		question
-	})
+  const question = await Question.findById(req.params.id);
+  if (!question) {
+    return res.status(404).json({
+      success: false,
+      message: 'question not found'
+    })
+  }
+  res.status(200).json({
+    success: true,
+    question
+  })
 }
 
 // Update a question by ID
-const updateQuestion = async (req, res) => {
+// const updateQuestion = async (req, res) => {
+//   try {
+//     const { questionId } = req.params;
+//     const { questionText, options } = req.body;
+//     const updatedQuestion = await Question.findByIdAndUpdate(
+//       questionId,
+//       { questionText, options },
+//       { new: true }
+//     );
+//     if (!updatedQuestion) {
+//       return res.status(404).json({ error: 'Question not found' });
+//     }
+//     res.status(200).json(updatedQuestion);
+//   } catch (error) {
+//     console.error('Error updating question:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// };
+updateQuestion = async (req, res) => {
   try {
-    const { questionId } = req.params;
-    const { questionText, options } = req.body;
-    const updatedQuestion = await Question.findByIdAndUpdate(
-      questionId,
-      { questionText, options },
-      { new: true }
-    );
-    if (!updatedQuestion) {
-      return res.status(404).json({ error: 'Question not found' });
+    const question = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!question) {
+      return res.status(404).json({ error: 'Category not found' });
     }
-    res.status(200).json(updatedQuestion);
+    res.json(question);
   } catch (error) {
-    console.error('Error updating question:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Unable to update category' });
   }
 };
 
