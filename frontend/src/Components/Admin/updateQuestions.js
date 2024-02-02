@@ -57,7 +57,7 @@ const UpdateQuestion = () => {
       // Show success toast
       toast.success('Question updated successfully');
       // Optionally, you can redirect to another page or perform other actions.
-      navigate('/questions/list');
+      navigate('/questions');
     } catch (error) {
       console.error('Error updating question:', error);
       // Handle error (e.g., show an error message to the user)

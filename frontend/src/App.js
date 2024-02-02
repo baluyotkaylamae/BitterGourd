@@ -18,8 +18,8 @@ function App() {
           <Route path="/questions" element={<QuestionsList />} />
           <Route path="/questions/create" element={<CreateQuestion />} />
           <Route path="/questions/update/:id" element={<UpdateQuestion />} />
-
           <Route path="/form" element={<AnswerForm />} /> {/* Add the new route for AnswerForm */}
+    
         </Routes>
         <Footer />
       </Router>
