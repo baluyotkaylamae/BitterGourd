@@ -1,14 +1,11 @@
 // Home.js
 import React from 'react';
 
-
 const Home = () => {
     return (
-        
-            
                 <div>
-                    <h1>Welcome to Your App!</h1>
-                    <p>This is the home page content.</p>
+                    <h1>Welcome to our App!</h1>
+                    <p>This is the content section, where you can see the introduction of our website.</p>
                 </div>
     );
 };
