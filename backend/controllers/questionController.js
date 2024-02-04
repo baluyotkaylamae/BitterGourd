@@ -41,7 +41,6 @@ const getAllQuestions = async (req, res) => {
 //   }
 // };
 
-
 const getQuestionById = async (req, res, next) => {
   const question = await Question.findById(req.params.id);
   if (!question) {
