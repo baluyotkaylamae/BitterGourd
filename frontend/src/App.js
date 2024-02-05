@@ -8,6 +8,21 @@ import CreateQuestion from './Components/Admin/createQuestions'; // Import the n
 import UpdateQuestion from './Components/Admin/updateQuestions';
 import AnswerForm from './Components/SurveyForm'; // Import the new component
 
+import Login from './Components/User/Login'
+import Register from './Components/User/Register';
+import Profile from './Components/User/Profile'
+import UpdateProfile from './Components/User/UpdateProfile';
+import ForgotPassword from './Components/User/ForgotPassword';
+import NewPassword from './Components/User/NewPassword';
+import UpdatePassword from './Components/User/UpdatePassword';
+import ProtectedRoute from './Components/Route/ProtectedRoute';
+import { getUser } from './utils/helpers';
+import UserManagement from './Components/Admin/userManagement';
+
+
+
+
+
 function App() {
   return (
     <div className="App">
@@ -20,6 +35,26 @@ function App() {
           <Route path="/questions/update/:id" element={<UpdateQuestion />} />
           <Route path="/form" element={<AnswerForm />} /> {/* Add the new route for AnswerForm */}
     
+{/* login */}
+<Route path="/login" element={<Login />} exact="true" />
+          <Route path="/register" element={<Register />} exact="true" />
+          <Route path="/me" element={<Profile />} exact="true" />
+          <Route path="/me/update" element={<UpdateProfile />} exact="true" />
+          <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
+          <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
+          <Route path="/password/update" element={<UpdatePassword />} />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UserManagement />
+              </ProtectedRoute>
+            }
+            end
+          />
+
+
+
         </Routes>
         <Footer />
       </Router>
