@@ -18,8 +18,9 @@ import UpdatePassword from './Components/User/UpdatePassword';
 import ProtectedRoute from './Components/Route/ProtectedRoute';
 import { getUser } from './utils/helpers';
 import UserManagement from './Components/Admin/userManagement';
-
-
+// import Dashboard from './Components/Admin/Dashboard';
+import "react-toastify/dist/ReactToastify.css";
+import Sidebar from './Components/Admin/Sidebar';
 
 
 
@@ -30,13 +31,47 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
-          <Route path="/questions" element={<QuestionsList />} />
+          {/* <Route path="/questions" element={<QuestionsList />} />
           <Route path="/questions/create" element={<CreateQuestion />} />
-          <Route path="/questions/update/:id" element={<UpdateQuestion />} />
-          <Route path="/form" element={<AnswerForm />} /> {/* Add the new route for AnswerForm */}
-    
-{/* login */}
-<Route path="/login" element={<Login />} exact="true" />
+          <Route path="/questions/update/:id" element={<UpdateQuestion />} /> */}
+
+          <Route path="/questions" element={
+            <ProtectedRoute isAdmin={true}>
+              <QuestionsList />
+            </ProtectedRoute>
+          } />
+
+           <Route path="/questions/create" element={
+            <ProtectedRoute isAdmin={true}>
+              <CreateQuestion />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/questions/update/:id" element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdateQuestion />
+            </ProtectedRoute>
+          } />
+      {/* <Route path="/dashboard" element={
+            <ProtectedRoute isAdmin={true}>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+        */}
+
+          <Route path="/sidebar" element={
+            <ProtectedRoute isAdmin={true}>
+              {/* <Dashboard /> */}
+              <Sidebar />
+            </ProtectedRoute>
+          } end />
+
+
+
+          <Route path="/form" element={<AnswerForm />} /> {/* Add the new route for AnswerForm
+
+          {/* login */}
+          <Route path="/login" element={<Login />} exact="true" />
           <Route path="/register" element={<Register />} exact="true" />
           <Route path="/me" element={<Profile />} exact="true" />
           <Route path="/me/update" element={<UpdateProfile />} exact="true" />

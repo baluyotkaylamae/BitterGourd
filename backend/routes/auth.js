@@ -12,7 +12,7 @@ const { registerUser, loginUser, logout, forgotPassword,
     editUserRole,
     deleteUser
 
-} = require('./controllers/authController');
+} = require('../controllers/authController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
 router.post('/register', upload.single("avatar"), registerUser);

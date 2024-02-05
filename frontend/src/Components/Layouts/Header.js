@@ -143,15 +143,11 @@ const Header = () => {
 
           {settings.map((setting, index) => (
             <MenuItem key={index} onClick={handleCloseUserMenu}>
-              {index === 0 ? (
+             
                 <Link to="/me" style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Typography textAlign="center">{setting}</Typography>
                 </Link>
-              ) : (
-                <Link to="/orders/me" style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </Link>
-              )}
+              
             </MenuItem>
           ))}
 
