@@ -18,11 +18,11 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Your Logo
+          Bitter Gourd Pollination
         </Typography>
-        <Button color="inherit">Menu Item 1</Button>
-        <Button color="inherit">Menu Item 2</Button>
-        <Button color="inherit">Menu Item 3</Button>
+        <Button color="inherit">Tutorials</Button>
+        <Button color="inherit">Tips/Recommendations</Button>
+        {/* <Button color="inherit">Menu Item 3</Button> */}
         <IconButton
           size="large"
           edge="end"
