@@ -61,7 +61,7 @@ const Header = () => {
           edge="start"
           color="inherit"
           aria-label="menu"
-          sx={{ mr: 2 }}
+          sx={{ color: '#74E291' }}
         >
           <MenuIcon />
         </IconButton>
@@ -100,7 +100,7 @@ const Header = () => {
           edge="end"
           color="inherit"
           aria-label="profile"
-          sx={{ color: 'green' }}
+          sx={{ color: '#74E291' }}
         >
           <AccountCircleIcon />
         </IconButton> */}
