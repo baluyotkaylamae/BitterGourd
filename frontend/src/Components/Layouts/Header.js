@@ -23,7 +23,7 @@ const Header = () => {
           edge="start"
           color="inherit"
           aria-label="menu"
-          sx={{ mr: 2 }}
+          sx={{ color: '#74E291' }}
         >
           <MenuIcon />
         </IconButton>
