@@ -28,39 +28,43 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
 
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontFamily: 'Arial', color: 'white' }}>
           Bitter Gourd Pollination
         </Typography>
 
         <Button
-        color="inherit"
-        onClick={handleClick}
-        aria-controls="tutorials-menu"
-        aria-haspopup="true"
-      >
-        Tutorials
-      </Button>
-      <Menu
-        id="tutorials-menu"
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {/* Add your dropdown menu items related to Tutorials here */}
-        <MenuItem onClick={handleClose}>Tutorial 1</MenuItem>
-        <MenuItem onClick={handleClose}>Tutorial 2</MenuItem>
-        <MenuItem onClick={handleClose}>Tutorial 3</MenuItem>
-      </Menu>
-        <Button color="inherit">Tips/Recommendations</Button>
-        
+          color="inherit"
+          onClick={handleClick}
+          aria-controls="tutorials-menu"
+          aria-haspopup="true"
+          sx={{ color: 'white' }}
+        >
+          Tutorials
+        </Button>
+        <Menu
+          id="tutorials-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {/* Add your dropdown menu items related to Tutorials here */}
+          <MenuItem onClick={handleClose}>Tutorial 1</MenuItem>
+          <MenuItem onClick={handleClose}>Tutorial 2</MenuItem>
+          <MenuItem onClick={handleClose}>Tutorial 3</MenuItem>
+        </Menu>
+        <Button color="inherit" sx={{ color: 'white' }}>
+          Tips/Recommendations
+        </Button>
+
         {/* <Button color="inherit">Menu Item 3</Button> */}
         <IconButton
           size="large"
           edge="end"
           color="inherit"
           aria-label="profile"
+          sx={{ color: 'green' }}
         >
-          <AccountCircleIcon/>
+          <AccountCircleIcon />
         </IconButton>
       </Toolbar>
     </AppBar>
