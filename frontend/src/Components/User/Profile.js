@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Loader from '../Layouts/Loader';
+// import Loader from '../Layouts/Loader';
 import MetaData from '../Layouts/Metadata';
 import { getUser } from '../../utils/helpers';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
 
 const Profile = () => {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({}); // Initialize as an object
 
   const getProfile = async () => {
@@ -22,7 +22,7 @@ const Profile = () => {
       const { data } = await axios.get(`http://localhost:4001/api/me`, config);
       console.log(data);
       setUser(data.user);
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error("Invalid user or password", {
@@ -37,9 +37,9 @@ const Profile = () => {
 
   return (
     <Fragment>
-      {loading ? (
-        <Loader />
-      ) : (
+      {/* {loading ? ( */}
+        {/* <Loader /> */}
+      {/* ) : ( */}
         <Fragment>
           <MetaData title={'Your Profile'} />
 
@@ -90,7 +90,7 @@ const Profile = () => {
             </div>
           </div>
         </Fragment>
-      )}
+      {/* )} */}
     </Fragment>
   );
 };
