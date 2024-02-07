@@ -19,10 +19,11 @@ const Login = () => {
   const navigate = useNavigate();
   let location = useLocation();
 //   const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : '';
-  const notify = (error) =>
-    toast.error(error, {
-      position: toast,
-    });
+  // const notify = (error) =>
+  // toast.error(error, {
+  //   position: 'bottom-center',
+  // });
+
 
   const login = async (email, password) => {
     try {
@@ -33,11 +34,13 @@ const Login = () => {
       };
       const { data } = await axios.post(`http://localhost:4001/api/login`, { email, password }, config);
       console.log(data);
+      
       authenticate(data, () => navigate('/'));
       window.location.reload();
+      
     } catch (error) {
       toast.error('Invalid user or password', {
-        position: toast,
+        position: 'top-right',
       });
     }
   };

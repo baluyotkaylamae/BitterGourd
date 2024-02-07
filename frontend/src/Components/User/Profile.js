@@ -26,7 +26,7 @@ const Profile = () => {
     } catch (error) {
       console.log(error);
       toast.error("Invalid user or password", {
-        position: toast.POSITION.BOTTOM_RIGHT
+        position: 'top-right'
       });
     }
   };

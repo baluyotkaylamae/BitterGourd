@@ -29,7 +29,7 @@ const Register = () => {
     }
     if (error) {
       toast.error(error, {
-        position: toast.POSITION.BOTTOM_RIGHT,
+        position: 'top-right',
       });
       setError('');
     }
@@ -41,7 +41,7 @@ const Register = () => {
     // Form validation
     if (!name || !email || !password || !avatar) {
       toast.error('All fields are required, including the avatar', {
-        position: toast.POSITION.BOTTOM_RIGHT,
+        position: toast,
       });
       return;
     }

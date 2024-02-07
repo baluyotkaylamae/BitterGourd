@@ -33,7 +33,7 @@ const UpdateProfile = () => {
         } catch (error) {
             console.error('Error fetching profile:', error);
             toast.error('Error fetching user profile', {
-                position: toast.POSITION.BOTTOM_CENTER, 
+                position: 'top-right', 
             });
         }
     };
@@ -51,7 +51,7 @@ const UpdateProfile = () => {
             setIsUpdated(data.success);
             setLoading(false);
             toast.success('User updated', {
-                position: toast.POSITION.BOTTOM_CENTER,
+                position: toast,
             });
             navigate('/me', { replace: true });
         } catch (error) {
@@ -62,19 +62,19 @@ const UpdateProfile = () => {
                 console.error('Server response:', error.response.data);
                 console.error('Status code:', error.response.status);
                 toast.error(error.response.data.message || 'User update failed', {
-                    position: toast.POSITION.BOTTOM_CENTER,
+                    position: 'top-right',
                 });
             } else if (error.request) {
                 // The request was made but no response was received
                 console.error('No response received from the server');
                 toast.error('No response received from the server', {
-                    position: toast.POSITION.BOTTOM_CENTER,
+                    position: 'top-right',
                 });
             } else {
                 // Something happened in setting up the request that triggered an Error
                 console.error('Error setting up the request:', error.message);
                 toast.error('Error setting up the request', {
-                    position: toast.POSITION.BOTTOM_CENTER,
+                    position: 'top-right',
                 });
             }
         }
@@ -97,7 +97,7 @@ const UpdateProfile = () => {
         // Check if required fields are empty
         if (!name || !email || !avatar) {
             toast.error('All fields are required', {
-                position: toast.POSITION.BOTTOM_CENTER,
+                position: 'top-right',
             });
             return;
         }
@@ -116,7 +116,7 @@ const UpdateProfile = () => {
         } catch (error) {
             // Display the error using toast.error
             toast.error(error.message || 'User update failed', {
-                position: toast.POSITION.BOTTOM_CENTER,
+                position: 'top-right',
             });
         }
     };

@@ -24,12 +24,12 @@ const ForgotPassword = () => {
             
             setLoading(false)
             toast.success(data.message, {
-                position: toast.POSITION.BOTTOM_RIGHT
+                position: 'top-center'
             });
             navigate('/login')
         } catch (error) {
             toast.error(error.response.data.message, {
-                position: toast.POSITION.BOTTOM_RIGHT
+                position:'top-center'
             });
         }
     }

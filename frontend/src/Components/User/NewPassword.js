@@ -31,12 +31,12 @@ const NewPassword = () => {
     useEffect(() => {
         if (error) {
             toast.error(error, {
-                position: toast.POSITION.BOTTOM_RIGHT
+                position: 'top-right'
             });
         }
         if (success) {
             toast.success('password updated', {
-                position: toast.POSITION.BOTTOM_RIGHT
+                position: 'top-center'
             });
             navigate('/login')
         }
