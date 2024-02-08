@@ -1,20 +1,32 @@
 const Question = require('../models/question'); // Adjust the path based on your project structure
 
 // Create a new question
+// const createQuestion = async (req, res) => {
+//   try {
+//     const { questionText, options } = req.body;
+
+//     // Split the options string into an array using commas
+//     const optionsArray = options.split(',').map(option => option.trim());
+
+//     const newQuestion = await Question.create({ questionText, options: optionsArray });
+//     res.status(201).json(newQuestion);
+//   } catch (error) {
+//     console.error('Error creating question:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// };
 const createQuestion = async (req, res) => {
   try {
     const { questionText, options } = req.body;
 
-    // Split the options string into an array using commas
-    const optionsArray = options.split(',').map(option => option.trim());
-
-    const newQuestion = await Question.create({ questionText, options: optionsArray });
+    const newQuestion = await Question.create({ questionText, options });
     res.status(201).json(newQuestion);
   } catch (error) {
     console.error('Error creating question:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 // Get all questions
 const getAllQuestions = async (req, res) => {
   try {
@@ -74,7 +86,7 @@ const getQuestionById = async (req, res, next) => {
 //     res.status(500).json({ error: 'Internal Server Error' });
 //   }
 // };
-updateQuestion = async (req, res) => {
+const updateQuestion = async (req, res) => {
   try {
     const question = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!question) {
@@ -89,9 +101,9 @@ updateQuestion = async (req, res) => {
 // Delete a question by ID
 const deleteQuestion = async (req, res) => {
   try {
-    const { questionId } = req.params;
-    const deletedQuestion = await Question.findByIdAndDelete(questionId);
-    if (!deletedQuestion) {
+    
+    const question = await Question.findByIdAndDelete(req.params.id);
+    if (!question) {
       return res.status(404).json({ error: 'Question not found' });
     }
     res.status(200).json({ message: 'Question deleted successfully' });

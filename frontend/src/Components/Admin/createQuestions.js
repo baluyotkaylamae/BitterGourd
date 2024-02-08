@@ -7,19 +7,20 @@ import Dashboard from './Dashboard';
 const CreateQuestion = () => {
   const [newQuestion, setNewQuestion] = useState({
     questionText: '',
-    options: '',
+    options: '', // Initialize options as an empty string
   });
 
   const handleInputChange = (e) => {
-    setNewQuestion({
-      ...newQuestion,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setNewQuestion(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleCreateQuestion = async () => {
-    // Split the options string into an array using commas
-    const optionsArray = newQuestion.options.split(',').map(option => option.trim());
+    // Ensure options is always a string
+    const optionsArray = (typeof newQuestion.options === 'string' ? newQuestion.options.split(',').map(option => option.trim()) : []);
 
     try {
       await axios.post('http://localhost:4001/api/questions', {

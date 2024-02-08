@@ -41,24 +41,19 @@ function App() {
               <QuestionsList />
             </ProtectedRoute>
           } />
-
           <Route path="/questions/create" element={
             <ProtectedRoute isAdmin={true}>
               <CreateQuestion />
             </ProtectedRoute>
           } />
 
+
           <Route path="/questions/update/:id" element={
             <ProtectedRoute isAdmin={true}>
               <UpdateQuestion />
             </ProtectedRoute>
           } />
-          {/* <Route path="/dashboard" element={
-            <ProtectedRoute isAdmin={true}>
-              <Dashboard />
-            </ProtectedRoute>
-          } />
-        */}
+
 
           <Route path="/dashboard" element={
             <ProtectedRoute isAdmin={true}>
