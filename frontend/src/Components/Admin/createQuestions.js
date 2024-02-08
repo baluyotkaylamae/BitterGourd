@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import Dashboard from './Dashboard';
 
 const CreateQuestion = () => {
   const [newQuestion, setNewQuestion] = useState({
@@ -43,6 +44,7 @@ const CreateQuestion = () => {
 
   return (
     <div>
+      <Dashboard />
       <h2>Create Question</h2>
       <div>
         <label>Question Text:</label>

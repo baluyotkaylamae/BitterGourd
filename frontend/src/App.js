@@ -21,6 +21,7 @@ import UserManagement from './Components/Admin/userManagement';
 // import Dashboard from './Components/Admin/Dashboard';
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from './Components/Admin/Sidebar';
+import Dashboard from './Components/Admin/Dashboard';
 
 
 
@@ -41,7 +42,7 @@ function App() {
             </ProtectedRoute>
           } />
 
-           <Route path="/questions/create" element={
+          <Route path="/questions/create" element={
             <ProtectedRoute isAdmin={true}>
               <CreateQuestion />
             </ProtectedRoute>
@@ -52,16 +53,21 @@ function App() {
               <UpdateQuestion />
             </ProtectedRoute>
           } />
-      {/* <Route path="/dashboard" element={
+          {/* <Route path="/dashboard" element={
             <ProtectedRoute isAdmin={true}>
               <Dashboard />
             </ProtectedRoute>
           } />
         */}
 
+          <Route path="/dashboard" element={
+            <ProtectedRoute isAdmin={true}>
+
+              <Dashboard />
+            </ProtectedRoute>
+          } end />
           <Route path="/sidebar" element={
             <ProtectedRoute isAdmin={true}>
-              {/* <Dashboard /> */}
               <Sidebar />
             </ProtectedRoute>
           } end />
