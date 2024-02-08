@@ -1,271 +1,138 @@
-// Header.js
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Box from '@mui/material/Box';
-import './FH.css';
-import Tooltip from '@mui/material/Tooltip';
-import Avatar from '@mui/material/Avatar';
-import { getUser, logout } from '../../utils/helpers';
-
-
-
-
-const settings = ['Profile'];
-const Header = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  const [user, setUser] = useState(getUser());
-  const userAuthenticated = !!user;
-  const navigate = useNavigate();
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const handleLogout = () => {
-    // Call the logout function to clear user data
-    logout();
-    setUser(null);
-
-    window.location.href = '/';
-  };
-
-  return (
-    <AppBar position="static" style={{ backgroundColor: 'green' }}>
-      <Toolbar>
-        <Link to="/">
-          <img src="/images/bitterguard-high-resolution-logo.png" alt="Bitter Gourd Logo" style={{ height: '40px' }} />
-        </Link>
-        
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', ml: 2 }}>
-          Bitter Guard
-        </Typography>
-
-        <Button color="inherit" sx={{ mr: 2 }}>
-          Tutorials
-        </Button>
-        <Button color="inherit" sx={{ mr: 2 }}>
-          Tips/Recommendations
-        </Button>
-
-        <Box>
-          {userAuthenticated ? (
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu}>
-                {user.avatar ? (
-                  <Avatar src={user.avatar.url} alt={user.name} />
-                ) : null}
-              </IconButton>
-            </Tooltip>
-          ) : (
-            <Link to="/login" className="btn ml-4 Json-BTN" id="login_btn">
-              <Button className='Json-BTN'>Login</Button>
-            </Link>
-          )}
-
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            {settings.map((setting, index) => (
-              <MenuItem key={index} onClick={handleCloseUserMenu}>
-                <Link to="/me" style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </Link>
-              </MenuItem>
-            ))}
-            {user && user.role === 'admin' && (
-              <Link to="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Dashboard</Typography>
-                </MenuItem>
-              </Link>
-            )}
-            <MenuItem onClick={handleLogout}>
-              <Typography textAlign="center" color="red">Logout</Typography>
-            </MenuItem>
-          </Menu>
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
-};
-
-export default Header;
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, IconButton, Box } from '@mui/material';
+import '../Layouts/FH.css';
+import PropTypes from 'prop-types';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Tooltip from '@mui/material/Tooltip';
-import Avatar from '@mui/material/Avatar';
-import { getUser, logout } from '../../utils/helpers';
-import './FH.css';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
-const settings = ['Profile'];
+const drawerWidth = 240;
 
-const Header = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  const user = getUser();
-  const userAuthenticated = !!user;
-  const navigate = useNavigate();
+const Sidebar = () => {
+  const [isQuestionOpen, setQuestionOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleDrawerClose = () => {
+    setIsClosing(true);
+    setMobileOpen(false);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleDrawerTransitionEnd = () => {
+    setIsClosing(false);
   };
 
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const handleLogout = () => {
-    logout();
-    window.location.href = '/';
+  const handleDrawerToggle = () => {
+    if (!isClosing) {
+      setMobileOpen(!mobileOpen);
+    }
   };
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Box>
-          <Link to="/">
-            <Typography variant="h6" component="div" sx={{ fontFamily: 'Arial', color: 'white' }}>
-              BitterFloral Guard
-            </Typography>
-          </Link>
-        </Box>
-
-
-        <Box sx={{ flexGrow: 1 }} >
-          <Button color="inherit" onClick={handleClick} sx={{ color: 'white' }}>
-            Tutorials
-          </Button>
-          <Menu
-            id="tutorials-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            <MenuItem onClick={handleClose}>Tutorial 1</MenuItem>
-            <MenuItem onClick={handleClose}>Tutorial 2</MenuItem>
-            <MenuItem onClick={handleClose}>Tutorial 3</MenuItem>
-          </Menu>
-
-          <Button color="inherit" sx={{ color: 'white' }}>
-            Tips/Recommendations
-          </Button>
-
-          <Link to="/form">
-            <Button color="inherit" sx={{ color: 'white' }}>
-              SURVEY
-            </Button>
-          </Link>
-
-        </Box>
-
-        <Box>
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              {userAuthenticated ? (
-                user.avatar ? (
-                  <Avatar
-                    src={user.avatar.url}
-                    alt={user.name}
-                    sx={{ borderRadius: '50%' }}
-                  />
-                ) : null
-              ) : (
-                <Link to="/login" className="btn ml-4 Json-BTN" id="login_btn">
-                  <Button className='Json-BTN'>Login</Button>
-                </Link>
-              )}
-            </IconButton>
-          </Tooltip>
-
-          <Menu
-            sx={{ mt: '45px' }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            {settings.map((setting, index) => (
-              <MenuItem key={index} onClick={handleCloseUserMenu}>
-                <Link to="/me" style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </Link>
-              </MenuItem>
-            ))}
-
-            {user && user.role === 'admin' && (
-              <MenuItem>
-                <Link to="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <Typography textAlign="center">Dashboard</Typography>
-                </Link>
-              </MenuItem>
-            )}
-
-            <MenuItem onClick={handleLogout}>
-              <Typography textAlign="center" color="red">Logout</Typography>
-            </MenuItem>
-          </Menu>
-        </Box>
-      </Toolbar>
-    </AppBar>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Sidebar
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders"
+      >
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onTransitionEnd={handleDrawerTransitionEnd}
+          onClose={handleDrawerClose}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+        >
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton component="a" href="/questions/create">
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Create question" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component="a" href="/questions">
+                <ListItemIcon>
+                  <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Questions List" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Drawer>
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+          open
+        >
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton component="a" href="/questions/create">
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Create question" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component="a" href="/questions">
+                <ListItemIcon>
+                  <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Questions List" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Drawer>
+      </Box>
+    </Box>
   );
 };
 
-export default Header;
+export default Sidebar;
