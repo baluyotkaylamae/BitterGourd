@@ -39,21 +39,29 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" style={{ backgroundColor: 'green' }}>
+    <AppBar position="static" style={{ background: 'linear-gradient(to right, #93c570, #a5d582)' }}>
       <Toolbar>
         <Link to="/">
           <img src="/images/bitterguard-high-resolution-logo.png" alt="Bitter Gourd Logo" style={{ height: '40px' }} />
         </Link>
 
 
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', ml: 2 }}>
-          Bitter Guard
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1 }}
+          className="text-ye text-black"
+          style={{ textAlign: 'left' }}
+          href="/"
+        >
+          BitterFloral Guard
         </Typography>
 
-        <Button color="inherit" sx={{ mr: 2 }}>
+
+        <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
           Tutorials
         </Button>
-        <Button color="inherit" sx={{ mr: 2 }}>
+        <Button className="text-black"  color="inherit" sx={{ mr: 2 }}>
           Tips/Recommendations
         </Button>
 
