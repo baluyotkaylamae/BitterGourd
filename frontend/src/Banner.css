@@ -1,0 +1,15 @@
+.banner-container {
+  width: 100%; /* Adjust the width as needed */
+  max-height: 50vh; /* Adjust the max-height as needed */
+  overflow: hidden; /* Hide overflow content */
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  margin: 10px auto; /* Add margin to position it below the header */
+}
+
+.image-on-banner {
+  width: 100%; /* Allow the image to adjust its width */
+  height: 100%; /* Make the image fill the container vertically */
+  object-fit: fill; /* Scale the image as large as possible without stretching */
+}

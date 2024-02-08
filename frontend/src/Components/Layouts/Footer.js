@@ -14,8 +14,8 @@ export default function App() {
             <MDBCol md="6" lg="6" xl="6" className='mx-auto mb-2'>
               <h6 className='text-uppercase fw-bold mb-4 text-header-Json'>CREATORS</h6>
               <p className='text-Json'>Baluyot, Kayla Mae B.</p>
-              <p className='text-Json'>Echague, Dennis Carlo</p>
-              <p className='text-Json'>Tomas, Yencie Edmel</p>
+              <p className='text-Json'>Echague, Dennis Carlo Y.</p>
+              <p className='text-Json'>Tomas, Yencie Edmel L.</p>
            
             </MDBCol>
 

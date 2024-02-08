@@ -1,13 +1,23 @@
-// Home.js
 import React from 'react';
+import './Banner.css';
 
 const Home = () => {
+  
+  const CurvedBanner = () => {
     return (
-                <div>
-                    <h1>Welcome to our Web!</h1>
-                    <p>This is the content section, where you can see the introduction of our website.</p>
-                </div>
+      <div className="curved-banner" style={{ backgroundColor: '#93c570' }}>
+        <div className="image-on-banner">
+          <img src='/images/Bitterfloral Guard.png' className="image-on-banner" alt="Image-on-banner" />
+        </div>
+      </div>
     );
+  };
+
+  return (
+    <div className="banner-container">
+      <CurvedBanner />
+    </div>
+  );
 };
 
 export default Home;
