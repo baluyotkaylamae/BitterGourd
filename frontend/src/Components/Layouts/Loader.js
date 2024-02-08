@@ -1,4 +1,8 @@
 import React from 'react';
+<<<<<<< HEAD
+=======
+
+>>>>>>> a0fa35888afb8c16447d4a31eb783dca356227cd
 
 const Loader = () => {
     return (
