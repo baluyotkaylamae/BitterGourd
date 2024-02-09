@@ -4,7 +4,7 @@ const cors = require('cors');
 const questions = require('./routes/question');
 const auth = require('./routes/auth');
 const answer = require('./routes/answer');
-
+const categories = require('./routes/categorypost');
 const app = express();
 
 // Middleware setup
@@ -20,6 +20,7 @@ app.use(cookieParser());
 // app.use('/api', answer);
 app.use('/api', questions);
 app.use('/api', auth);
-app.use('/api', answer)
+app.use('/api', answer);
+app.use('/api', categories);
 
 module.exports = app;

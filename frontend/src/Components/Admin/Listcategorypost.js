@@ -3,34 +3,34 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Sidebar from './Sidebar';
 import { MDBDataTable } from 'mdbreact';
-import Dashboard from './Dashboard';
+import './Crud.css';
 
-
-const QuestionsList = () => {
-  const [questions, setQuestions] = useState([]);
+const CategoryDataTable = () => {
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     axios
-      .get('http://localhost:4001/api/questions')
+      .get('http://localhost:4001/api/categories')
       .then((res) => {
-        setQuestions(res.data.questions);
+        setCategories(res.data.categories);
       })
       .catch((err) => {
         console.error(err);
       });
   }, []);
 
-  const handleDelete = (questionId) => {
+  const handleDelete = (categoryId) => {
     axios
-      .delete(`http://localhost:4001/api/questions/${questionId}`)
+      .delete(`http://localhost:4001/api/categories/${categoryId}`)
       .then(() => {
-        setQuestions(questions.filter((question) => question._id !== questionId));
-        toast.success('Question deleted successfully');
+        setCategories(categories.filter((category) => category._id !== categoryId));
+        toast.success('Category deleted successfully');
       })
       .catch((err) => {
         console.error(err);
-        toast.error('Failed to delete question');
+        toast.error('Failed to delete category');
       });
   };
 
@@ -43,13 +43,13 @@ const QuestionsList = () => {
           sort: 'asc',
         },
         {
-          label: 'Question Text',
-          field: 'questionText',
+          label: 'Name',
+          field: 'name',
           sort: 'asc',
         },
         {
-          label: 'Options',
-          field: 'options',
+          label: 'Description',
+          field: 'description',
           sort: 'asc',
         },
         {
@@ -61,19 +61,19 @@ const QuestionsList = () => {
       rows: [],
     };
 
-    questions.forEach((question) => {
+    categories.forEach((category) => {
       data.rows.push({
-        _id: question._id,
-        questionText: question.questionText,
-        options: question.options.join(', '), // Assuming options is an array
+        _id: category._id,
+        name: category.name,
+        description: category.description,
         actions: (
           <div>
-            <Link to={`/questions/update/${question._id}`} className="btn btn-warning mr-2">
+            <Link to={`/category/update/${category._id}`} className="btn btn-primary">
               Edit
             </Link>
             <button
-              className="btn btn-danger"
-              onClick={() => handleDelete(question._id)}
+              className="btn btn-danger ml-2"
+              onClick={() => handleDelete(category._id)}
             >
               Delete
             </button>
@@ -87,15 +87,14 @@ const QuestionsList = () => {
 
   return (
     <div className="container mt-5">
-      <Dashboard />
       <div className="row">
         <div className="col-md-3">
-        
+          <Sidebar />
         </div>
         <div className="col-md-9" style={{ color: '#A97155' }}>
-          <h2 className="title-crud">List of Questions</h2>
-          <Link to="/questions/create" className="btn btn-primary mb-3">
-            Create Question
+          <h2 className="title-crud">List of Categories</h2>
+          <Link to="/category/create" className="btn btn-primary mb-3">
+            Create Category
           </Link>
           <MDBDataTable
             data={setDataTable()}
@@ -111,4 +110,4 @@ const QuestionsList = () => {
   );
 };
 
-export default QuestionsList;
+export default CategoryDataTable;

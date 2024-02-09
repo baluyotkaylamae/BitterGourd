@@ -16,12 +16,14 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import CategoryIcon from '@mui/icons-material/Category';
 import FormatListBulleted from '@mui/icons-material/FormatListBulleted';
 
 const drawerWidth = 240;
 
 const Sidebar = () => {
   const [isQuestionOpen, setQuestionOpen] = useState(false);
+  const [isCategoryOpen, setCategoryOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -43,6 +45,9 @@ const Sidebar = () => {
   const handleQuestionToggle = () => {
     setQuestionOpen(!isQuestionOpen);
   };
+  const handleCategoryToggle = () => {
+    setCategoryOpen(!isCategoryOpen);
+  };
 
   const ListItemLink = ({ to, primary, icon, onClick }) => (
     <ListItem disablePadding onClick={onClick}>
@@ -63,7 +68,7 @@ const Sidebar = () => {
           ml: { sm: `${drawerWidth}px` },
         }}
       />
-      <img src="/bitterguard-high-resolution-logo.png" alt="Bitterguard Logo" style={{ width: '100%' }} />
+     
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -104,7 +109,7 @@ const Sidebar = () => {
         >
           <List>
             <ListItem disablePadding>
-              <img src="images/bitterguard-high-resolution-logo.png" alt="Bitterguard Logo" style={{ width: '100%' }} />
+            <img src="/images/bitterguard-high-resolution-logo.png" alt="Bitterguard Logo" style={{ width: '100%' }} />
             </ListItem>
             <ListItemLink to="/" primary="Home" icon={<HomeIcon />} />
             <ListItem disablePadding onClick={handleQuestionToggle}>
@@ -120,6 +125,25 @@ const Sidebar = () => {
                 <ListItemLink to="/questions" primary="Questions List" icon={<FormatListBulleted />} />
               </List>
             </Collapse>
+
+            <ListItem disablePadding onClick={handleCategoryToggle}>
+              <ListItemButton>
+                <ListItemIcon><CategoryIcon  /></ListItemIcon>
+                <ListItemText primary="Categorypost" />
+                {isCategoryOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+            </ListItem>
+
+            <Collapse in={isCategoryOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemLink to="/category/create" primary="Create Category post" icon={<AddIcon />} />
+                <ListItemLink to="/category/list" primary="Category post List" icon={<FormatListBulleted />} />
+              </List>
+            </Collapse>
+
+
+
+
           </List>
         </Drawer>
       </Box>

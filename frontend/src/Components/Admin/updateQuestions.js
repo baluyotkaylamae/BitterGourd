@@ -3,6 +3,9 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import './Crud.css';
+import Sidebar from './Sidebar';
+
 
 const UpdateQuestion = () => {
   const { id } = useParams();
@@ -69,30 +72,34 @@ const UpdateQuestion = () => {
     <div className="container mt-5">
       <div className="row">
         <div className="col-md-3">
-          {/* Sidebar */}
+        <Sidebar/>
         </div>
-        <div className="col-md-9" style={{ color: '#A97155' }}>
-          <h2>Update Question</h2>
-          <div>
-            <label>Question Text:</label>
+        <div className="col-md-9 text-crud" style={{ paddingBottom: '50px' }}>
+          <h2 className="title-crud">Update Question</h2>
+          <div className="mb-3">
+            <label htmlFor="questionText" className="form-label">Question Text:</label>
             <input
               type="text"
+              id="questionText"
               name="questionText"
               value={question.questionText}
               onChange={handleInputChange}
+              className="form-control"
             />
           </div>
-          <div>
-            <label>Options (comma-separated):</label>
+          <div className="mb-3">
+            <label htmlFor="options" className="form-label">Options (comma-separated):</label>
             <input
               type="text"
+              id="options"
               name="options"
               value={question.options.join(',')} // Join options into a string for input
               onChange={handleOptionsChange} // Use separate handler for options
+              className="form-control"
             />
           </div>
           <div>
-            <button onClick={handleUpdateQuestion}>Update Question</button>
+            <button onClick={handleUpdateQuestion} className="btn btn-crud">Update Question</button>
           </div>
           <ToastContainer />
         </div>

@@ -6,6 +6,9 @@ import Footer from './Components/Layouts/Footer';
 import QuestionsList from './Components/Admin/listQuestions'; // Import the new component for managing questions
 import CreateQuestion from './Components/Admin/createQuestions'; // Import the new component for creating questions
 import UpdateQuestion from './Components/Admin/updateQuestions';
+import Createcategorypost from './Components/Admin/Createcategorypost';
+import Listcategorypost from './Components/Admin/Listcategorypost';
+import Updatecategorypost from './Components/Admin/Updatecategorypost';
 import AnswerForm from './Components/SurveyForm'; // Import the new component
 
 import Login from './Components/User/Login'
@@ -64,6 +67,24 @@ function App() {
           <Route path="/sidebar" element={
             <ProtectedRoute isAdmin={true}>
               <Sidebar />
+            </ProtectedRoute>
+          } end />
+
+
+          {/* category */}
+          <Route path="/category/create" element={
+            <ProtectedRoute isAdmin={true}>
+              <Createcategorypost />
+            </ProtectedRoute>
+          } end />
+          <Route path="/category/update/:id" element={
+            <ProtectedRoute isAdmin={true}>
+              <Updatecategorypost />
+            </ProtectedRoute>
+          } end />
+          <Route path="/category/list" element={
+            <ProtectedRoute isAdmin={true}>
+              <Listcategorypost />
             </ProtectedRoute>
           } end />
 

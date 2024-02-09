@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Dashboard from './Dashboard';
+import './Crud.css'; // Import CSS file for styling
 
 const CreateQuestion = () => {
   const [newQuestion, setNewQuestion] = useState({
@@ -44,31 +45,43 @@ const CreateQuestion = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-5">
       <Dashboard />
-      <h2>Create Question</h2>
-      <div>
-        <label>Question Text:</label>
-        <input
-          type="text"
-          name="questionText"
-          value={newQuestion.questionText}
-          onChange={handleInputChange}
-        />
+      <div className="row">
+        <div className="col-md-3">
+        </div>
+        <div className="col-md-9 text-crud" style={{ paddingBottom: '50px' }}>
+          <h2 className='title-crud'>Create Question</h2>
+          <div className="mb-3">
+            <label htmlFor="questionText" className="form-label d-block text-center">Question Text:</label>
+            <input
+              type="text"
+              id="questionText"
+              name="questionText"
+              value={newQuestion.questionText}
+              onChange={handleInputChange}
+              className="form-control mx-auto"
+              style={{ maxWidth: '300px' }}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="options" className="form-label d-block text-center">Options (comma-separated):</label>
+            <input
+              type="text"
+              id="options"
+              name="options"
+              value={newQuestion.options}
+              onChange={handleInputChange}
+              className="form-control mx-auto"
+              style={{ maxWidth: '300px' }}
+            />
+          </div>
+          <div className="text-center">
+            <button className="btn btn-crud" onClick={handleCreateQuestion}>Create Question</button>
+          </div>
+          <ToastContainer />
+        </div>
       </div>
-      <div>
-        <label>Options (comma-separated):</label>
-        <input
-          type="text"
-          name="options"
-          value={newQuestion.options}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <button onClick={handleCreateQuestion}>Create Question</button>
-      </div>
-      <ToastContainer />
     </div>
   );
 };
