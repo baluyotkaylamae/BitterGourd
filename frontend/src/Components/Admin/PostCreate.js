@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getToken } from '../../utils/helpers';
 import { toast } from 'react-toastify';
+import Sidebar from './Sidebar';
+
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -104,6 +106,7 @@ const CreatePost = () => {
 
   return (
     <div className="container mt-5">
+          <Sidebar />
       <div className="row">
         <div className="col-md-9 offset-md-1 text-crud" style={{paddingBottom:'50px'}}>
           <h2 className='title-crud'>Create Post</h2>

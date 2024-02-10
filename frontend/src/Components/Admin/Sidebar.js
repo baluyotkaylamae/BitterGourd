@@ -18,12 +18,14 @@ import Collapse from '@mui/material/Collapse';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import CategoryIcon from '@mui/icons-material/Category';
 import FormatListBulleted from '@mui/icons-material/FormatListBulleted';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
 const drawerWidth = 240;
 
 const Sidebar = () => {
   const [isQuestionOpen, setQuestionOpen] = useState(false);
   const [isCategoryOpen, setCategoryOpen] = useState(false);
+  const [isPostOpen, setPostOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -48,6 +50,11 @@ const Sidebar = () => {
   const handleCategoryToggle = () => {
     setCategoryOpen(!isCategoryOpen);
   };
+  const handlePostToggle = () => {
+    setPostOpen(!isPostOpen);
+  };
+
+
 
   const ListItemLink = ({ to, primary, icon, onClick }) => (
     <ListItem disablePadding onClick={onClick}>
@@ -141,6 +148,20 @@ const Sidebar = () => {
               </List>
             </Collapse>
 
+            <ListItem disablePadding onClick={handlePostToggle}>
+              <ListItemButton>
+                <ListItemIcon><PostAddIcon  /></ListItemIcon>
+                <ListItemText primary="Posts" />
+                {isPostOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+            </ListItem>
+
+            <Collapse in={isPostOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemLink to="/post/create" primary="Create posts" icon={<AddIcon />} />
+                <ListItemLink to="/post/list" primary="Post List" icon={<FormatListBulleted />} />
+              </List>
+            </Collapse>
 
 
 

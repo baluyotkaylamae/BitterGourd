@@ -58,12 +58,22 @@ const Header = () => {
         </Typography>
 
 
+        <Link to="/tutorials">
         <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
           Tutorials
         </Button>
-        <Button className="text-black"  color="inherit" sx={{ mr: 2 }}>
+      </Link>
+      <Link to="/posts?category=Tips">
+        <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
           Tips/Recommendations
         </Button>
+      </Link>
+      <Link to="/posts?category=Facts">
+        <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
+          Facts
+        </Button>
+      </Link>
+
 
         <Box>
           {userAuthenticated ? (

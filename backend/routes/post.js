@@ -14,7 +14,23 @@ const {
 } = require('../controllers/PostController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
-router.get('/posts', getPosts);
+router.get('/posts', async (req, res) => {
+    const { category } = req.query;
+    console.log('Category:', category); // Add this line for debugging
+    try {
+      let posts;
+      if (category) {
+        posts = await Post.find({ category }); // Filter posts by category
+      } else {
+        posts = await Post.find(); 
+      }
+      res.json({ posts });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+
 router.get('/posts/:id', getSinglePost);
 router.get('/post/:id', getPostById);
 

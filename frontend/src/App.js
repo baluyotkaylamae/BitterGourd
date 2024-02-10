@@ -29,7 +29,7 @@ import PostList from './Components/Admin/PostList';
 import CreatePost from './Components/Admin/PostCreate';
 import UpdatePost from './Components/Admin/PostUpdate';
 import PostDetails from './Components/Postdetails';
-
+import TutorialPage from './Components/categorypages/TutorialsCategory';
 
 
 
@@ -111,11 +111,14 @@ function App() {
           } end />
 
 
-
-
+         
           <Route path="/Post" element={<Posts />} />
           <Route path="/posts/:postId" element={<PostDetails />} />
           <Route path="/form" element={<AnswerForm />} /> {/* Add the new route for AnswerForm
+          
+           {/* CateforyPages */}
+          <Route path="/tutorials" element={<TutorialPage/>} />
+
 
           {/* login */}
           <Route path="/login" element={<Login />} exact="true" />

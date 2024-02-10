@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { errMsg, successMsg } from '../../utils/helpers';
 import { getToken } from '../../utils/helpers';
 import axios from 'axios';
+import Sidebar from './Sidebar';
+
 
 const UpdatePost = () => {
     const [name, setName] = useState('');
@@ -115,6 +117,7 @@ const UpdatePost = () => {
 
     return (
         <div className="container mt-5">
+            <Sidebar/>
             <div className="row">
                 <div className="col-md-3">
                 </div>

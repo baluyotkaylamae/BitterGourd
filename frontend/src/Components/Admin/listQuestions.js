@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MDBDataTable } from 'mdbreact';
-import Dashboard from './Dashboard';
+import Sidebar from './Sidebar';
 
 
 const QuestionsList = () => {
@@ -87,7 +87,7 @@ const QuestionsList = () => {
 
   return (
     <div className="container mt-5">
-      <Dashboard />
+      <Sidebar />
       <div className="row">
         <div className="col-md-3">
         

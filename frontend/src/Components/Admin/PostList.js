@@ -5,6 +5,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { getToken } from '../../utils/helpers';
+import Sidebar from './Sidebar';
+
 
 const PostDataTable = () => {
   const [posts, setPosts] = useState([]);
@@ -110,6 +112,7 @@ const PostDataTable = () => {
 
   return (
     <div className="container mt-5">
+        <Sidebar/>
       <div className="row">
         <div className="col-md-12">
           <h2 className="title-crud">List of Posts</h2>
