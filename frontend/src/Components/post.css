@@ -60,4 +60,9 @@
     height: auto; /* Maintain aspect ratio */
     margin-bottom: 20px; /* Add margin bottom for spacing */
 }
+
+.bold-text {
+    font-weight: bold;
+    font-size: 1.1em;
+}
 /* Add more styles as needed */

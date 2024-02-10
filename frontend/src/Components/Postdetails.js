@@ -32,12 +32,35 @@ const PostDetails = () => {
     }
 
     return (
-        <div className="container mt-4 post-details-container"> {/* Add className for styling */}
-            <h1>{post.name}</h1>
-            <img src={post.images[0].url} alt={post.name} className="post-image" />
-            <p>{post.description}</p>
+        <div className="container mt-4 post-details-container">
+            <h1 style={{ textAlign: 'justify' }}>{post.name}</h1>
+            <img
+                src={post.images[0].url}
+                alt={post.name}
+                className="post-image"
+                style={{ width: '750px', height: '500px' }}
+            />
+            {post.description.split(/\n/).map((part, index) => {
+                // If the part contains a number followed by a period
+                if (/^\d+\.\s*/.test(part)) {
+                    return (
+                        <p key={index} style={{ textAlign: 'justify', fontSize: '20px' }}>
+                            {part}
+                        </p>
+                    );
+                } else {
+                    return (
+                        <p key={index} style={{ textAlign: 'justify', textIndent: '1em', fontSize: '20px' }}>
+                            {part.trim()}
+                        </p>
+                    );
+                }
+            })}
         </div>
     );
+
+
+
 };
 
 export default PostDetails;
