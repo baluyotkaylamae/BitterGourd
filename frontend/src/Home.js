@@ -1,5 +1,6 @@
 import React from 'react';
 import './Banner.css';
+import Posts from './Components/RecentPost'; // Import the Posts component
 
 const Home = () => {
   
@@ -14,8 +15,11 @@ const Home = () => {
   };
 
   return (
-    <div className="banner-container">
-      <CurvedBanner />
+    <div>
+      <div className="banner-container">
+        <CurvedBanner />
+      </div>
+      <Posts /> {/* Render the Posts component here */}
     </div>
   );
 };

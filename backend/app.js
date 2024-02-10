@@ -5,6 +5,7 @@ const questions = require('./routes/question');
 const auth = require('./routes/auth');
 const answer = require('./routes/answer');
 const categories = require('./routes/categorypost');
+const post = require('./routes/post');
 const app = express();
 
 // Middleware setup
@@ -22,5 +23,6 @@ app.use('/api', questions);
 app.use('/api', auth);
 app.use('/api', answer);
 app.use('/api', categories);
+app.use('/api', post);
 
 module.exports = app;

@@ -10,7 +10,7 @@ import Createcategorypost from './Components/Admin/Createcategorypost';
 import Listcategorypost from './Components/Admin/Listcategorypost';
 import Updatecategorypost from './Components/Admin/Updatecategorypost';
 import AnswerForm from './Components/SurveyForm'; // Import the new component
-
+import Posts from './Components/Posts';
 import Login from './Components/User/Login'
 import Register from './Components/User/Register';
 import Profile from './Components/User/Profile'
@@ -25,6 +25,11 @@ import UserManagement from './Components/Admin/userManagement';
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from './Components/Admin/Sidebar';
 import Dashboard from './Components/Admin/Dashboard';
+import PostList from './Components/Admin/PostList';
+import CreatePost from './Components/Admin/PostCreate';
+import UpdatePost from './Components/Admin/PostUpdate';
+import PostDetails from './Components/Postdetails';
+
 
 
 
@@ -88,8 +93,28 @@ function App() {
             </ProtectedRoute>
           } end />
 
+          {/* Post */}
+          <Route path="/post/list" element={
+            <ProtectedRoute isAdmin={true}>
+              <PostList />
+            </ProtectedRoute>
+          } end />
+          <Route path="/post/create" element={
+            <ProtectedRoute isAdmin={true}>
+              <CreatePost />
+            </ProtectedRoute>
+          } end />
+          <Route path="/post/update/:id" element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdatePost />
+            </ProtectedRoute>
+          } end />
 
 
+
+
+          <Route path="/Post" element={<Posts />} />
+          <Route path="/posts/:postId" element={<PostDetails />} />
           <Route path="/form" element={<AnswerForm />} /> {/* Add the new route for AnswerForm
 
           {/* login */}

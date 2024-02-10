@@ -42,8 +42,8 @@ export const logout = next => {
 };
 
 export const errMsg = (message = '') => toast.error(message, {
-    position: toast.POSITION.BOTTOM_CENTER
+    position: 'top-center'
 });
 export const successMsg = (message = '') => toast.success(message, {
-    position: toast.POSITION.BOTTOM_CENTER
+    position: 'top-center'
 });

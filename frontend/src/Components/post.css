@@ -1,0 +1,63 @@
+.prodcard-JSON {
+    border: 2px solid #7db369;
+    height: auto; /* Adjust the height to fit content */
+    width: 100%; /* Adjust the width to fill the container */
+    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    margin-bottom: 20px; /* Add some space between cards */
+}
+
+.prodcard-JSON:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 20px #ccf7b9;
+}
+
+.product-image {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover;
+}
+
+.card-title-des {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.card-des {
+    font-size: 1rem;
+    line-height: 1.4; /* Improve readability */
+    margin-bottom: 10px;
+}
+
+.json-button {
+    width: 100%;
+    background-color: #75f771;
+    color: whitesmoke;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none; /* Remove default button underline */
+}
+
+.json-button:hover {
+    background-color: #fdd96b;
+    color: #e8dd80;
+}
+
+.post-details-container {
+    font-family: 'Arial', sans-serif; /* Example font family */
+    color: #333; /* Example text color */
+    padding: 25px; /* Example padding */
+    font-size: 25px; /* Example font size */
+}
+
+.post-image {
+    width: 90%; /* Set image width to fill container */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 20px; /* Add margin bottom for spacing */
+}
+/* Add more styles as needed */
