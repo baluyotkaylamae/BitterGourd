@@ -58,7 +58,7 @@ const Header = () => {
         </Typography>
 
 
-        <Link to="/tutorials">
+        <Link to="/Tutorials">
         <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
           Tutorials
         </Button>
