@@ -150,11 +150,11 @@ const Register = () => {
                           <label className="form-label" htmlFor="password_field">Password</label>
                         </div>
                         <div className="form-group mb-4">
-                          <label htmlFor="avatar_upload">Avatar</label>
+                          <label htmlFor="avatar_upload"></label>
                           <div className="d-flex align-items-center">
                             <div>
                               <figure className="avatar mr-3 item-rtl ">
-                                <img src={avatarPreview} className="rounded-circle" alt="Avatar Preview" />
+                                <img src={avatarPreview} className="rounded-circle" alt="" />
                               </figure>
                             </div>
                             <div className="custom-file">
@@ -166,7 +166,7 @@ const Register = () => {
                                 accept="image/*"
                                 onChange={onChange}
                               />
-                              <label className="custom-file-label" htmlFor="customFile">Choose Avatar</label>
+                              <label className="custom-file-label" htmlFor="customFile"></label>
                             </div>
                           </div>
                         </div>
