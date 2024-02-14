@@ -33,7 +33,7 @@ const PostDetails = () => {
 
     return (
         <div className="container mt-4 post-details-container">
-            <h1 style={{ textAlign: 'justify' }}>{post.name}</h1>
+            <h1 style={{ textAlign: 'center' }}>{post.name}</h1>
             <img
                 src={post.images[0].url}
                 alt={post.name}
@@ -44,13 +44,13 @@ const PostDetails = () => {
                 // If the part contains a number followed by a period
                 if (/^\d+\.\s*/.test(part)) {
                     return (
-                        <p key={index} style={{ textAlign: 'justify', fontSize: '20px' }}>
+                        <p key={index} style={{ textAlign: 'center', fontSize: '20px' }}>
                             {part}
                         </p>
                     );
                 } else {
                     return (
-                        <p key={index} style={{ textAlign: 'justify', textIndent: '1em', fontSize: '20px' }}>
+                        <p key={index} style={{ textAlign: 'center', textIndent: '1em', fontSize: '20px' }}>
                             {part.trim()}
                         </p>
                     );

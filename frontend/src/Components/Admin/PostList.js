@@ -112,29 +112,34 @@ const PostDataTable = () => {
 
   return (
     <div className="container mt-5">
-        <Sidebar/>
       <div className="row">
-        <div className="col-md-12">
-          <h2 className="title-crud">List of Posts</h2>
-          <Link to="/post/create" className="btn btn-primary mb-3">
-            Create Post
-          </Link>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <MDBDataTable
-              data={setDataTable()}
-              className="px-3"
-              bordered
-              striped
-              hover
-            />
-          )}
-          <ToastContainer />
+        <div className="col-md-3">
+          <Sidebar />
+        </div>
+        <div className="col-md-9">
+          <div className="col-md-12">
+            <h2 className="title-crud">List of Posts</h2>
+            <Link to="/post/create" className="btn btn-primary mb-3">
+              Create Post
+            </Link>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <MDBDataTable
+                data={setDataTable()}
+                className="px-3"
+                bordered
+                striped
+                hover
+              />
+            )}
+            <ToastContainer />
+          </div>
         </div>
       </div>
     </div>
   );
+  
 };
 
 export default PostDataTable;
