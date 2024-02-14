@@ -68,13 +68,13 @@ const PostDetails = () => {
                 // If the part contains a number followed by a period
                 if (/^\d+\.\s*/.test(part)) {
                     return (
-                        <p key={index} style={{ textAlign: 'center', fontSize: '20px' }}>
+                        <p key={index} style={{ textAlign: 'justify', fontSize: '20px' }}>
                             {part}
                         </p>
                     );
                 } else {
                     return (
-                        <p key={index} style={{ textAlign: 'center', textIndent: '1em', fontSize: '20px' }}>
+                        <p key={index} style={{ textAlign: 'justify', textIndent: '1em', fontSize: '20px' }}>
                             {part.trim()}
                         </p>
                     );
