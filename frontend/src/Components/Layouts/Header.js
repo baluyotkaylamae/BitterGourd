@@ -7,6 +7,9 @@ import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import { getUser, logout } from '../../utils/helpers';
 import './FH.css';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 
 const settings = ['Profile'];
 
@@ -59,20 +62,32 @@ const Header = () => {
 
 
         <Link to="/Tutorials">
-        <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
-          Tutorials
-        </Button>
-      </Link>
-      <Link to="/Tips">
-        <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
-          Tips/Recommendations
-        </Button>
-      </Link>
-      <Link to="/Facts">
-        <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
-          Facts
-        </Button>
-      </Link>
+          <Tooltip title="Tutorials">
+            <IconButton style={{ color: "black" }}>
+              <LibraryBooksIcon />
+              Tutorials
+            </IconButton>
+          </Tooltip>
+        </Link>
+
+        <Link to="/Tips">
+          <Tooltip title="Tips/Recommendations">
+            <IconButton style={{ color: "black" }}>
+              <FavoriteIcon />
+              Tips/Recommendations
+            </IconButton>
+          </Tooltip>
+        </Link>
+
+        <Link to="/Facts">
+          <Tooltip title="Facts">
+            <IconButton style={{ color: "black" }}>
+              <EmojiObjectsIcon />
+              Facts
+            </IconButton>
+          </Tooltip>
+        </Link>
+
 
 
         <Box>

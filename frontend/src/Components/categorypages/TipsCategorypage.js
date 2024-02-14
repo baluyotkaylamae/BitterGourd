@@ -55,7 +55,7 @@ const TipsPosts = () => {
 
     return (
         <div className="container mt-4">
-            <h1 className='prod-t'>Tutorial Posts</h1>
+            <h1 className='prod-t'>Tips/Recommendations Posts</h1>
             <div className="row">
                 {loading ? (
                     <p>Loading...</p>
