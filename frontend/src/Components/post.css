@@ -66,3 +66,23 @@
     font-size: 1.1em;
 }
 /* Add more styles as needed */
+
+
+/* post.css */
+.video-details-container {
+    max-width: 1000px; 
+    max-height: 1000px; 
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .video-details-container h1 {
+    text-align: justify;
+    margin-bottom: 20px;
+  }
+  
+  .post-video {
+    width: 1000px;
+    height:500px; /* Ensure aspect ratio is maintained */
+  }
+  

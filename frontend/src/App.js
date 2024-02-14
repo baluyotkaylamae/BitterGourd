@@ -30,7 +30,9 @@ import CreatePost from './Components/Admin/PostCreate';
 import UpdatePost from './Components/Admin/PostUpdate';
 import PostDetails from './Components/Postdetails';
 import TutorialPage from './Components/categorypages/TutorialsCategory';
-
+import Tips from './Components/categorypages/TipsCategorypage';
+import Facts from './Components/categorypages/FactsCategory';
+import Video1 from './Components/Videos/video1';
 
 
 function App() {
@@ -118,7 +120,12 @@ function App() {
           
            {/* CateforyPages */}
           <Route path="/tutorials" element={<TutorialPage/>} />
+          <Route path="/Tips" element={<Tips/>} />
+          <Route path="/Facts" element={<Facts/>} />
 
+          {/* videos */}
+
+          <Route path="/video1" element={<Video1/>} />
 
           {/* login */}
           <Route path="/login" element={<Login />} exact="true" />

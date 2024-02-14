@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../post.css';
 
-const TutorialPostCard = ({ post }) => {
+const FactsPostCard = ({ post }) => {
     return (
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
             <div className="card product-cart-text prodcard-JSON">
@@ -28,20 +28,20 @@ const TutorialPostCard = ({ post }) => {
     );
 };
 
-const TutorialPosts = () => {
+const FactsPosts = () => {
     const [loading, setLoading] = useState(true);
-    const [tutorialPosts, setTutorialPosts] = useState([]);
+    const [tutorialPosts, setFactsPosts] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchTutorialPosts = async () => {
+        const fetchFactsPosts = async () => {
             try {
                 const response = await axios.get('http://localhost:4001/api/posts', {
                     params: {
-                        category: '65c6f4e671c818fb13bcc605'
+                        category: '65c6f51771c818fb13bcc60d'
                     }
                 });
-                setTutorialPosts(response.data.posts);
+                setFactsPosts(response.data.posts);
                 setLoading(false);
             } catch (error) {
                 setError(error);
@@ -50,7 +50,7 @@ const TutorialPosts = () => {
         };
         
 
-        fetchTutorialPosts();
+        fetchFactsPosts();
     }, []);
 
     return (
@@ -63,7 +63,7 @@ const TutorialPosts = () => {
                     <p className="error-message">Error: {error.message}</p>
                 ) : tutorialPosts.length > 0 ? (
                     tutorialPosts.map(post => (
-                        <TutorialPostCard key={post._id} post={post} />
+                        <FactsPostCard key={post._id} post={post} />
                     ))
                 ) : (
                     <p className="no-products-message">No tutorial posts found.</p>
@@ -73,4 +73,4 @@ const TutorialPosts = () => {
     );
 };
 
-export default TutorialPosts;
+export default FactsPosts;

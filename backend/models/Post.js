@@ -11,6 +11,7 @@ const postSchema = new mongoose.Schema({
   },
   category: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
     required: [true, "Please select a category."]
   },
   images: [

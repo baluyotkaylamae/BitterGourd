@@ -63,12 +63,12 @@ const Header = () => {
           Tutorials
         </Button>
       </Link>
-      <Link to="/posts?category=Tips">
+      <Link to="/Tips">
         <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
           Tips/Recommendations
         </Button>
       </Link>
-      <Link to="/posts?category=Facts">
+      <Link to="/Facts">
         <Button className="text-black" color="inherit" sx={{ mr: 2 }}>
           Facts
         </Button>
