@@ -94,7 +94,7 @@ exports.getPosts = async (req, res, next) => {
     try {
         let posts;
         if (category) {
-            posts = await Post.find({ category });
+            posts = await Post.find({ category: category }); // Filter posts by category ID
         } else {
             posts = await Post.find();
         }
