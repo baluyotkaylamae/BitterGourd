@@ -11,10 +11,13 @@ const {
   getAdminPost,
   getSinglePost,
   getPostById,
+  getRecentPosts,
 } = require('../controllers/PostController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
 router.get('/posts', getPosts);
+// router.get('/recent-posts', getRecentPosts);
+
 
 router.get('/posts/:id', getSinglePost);
 router.get('/post/:id', getPostById);

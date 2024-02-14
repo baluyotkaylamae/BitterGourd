@@ -31,6 +31,24 @@ const PostDetails = () => {
         return <p>Post not found.</p>;
     }
 
+    // Function to format date in ISO 8601 format to a readable date and time format
+    const formatDateTime = (dateTimeString) => {
+      
+
+        const options = {
+            weekday: 'long', // Display the full name of the weekday
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit', // Display hours in 2-digit format
+            minute: '2-digit', // Display minutes in 2-digit format
+            hour12: true, // Use 12-hour clock format
+            // timeZone: 'Asia/Manila' // Adjust timezone to Philippines
+            timezone:'UTC'
+        };
+        return new Date(dateTimeString).toLocaleString('en-US', options);
+    };
+
     return (
         <div className="container mt-4 post-details-container">
             <h1 style={{ textAlign: 'center' }}>{post.name}</h1>
@@ -40,6 +58,12 @@ const PostDetails = () => {
                 className="post-image"
                 style={{ width: '750px', height: '500px' }}
             />
+            <p style={{ textAlign: 'center', fontSize: '16px', fontStyle: 'italic', marginTop: '10px' }}>
+                Date Created: {formatDateTime(post.dateCreated)}
+            </p>
+            <p style={{ textAlign: 'center', fontSize: '16px', fontStyle: 'italic' }}>
+                Last Updated: {formatDateTime(post.dateUpdated)}
+            </p>
             {post.description.split(/\n/).map((part, index) => {
                 // If the part contains a number followed by a period
                 if (/^\d+\.\s*/.test(part)) {
@@ -58,9 +82,6 @@ const PostDetails = () => {
             })}
         </div>
     );
-
-
-
 };
 
 export default PostDetails;

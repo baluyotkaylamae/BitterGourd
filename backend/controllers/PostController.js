@@ -48,6 +48,7 @@ exports.newPost = async (req, res, next) => {
 
 	req.body.images = imagesLinks
 	//req.body.user = req.user.id;
+	req.body.dateCreated = Date.now();
 
 	const post = await Post.create(req.body);
 	if (!post)
@@ -177,6 +178,8 @@ exports.updatePost = async (req, res, next) => {
             req.body.images = imagesLinks;
         }
 
+
+		req.body.dateUpdated = Date.now();
         post = await Post.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
@@ -226,3 +229,17 @@ exports.getPostById = async (req, res) => {
 	  return res.status(500).json({ error: 'Internal server error' });
 	}
   };
+
+//   exports.getRecentPosts = async (req, res, next) => {
+//     try {
+//         const recentPosts = await Post.find({ dateCreated: { $exists: true } }).sort({ dateCreated: -1 });
+//         res.status(200).json({
+//             success: true,
+//             count: recentPosts.length,
+//             posts: recentPosts
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// };

@@ -1,0 +1,32 @@
+/* Center the post container */
+.post-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    height: 90vh; /* Set post container height to fill the viewport */
+    padding: 30px; /* Add padding for better spacing */
+}
+
+/* Adjust width of the post container */
+.post-scroll {
+    max-height: 90vh;
+    max-width: 800vh; /* Adjust height as needed */
+    overflow-y: auto;
+}
+
+/* Style for individual post */
+.post {
+    width: 100%; /* Adjust width as needed */
+    margin-bottom: 20px; /* Adjust margin as needed */
+}
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.see-more-link {
+    text-decoration: none;
+    color: #007bff;
+    cursor: pointer;
+}

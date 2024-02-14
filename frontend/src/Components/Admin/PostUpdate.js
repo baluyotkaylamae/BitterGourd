@@ -4,7 +4,8 @@ import { errMsg, successMsg } from '../../utils/helpers';
 import { getToken } from '../../utils/helpers';
 import axios from 'axios';
 import Sidebar from './Sidebar';
-
+import DatePicker from 'react-datepicker'; 
+import 'react-datepicker/dist/react-datepicker.css'; 
 
 const UpdatePost = () => {
     const [name, setName] = useState('');
@@ -18,6 +19,7 @@ const UpdatePost = () => {
     const [categories, setCategories] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
     const [error, setError] = useState('');
+    const [date, setDate] = useState(new Date()); // Initialize with current date
 
     let navigate = useNavigate();
     const { id } = useParams();
@@ -52,6 +54,12 @@ const UpdatePost = () => {
             setName(data.post.name);
             setDescription(data.post.description);
             setCategory(data.post.category);
+            const parsedDate = Date.parse(data.post.date);
+            if (!isNaN(parsedDate)) {
+                setDate(new Date(parsedDate));
+            } else {
+                setDate(new Date());
+            }
             setOldImages(data.post.images);
             setLoading(false);
         } catch (error) {
@@ -87,6 +95,7 @@ const UpdatePost = () => {
             setCategories(categories);
             setCategory(category);
             setOldImages(images);
+            setDate(date);
         }
 
         if (error) {
@@ -106,6 +115,7 @@ const UpdatePost = () => {
         formData.set('name', name);
         formData.set('description', description);
         formData.set('category', category);
+        formData.set('date', date.toISOString()); // Convert date to ISO string
 
         if (e.target.images.value) {
             images.forEach(image => {
@@ -149,6 +159,18 @@ const UpdatePost = () => {
                                 ))}
                             </select>
                         </div>
+
+                        <div className="form-group">
+                            <label htmlFor="date_field">Date</label><br />
+                            <DatePicker
+                                selected={date}
+                                onChange={date => setDate(date)}
+                                showTimeSelect
+                                dateFormat="Pp"
+                            />
+                        </div>
+
+
 
                         <div className="form-group px-4">
                             <label htmlFor="avatar_upload" className='w-100' style={{ textAlign: "left" }}>Image</label>

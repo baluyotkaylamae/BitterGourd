@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { getToken } from '../../utils/helpers';
 import { toast } from 'react-toastify';
 import Sidebar from './Sidebar';
-
+import DatePicker from 'react-datepicker'; 
+import 'react-datepicker/dist/react-datepicker.css'; 
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -17,6 +18,9 @@ const CreatePost = () => {
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState({});
+
+
+
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -46,6 +50,15 @@ const CreatePost = () => {
     }
   };
 
+  
+  const handleDateChange = (date) => {
+    setPost({
+      ...post,
+      date: date,
+    });
+  };
+
+
   useEffect(() => {
     console.log('Fetching categories...');
     axios
@@ -73,6 +86,7 @@ const CreatePost = () => {
     formData.append('name', post.name);
     formData.append('description', post.description);
     formData.append('category', post.category);
+    formData.append('date', post.date);
 
     images.forEach((image) => {
       formData.append('images', image);
@@ -93,6 +107,7 @@ const CreatePost = () => {
         name: '',
         description: '',
         category: '',
+        date: new Date(),
         images: null,
       });
       setImages([]);
@@ -159,6 +174,23 @@ const CreatePost = () => {
                   ))}
                 </select>
               </div>
+
+              <div className="mb-3">
+                <label htmlFor="date" className="form-label">
+                  Date
+                </label>
+                <br />
+                <DatePicker
+                  selected={post.date}
+                  onChange={handleDateChange}
+                  showTimeSelect
+                  dateFormat="Pp"
+                />
+              </div>
+
+
+
+
               <div className="mb-3">
                 <label htmlFor="image" className="form-label">
                   Image
