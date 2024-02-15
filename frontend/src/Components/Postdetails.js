@@ -80,7 +80,11 @@ const PostDetails = () => {
                     );
                 }
             })}
+
+            
         </div>
+
+        
     );
 };
 

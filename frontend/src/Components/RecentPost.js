@@ -206,6 +206,7 @@ const RecentPost = () => {
                                                 See More
                                             </Link>
                                         </p>
+                                        <hr /> 
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -214,6 +215,7 @@ const RecentPost = () => {
                                         >
                                             Like
                                         </Button>
+
                                         <IconButton component={Link} to={`/posts/${post._id}`}>
                                             <ChatBubbleOutlineIcon />
                                             <span className="comment-text">Comment</span>
