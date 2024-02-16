@@ -153,9 +153,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ThumbUp as ThumbUpIcon, ChatBubbleOutline as ChatBubbleOutlineIcon } from '@mui/icons-material'; // Import MUI icons
 import { Button, IconButton } from '@mui/material'; // Import MUI button components
-import './recentpost.css';
+import './post2.css';
 
-const RecentPost = () => {
+const Post = () => {
     const [loading, setLoading] = useState(true);
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null);
@@ -182,7 +182,7 @@ const RecentPost = () => {
 
     return (
         <div className="container mt-4">
-            <h1 className='prod-t'>Recent Post</h1>
+            <h1 className='prod-t'>BitterFloral Timeline</h1>
             <div className="post-container">
                 {loading && <p>Loading...</p>}
                 {error && <p>Error: {error.message}</p>}
@@ -229,4 +229,4 @@ const RecentPost = () => {
     );
 };
 
-export default RecentPost;
+export default Post;

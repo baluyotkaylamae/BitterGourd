@@ -1,9 +1,12 @@
 .prodcard-JSON {
     border: 2px solid #7db369;
-    height: auto; /* Adjust the height to fit content */
-    width: 100%; /* Adjust the width to fill the container */
+    height: auto;
+    /* Adjust the height to fit content */
+    width: 100%;
+    /* Adjust the width to fill the container */
     transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-    margin-bottom: 20px; /* Add some space between cards */
+    margin-bottom: 20px;
+    /* Add some space between cards */
 }
 
 .prodcard-JSON:hover {
@@ -13,7 +16,8 @@
 
 .product-image {
     width: 100%;
-    height: auto; /* Maintain aspect ratio */
+    height: auto;
+    /* Maintain aspect ratio */
     object-fit: cover;
 }
 
@@ -26,7 +30,8 @@
 
 .card-des {
     font-size: 1rem;
-    line-height: 1.4; /* Improve readability */
+    line-height: 1.4;
+    /* Improve readability */
     margin-bottom: 10px;
 }
 
@@ -40,7 +45,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-decoration: none; /* Remove default button underline */
+    text-decoration: none;
+    /* Remove default button underline */
 }
 
 .json-button:hover {
@@ -49,41 +55,140 @@
 }
 
 .post-details-container {
-    font-family: 'Arial', sans-serif; /* Example font family */
-    color: #333; /* Example text color */
-    padding: 25px; /* Example padding */
-    font-size: 25px; /* Example font size */
+    font-family: 'Arial', sans-serif;
+    /* Example font family */
+    color: #333;
+    /* Example text color */
+    padding: 25px;
+    /* Example padding */
+    font-size: 25px;
+    /* Example font size */
 }
 
 .post-image {
-    width: 90%; /* Set image width to fill container */
-    height: auto; /* Maintain aspect ratio */
-    margin-bottom: 20px; /* Add margin bottom for spacing */
+    width: 90%;
+    /* Set image width to fill container */
+    height: auto;
+    /* Maintain aspect ratio */
+    margin-bottom: 20px;
+    /* Add margin bottom for spacing */
 }
 
 .bold-text {
     font-weight: bold;
     font-size: 1.1em;
 }
+
 /* Add more styles as needed */
 
 
 /* post.css */
 .video-details-container {
-    max-width: 1000px; 
-    max-height: 1000px; 
+    max-width: 1000px;
+    max-height: 1000px;
     margin: 0 auto;
     padding: 20px;
-  }
-  
-  .video-details-container h1 {
+}
+
+.video-details-container h1 {
     text-align: justify;
     margin-bottom: 20px;
-  }
-  
-  .post-video {
+}
+
+.post-video {
     width: 1000px;
-    height:500px; /* Ensure aspect ratio is maintained */
-  }
-  
-  
+    height: 500px;
+    /* Ensure aspect ratio is maintained */
+}
+
+.btn-reply,
+.btn-like {
+    margin: 10px;
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+
+/* comment */
+/* post.css */
+
+/* Existing styles */
+
+.comment-section {
+    margin-top: 20px;
+}
+
+.comment-section textarea {
+    width: calc(100% - 16px);
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.comment-section button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.comment {
+    padding: 3px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
+    text-align: left;
+}
+
+.author-avatar {
+    width: 40px;
+    /* Adjust size as needed */
+    height: 40px;
+    /* Adjust size as needed */
+    border-radius: 50%;
+    /* Make it round */
+    margin-right: 10px;
+    /* Adjust spacing */
+}
+
+.comment-date {
+    font-size: 12px;
+
+}
+
+.comments-list {
+    margin-top: 20px;
+}
+
+.comments-list .comment {
+    margin-bottom: 20px;
+}
+
+.replies-list {
+    margin-top: 10px;
+    padding-left: 20px;
+    /* Indent replies */
+    border-left: 2px solid #ccc;
+    /* Add a border to visually separate replies */
+}
+
+.reply {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}

@@ -10,7 +10,6 @@ import Createcategorypost from './Components/Admin/Createcategorypost';
 import Listcategorypost from './Components/Admin/Listcategorypost';
 import Updatecategorypost from './Components/Admin/Updatecategorypost';
 import AnswerForm from './Components/SurveyForm'; // Import the new component
-import Posts from './Components/Posts';
 import Login from './Components/User/Login'
 import Register from './Components/User/Register';
 import Profile from './Components/User/Profile'
@@ -114,7 +113,7 @@ function App() {
 
 
          
-          <Route path="/Post" element={<Posts />} />
+        
           <Route path="/posts/:postId" element={<PostDetails />} />
           <Route path="/form" element={<AnswerForm />} /> {/* Add the new route for AnswerForm
           

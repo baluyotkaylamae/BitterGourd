@@ -1,6 +1,6 @@
 import React from 'react';
 import './Banner.css';
-import Posts from './Components/RecentPost'; // Import the Posts component
+import Posts from './Components/Post'; // Import the Posts component
 
 const Home = () => {
   

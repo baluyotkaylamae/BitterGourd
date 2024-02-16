@@ -81,14 +81,6 @@ exports.deletePost = async (req, res) => {
 	}
 };
 
-// exports.getPosts = async (req, res, next) => {
-// 	const posts = await Post.find({});
-// 	res.status(200).json({
-// 		success: true,
-// 		count: posts.length,
-// 		posts
-// 	})
-// }
 exports.getPosts = async (req, res, next) => {
     const { category } = req.query;
 
