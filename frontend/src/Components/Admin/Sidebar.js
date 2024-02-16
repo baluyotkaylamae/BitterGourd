@@ -19,6 +19,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import CategoryIcon from '@mui/icons-material/Category';
 import FormatListBulleted from '@mui/icons-material/FormatListBulleted';
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import SsidChartIcon from '@mui/icons-material/SsidChart';
 
 const drawerWidth = 240;
 
@@ -119,6 +120,7 @@ const Sidebar = () => {
             <img src="/images/bitterguard-high-resolution-logo.png" alt="Bitterguard Logo" style={{ width: '100%' }} />
             </ListItem>
             <ListItemLink to="/" primary="Home" icon={<HomeIcon />} />
+            <ListItemLink to="/dashboard" primary="Analytics" icon={<SsidChartIcon/>} />
             <ListItem disablePadding onClick={handleQuestionToggle}>
               <ListItemButton>
                 <ListItemIcon><QuestionMarkIcon /></ListItemIcon>
