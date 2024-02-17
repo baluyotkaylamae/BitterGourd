@@ -10,7 +10,7 @@
 /* Adjust width of the post container */
 .post-scroll {
     max-height: 90vh;
-    max-width: 800px; /* Adjust height as needed */
+    max-width: 10000px; /* Adjust height as needed */
     overflow-y: auto;
 }
 

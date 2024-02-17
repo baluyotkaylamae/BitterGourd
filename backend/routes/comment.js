@@ -8,6 +8,8 @@ router.post('/:postId/comments', commentController.createCommentOnPost);
 // Get all comments for a specific post
 router.get('/:postId/allcomments', commentController.getAllCommentsForPost);
 
+router.post('/posts/:postId/comments/:commentId/replies', commentController.addReplyToComment);
+
 // // Get comment by ID
 // router.get('/comments/:id', commentController.getCommentById);
 

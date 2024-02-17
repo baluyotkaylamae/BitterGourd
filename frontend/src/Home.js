@@ -6,7 +6,7 @@ const Home = () => {
   
   const CurvedBanner = () => {
     return (
-      <div className="curved-banner" style={{ backgroundColor: '#93c570' }}>
+      <div className="curved-banner">
         <div className="image-on-banner">
           <img src='/images/Bitterfloral Guard.png' className="image-on-banner" alt="Image-on-banner" />
         </div>
@@ -15,7 +15,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="home-container" style={{ background: 'linear-gradient(to bottom, #f8fca4, #ccfca4)' }}>
       <div className="banner-container">
         <CurvedBanner />
       </div>
