@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import { getUser, logout } from '../../utils/helpers';
 import './FH.css';
 
@@ -68,6 +69,14 @@ const Header = () => {
             </div>
           </Grid>
           <Grid item>
+            <Link to="/statichome">
+              <IconButton style={{ color: 'black' }}>
+                <OndemandVideoIcon />
+                Info Vid.
+              </IconButton>
+            </Link>
+          </Grid>
+          <Grid item>
             <Link to="/Tutorials">
               <IconButton style={{ color: 'black' }}>
                 <LibraryBooksIcon />
@@ -79,7 +88,7 @@ const Header = () => {
             <Link to="/Tips">
               <IconButton style={{ color: 'black' }}>
                 <FavoriteIcon />
-                Tips/Recommendations
+                Tips/Recom.
               </IconButton>
             </Link>
           </Grid>

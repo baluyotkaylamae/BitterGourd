@@ -32,7 +32,15 @@ import TutorialPage from './Components/categorypages/TutorialsCategory';
 import Tips from './Components/categorypages/TipsCategorypage';
 import Facts from './Components/categorypages/FactsCategory';
 import Video1 from './Components/Videos/video1';
-
+import StaticHome from './Components/Static/StaticHome';
+import StaticPage1 from './Components/Static/StaticPage1';
+import StaticPage2 from './Components/Static/StaticPage2';
+import StaticPage3 from './Components/Static/StaticPage3';
+import StaticPage4 from './Components/Static/StaticPage4';
+import StaticPage5 from './Components/Static/StaticPage5';
+import StaticPage6 from './Components/Static/StaticPage6';
+import StaticPage7 from './Components/Static/StaticPage7';
+import StaticPage8 from './Components/Static/StaticPage8';
 
 function App() {
   return (
@@ -123,7 +131,15 @@ function App() {
           <Route path="/Facts" element={<Facts/>} />
 
           {/* videos */}
-
+          <Route path="/statichome" element={<StaticHome/>} />
+          <Route path="/staticvid1" element={<StaticPage1/>} />
+          <Route path="/staticvid2" element={<StaticPage2/>} />
+          <Route path="/staticvid3" element={<StaticPage3/>} />
+          <Route path="/staticvid4" element={<StaticPage4/>} />
+          <Route path="/staticvid5" element={<StaticPage5/>} />
+          <Route path="/staticvid6" element={<StaticPage6/>} />
+          <Route path="/staticvid7" element={<StaticPage7/>} />
+          <Route path="/staticvid8" element={<StaticPage8/>} />
           <Route path="/video1" element={<Video1/>} />
 
           {/* login */}
