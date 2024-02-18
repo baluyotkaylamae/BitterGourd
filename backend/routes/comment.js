@@ -10,6 +10,11 @@ router.get('/:postId/allcomments', commentController.getAllCommentsForPost);
 
 router.post('/posts/:postId/comments/:commentId/replies', commentController.addReplyToComment);
 
+// like
+router.post('/comments/:commentId/like', commentController.likeComment)
+
+router.post('/comments/:commentId/replies/:replyId/like', commentController.likeComment);
+
 // // Get comment by ID
 // router.get('/comments/:id', commentController.getCommentById);
 

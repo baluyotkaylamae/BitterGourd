@@ -43,3 +43,46 @@ exports.createCommentOnPost = async (req, res) => {
         res.status(400).json({ success: false, error: err.message });
     }
 };
+// exports.likeComment = async (req, res) => {
+//   try {
+//     const { commentId } = req.params; // Remove the extra commentId here
+//     const { userId } = req.body;
+//     const updatedComment = await Comment.findByIdAndUpdate(
+//       commentId,
+//       { $addToSet: { likes: userId } }, // Add userId to likes array if not already present
+//       { new: true }
+//     );
+//     res.status(200).json({ success: true, data: updatedComment });
+//   } catch (err) {
+//     res.status(400).json({ success: false, error: err.message });
+//   }
+// };
+exports.likeComment = async (req, res) => {
+  try {
+    const { commentId, replyId } = req.params;
+    const { userId } = req.body;
+
+    let updatedComment;
+
+    if (replyId) {
+      // If replyId is provided, update the specified reply's likes
+      updatedComment = await Comment.findOneAndUpdate(
+        { _id: commentId, 'replies._id': replyId }, // Find the comment with the given commentId and matching replyId
+        { $addToSet: { 'replies.$.likes': userId } }, // Add userId to likes array of the matching reply
+        { new: true }
+      );
+    } else {
+      // If no replyId is provided, update the likes of the main comment
+      updatedComment = await Comment.findByIdAndUpdate(
+        commentId,
+        { $addToSet: { likes: userId } }, // Add userId to likes array if not already present
+        { new: true }
+      );
+    }
+
+    res.status(200).json({ success: true, data: updatedComment });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+};
+
