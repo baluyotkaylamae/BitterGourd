@@ -75,6 +75,7 @@ const StaticHome = () => {
           </Link>
         </Grid>
       </Grid>
+      <div style={{ marginBottom: '20px' }}></div>
       <Grid container spacing={2}>
         <Grid item xs={12} md={3}>
           <Link to="/staticvid5" className="video-link">

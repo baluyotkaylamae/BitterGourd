@@ -5,17 +5,18 @@ const StaticPage4 = () => {
     <div>
       <br/>
       <h1>Health Benefits of Bitter Gourd</h1>
-      <div>
+      <div style={{ display: 'inline-block', textAlign: 'left' }}>
         <iframe
-          width="900"
-          height="500"
+          width="1100"
+          height="700"
           src="https://www.youtube.com/embed/LandUmqpkQI"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
-        <p>Source: <a href="https://www.youtube.com/embed/LandUmqpkQI">https://www.youtube.com/embed/LandUmqpkQI</a></p>
+        <p>Source: <a href="https://www.youtube.com/@Healthpecial">Healthpecial </a></p>
+        <p>Video Link: <a href="https://www.youtube.com/embed/LandUmqpkQI">https://www.youtube.com/embed/LandUmqpkQI</a></p>
       </div>
     </div>
   );
