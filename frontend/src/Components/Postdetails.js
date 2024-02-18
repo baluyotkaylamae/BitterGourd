@@ -37,11 +37,7 @@ const PostDetails = () => {
                 console.error('Error fetching post:', error);
                 setLoading(false);
             }
-
-
-
         };
-        
 
         fetchPost();
         fetchComments(); // Call fetchComments here to load comments initially
@@ -67,6 +63,27 @@ const PostDetails = () => {
                 };
             }, {});
             setLikedComments(initialLikedComments);
+
+            const updatedComments = response.data.data.map(comment => ({
+                ...comment,
+                replies: comment.replies.map(reply => ({
+                    ...reply,
+                    likesCount: reply.likes.length
+                }))
+            }));
+            setComments(updatedComments);
+
+            const initialLikedReplies = response.data.data.reduce((acc, comment) => {
+                const likedReplies = comment.replies.reduce((liked, reply) => {
+                    liked[reply._id] = reply.likes.includes(currentUser._id);
+                    return liked;
+                }, {});
+                return {
+                    ...acc,
+                    ...likedReplies
+                };
+            }, {});
+            setLikedReplies(initialLikedReplies);
 
 
 
@@ -204,7 +221,7 @@ const PostDetails = () => {
                         [replyId]: currentUserLiked
                     };
                 });
-
+                fetchComments();
                 console.log('Liked reply:', likedReplies);
             } else {
                 console.error('Failed to like reply:', response.data.error);
@@ -410,8 +427,6 @@ const PostDetails = () => {
                                                                     </IconButton>
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
                                                     </div>
                                                 ))}
