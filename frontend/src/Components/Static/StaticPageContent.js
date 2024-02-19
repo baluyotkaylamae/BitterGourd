@@ -32,9 +32,8 @@ const StaticPageContent = () => {
         <div className="static-page-content">
             <br />
             <Grid container spacing={4}>
-                <Grid item xs={9}>
-                    <div className="video-container" style={{ display: 'inline-block', textAlign: 'left' }}>
-                        <h1>{video.title}</h1>
+                <Grid item xs={9} style={{ marginTop: '25px' }}>
+                    <div className="video-container" style={{ display: 'inline-block', textAlign: 'left', borderRadius: '15px', border: '4px solid lightgreen' }}>
                         <iframe
                             width="1000"
                             height="600"
@@ -46,18 +45,19 @@ const StaticPageContent = () => {
                             allowFullScreen
                         ></iframe>
                         <CardContent>
+                            <h2>{video.title}</h2>
                             <Typography variant="body1">Source: <a href={video.sourceLink}>{video.source}</a></Typography>
                             <Typography variant="body1">Video Link: <a href={video.videoLink}>{video.videoUrl}</a></Typography>
                         </CardContent>
                     </div>
                 </Grid>
-                <Grid item xs={3}>
-                    <Box sx={{ p: 4, bgcolor: 'background.paper', maxWidth: '95%' }}>
+                <Grid item xs={3} style={{ marginTop: '-20px' }} container alignItems="flex-start">
+                    <Box sx={{ p: 3, bgcolor: 'background.paper', maxWidth: '95%' }}>
                         <div className="related-videos">
                             <Typography variant="h6">Related Videos</Typography>
                             {relatedVideos.map(relatedVideo => (
                                 <Link to={`/staticvidcontent/${relatedVideo.id}`} className="video-link" key={relatedVideo.id}>
-                                    <Card className="video-card" style={{ marginBottom: '20px', borderRadius: '15px' }}>
+                                    <Card className="video-card" style={{ marginBottom: '20px', borderRadius: '15px', border: '4px solid lightgreen' }}>
                                         <CardMedia
                                             component="img"
                                             height="200"
@@ -66,9 +66,10 @@ const StaticPageContent = () => {
                                             style={{ borderRadius: '15px 15px 0 0' }}
                                         />
                                         <CardContent>
-                                            <Typography variant="body2">{relatedVideo.title}</Typography>
+                                            <Typography variant="body2" sx={{ fontFamily: 'Arial', fontSize: '18px', fontWeight: 'bold' }}>{relatedVideo.title}</Typography>
                                         </CardContent>
                                     </Card>
+
                                 </Link>
                             ))}
                         </div>
