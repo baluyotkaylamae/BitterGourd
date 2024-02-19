@@ -44,18 +44,66 @@ const PostDetails = () => {
     }, [postId]);
 
     // fetch comment
+    // const fetchComments = async () => {
+    //     try {
+    //         const response = await axios.get(`http://localhost:4001/api/${postId}/allcomments`);
+    //         setComments(response.data.data);
+
+    //         const commentsWithLikes = response.data.data.map(comment => ({
+    //             ...comment,
+    //             likesCount: comment.likes.length // Assuming 'likes' is an array of user IDs who liked the comment
+    //         }));
+    //         setComments(commentsWithLikes);
+
+    //         const initialLikedComments = response.data.data.reduce((acc, comment) => {
+    //             const currentUserLiked = comment.likes.some(like => like === currentUser._id);
+    //             return {
+    //                 ...acc,
+    //                 [comment._id]: currentUserLiked
+    //             };
+    //         }, {});
+    //         setLikedComments(initialLikedComments);
+
+    //         const initialLikedReplies = response.data.data.reduce((acc, comment) => {
+    //             const likedReplies = comment.replies.reduce((liked, reply) => {
+    //                 liked[reply._id] = reply.likes.includes(currentUser._id);
+    //                 return liked;
+    //             }, {});
+    //             return {
+    //                 ...acc,
+    //                 ...likedReplies
+    //             };
+    //         }, {});
+    //         setLikedReplies(initialLikedReplies);
+
+    //         const updatedComments = response.data.data.map(comment => ({
+    //             ...comment,
+    //             replies: comment.replies.map(reply => ({
+    //                 ...reply,
+    //                 likesCount: reply.likes.length
+    //             }))
+    //         }));
+    //         setComments(updatedComments);
+
+    //     } catch (error) {
+    //         console.error('Error fetching comments:', error);
+    //     }
+    // };
+
     const fetchComments = async () => {
         try {
             const response = await axios.get(`http://localhost:4001/api/${postId}/allcomments`);
-            setComments(response.data.data);
-
-            const commentsWithLikes = response.data.data.map(comment => ({
+            const updatedComments = response.data.data.map(comment => ({
                 ...comment,
-                likesCount: comment.likes.length // Assuming 'likes' is an array of user IDs who liked the comment
+                likesCount: comment.likes.length, // Update likes count for comments
+                replies: comment.replies.map(reply => ({
+                    ...reply,
+                    likesCount: reply.likes.length // Update likes count for replies
+                }))
             }));
-            setComments(commentsWithLikes);
+            setComments(updatedComments);
 
-            const initialLikedComments = response.data.data.reduce((acc, comment) => {
+            const initialLikedComments = updatedComments.reduce((acc, comment) => {
                 const currentUserLiked = comment.likes.some(like => like === currentUser._id);
                 return {
                     ...acc,
@@ -64,16 +112,7 @@ const PostDetails = () => {
             }, {});
             setLikedComments(initialLikedComments);
 
-            const updatedComments = response.data.data.map(comment => ({
-                ...comment,
-                replies: comment.replies.map(reply => ({
-                    ...reply,
-                    likesCount: reply.likes.length
-                }))
-            }));
-            setComments(updatedComments);
-
-            const initialLikedReplies = response.data.data.reduce((acc, comment) => {
+            const initialLikedReplies = updatedComments.reduce((acc, comment) => {
                 const likedReplies = comment.replies.reduce((liked, reply) => {
                     liked[reply._id] = reply.likes.includes(currentUser._id);
                     return liked;
@@ -84,13 +123,11 @@ const PostDetails = () => {
                 };
             }, {});
             setLikedReplies(initialLikedReplies);
-
-
-
         } catch (error) {
             console.error('Error fetching comments:', error);
         }
     };
+
 
     const handleCommentChange = (event) => {
         setComment(event.target.value);
