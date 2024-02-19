@@ -10,7 +10,7 @@
 }
 
 .prodcard-JSON:hover {
-    transform: scale(1.06);
+    /* transform: scale(1.06); */
     box-shadow: 0 0 20px #ccf7b9;
 }
 

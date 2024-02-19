@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { ThumbUp as ThumbUpIcon, ChatBubbleOutline as ChatBubbleOutlineIcon } from '@mui/icons-material'; // Import MUI icons
-import { Button, IconButton } from '@mui/material'; // Import MUI button components
+import { ThumbUp as ThumbUpIcon, ChatBubbleOutline as ChatBubbleOutlineIcon } from '@mui/icons-material';
+import { Button, IconButton } from '@mui/material';
 import './post2.css';
+import { getUser } from '../utils/helpers';
 
 const Post = () => {
     const [loading, setLoading] = useState(true);
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null);
+    const [likeCounts, setLikeCounts] = useState({});
+    const [likedPosts, setLikedPosts] = useState([]);
+    const currentUser = getUser();
+
+    
+
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -29,12 +36,53 @@ const Post = () => {
                 setError(error);
                 setLoading(false);
             }
+
+            const countLikes = () => {
+                const likes = {};
+                posts.forEach(post => {
+                    // Initialize like count for each post to 0
+                    likes[post._id] = post.likes ? post.likes.length : 0;
+                });
+                setLikeCounts(likes);
+            };
+            countLikes();
         };
         fetchPosts();
-    }, []);
-    
-    const handleReaction = () => {
-        // Add logic to handle reaction
+    }, [posts]);
+
+    useEffect(() => {
+        // Count likes for each post
+        const countLikes = () => {
+            const likes = {};
+            posts.forEach(post => {
+                // Initialize like count for each post to 0
+                likes[post._id] = post.likes ? post.likes.length : 0;
+            });
+            setLikeCounts(likes);
+        };
+        countLikes();
+    }, [posts]);
+
+    const handleReaction = async (postId) => {
+        try {
+            const currentUser = getUser();
+            if (!currentUser) {
+                alert('Please log in to like the post.');
+                return;
+            }
+            // Perform like operation
+            await axios.post(`http://localhost:4001/api/posts/${postId}/like`, { userId: currentUser._id });
+            // Fetch updated posts
+            const updatedPostsResponse = await axios.get('http://localhost:4001/api/posts');
+            const updatedPosts = updatedPostsResponse.data.posts.map(post => ({
+                ...post,
+                likes: post._id === postId ? (post.likes || []).concat(currentUser._id) : post.likes || []
+            }));
+            setPosts(updatedPosts);
+            // alert('Post liked successfully.');
+        } catch (error) {
+            console.error('Error liking post:', error);
+        }
     };
 
     return (
@@ -63,13 +111,14 @@ const Post = () => {
                                                 See More
                                             </Link>
                                         </p>
-                                        <hr /> 
-                                        <div>Comments: {post.commentsCount}</div> {/* Display comments count */}
+                                        <hr />
+                                        <div>Comments: {post.commentsCount}</div>
+                                        <div>Likes: {likeCounts[post._id] || 0}</div> {/* Display like count */}
                                         <Button
                                             variant="contained"
                                             color="primary"
-                                            onClick={handleReaction}
-                                            startIcon={<ThumbUpIcon />}
+                                            onClick={() => handleReaction(post._id)}
+                                            startIcon={<ThumbUpIcon style={{ color: post.likes && post.likes.includes(currentUser._id) ? 'blue' : 'inherit' }} />}
                                         >
                                             Like
                                         </Button>
@@ -86,7 +135,6 @@ const Post = () => {
             </div>
         </div>
     );
-    
 };
 
 export default Post;

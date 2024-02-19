@@ -12,6 +12,8 @@ const {
   getSinglePost,
   getPostById,
   getRecentPosts,
+  likePost,
+  unlikePost
 } = require('../controllers/PostController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
@@ -21,7 +23,11 @@ router.get('/posts', getPosts);
 
 router.get('/posts/:id', getSinglePost);
 router.get('/post/:id', getPostById);
+// Route for liking a post
+router.post('/posts/:postId/like', likePost);
 
+// Route for unliking a post
+router.post('/posts/:postId/unlike',unlikePost);
 
 //admin
 router.put('/admin/update/post/:id', isAuthenticatedUser, authorizeRoles("admin"), upload.array('images'),updatePost);

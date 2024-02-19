@@ -48,6 +48,7 @@ exports.newPost = async (req, res, next) => {
 
 	req.body.images = imagesLinks
 	//req.body.user = req.user.id;
+	req.body.likes = [];// Initialize likes count to 0 for new post
 	req.body.dateCreated = Date.now();
 
 	const post = await Post.create(req.body);
@@ -235,3 +236,59 @@ exports.getPostById = async (req, res) => {
 //         res.status(500).json({ error: 'Internal Server Error' });
 //     }
 // };
+
+// Handle liking a post
+exports.likePost = async (req, res) => {
+	try {
+	  const { postId } = req.params;
+	  const { userId } = req.body; // Assuming userId is sent in the request body
+  
+	  const post = await Post.findById(postId);
+  
+	  if (!post) {
+		return res.status(404).json({ message: 'Post not found' });
+	  }
+  
+	  // Check if the user has already liked the post
+	  if (post.likes.includes(userId)) {
+		return res.status(400).json({ message: 'You have already liked this post' });
+	  }
+  
+	  // Add userId to the likes array
+	  post.likes.push(userId);
+	  await post.save();
+  
+	  return res.status(200).json({ message: 'Post liked successfully' });
+	} catch (error) {
+	  console.error('Error liking post:', error);
+	  return res.status(500).json({ success: false, message: 'Internal Server Error' });
+	}
+  };
+  
+  // Handle unliking a post
+  exports.unlikePost = async (req, res) => {
+	try {
+	  const { postId } = req.params;
+	  const { userId } = req.body; // Assuming userId is sent in the request body
+  
+	  const post = await Post.findById(postId);
+  
+	  if (!post) {
+		return res.status(404).json({ message: 'Post not found' });
+	  }
+  
+	  // Check if the user has already liked the post
+	  if (!post.likes.includes(userId)) {
+		return res.status(400).json({ message: 'You have not liked this post' });
+	  }
+  
+	  // Remove userId from the likes array
+	  post.likes = post.likes.filter(id => id !== userId);
+	  await post.save();
+  
+	  return res.status(200).json({ message: 'Post unliked successfully' });
+	} catch (error) {
+	  console.error('Error unliking post:', error);
+	  return res.status(500).json({ success: false, message: 'Internal Server Error' });
+	}
+  };
