@@ -41,6 +41,7 @@ import StaticPage5 from './Components/Static/StaticPage5';
 import StaticPage6 from './Components/Static/StaticPage6';
 import StaticPage7 from './Components/Static/StaticPage7';
 import StaticPage8 from './Components/Static/StaticPage8';
+import StaticPageContent from './Components/Static/StaticPageContent';
 
 function App() {
   return (
@@ -140,6 +141,7 @@ function App() {
           <Route path="/staticvid6" element={<StaticPage6/>} />
           <Route path="/staticvid7" element={<StaticPage7/>} />
           <Route path="/staticvid8" element={<StaticPage8/>} />
+          <Route path="/staticvidcontent/:videoId" element={<StaticPageContent />} />
           <Route path="/video1" element={<Video1/>} />
 
           {/* login */}

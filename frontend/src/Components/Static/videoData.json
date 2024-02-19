@@ -1,0 +1,66 @@
+[
+    {
+        "id": 1,
+        "title": "Save Female Flower",
+        "imageUrl": "/images/static1.jpg",
+        "videoUrl": "https://www.youtube.com/embed/GtcDP-AJoG8",
+        "source": "Terrace gardening at Home",
+        "videoLink": "https://www.youtube.com/embed/GtcDP-AJoG8"
+    },
+    {
+        "id": 2,
+        "title": "Identify Flower Gender",
+        "imageUrl": "/images/static2.jpg",
+        "videoUrl": "https://www.youtube.com/embed/f7Dp0xZ5iUY",
+        "source": "Jazz Me & U in FL. USA",
+        "videoLink": "https://www.youtube.com/embed/f7Dp0xZ5iUY"
+    },
+    {
+        "id": 3,
+        "title": "Hand Pollinate Bitter Gourd",
+        "imageUrl": "/images/static3.jpg",
+        "videoUrl": "https://www.youtube.com/embed/rqhhxfVvmvc",
+        "source": "GERMINATION X",
+        "videoLink": "https://www.youtube.com/embed/rqhhxfVvmvc"
+    },
+    {
+        "id": 4,
+        "title": "Remove Bitterness of Ampalaya",
+        "imageUrl": "/images/static4.jpg",
+        "videoUrl": "https://www.youtube.com/embed/eNf459fFkaU",
+        "source": "FEATR",
+        "videoLink": "https://www.youtube.com/embed/eNf459fFkaU"
+    },
+    {
+        "id": 5,
+        "title": "Pruning Bitter Gourd",
+        "imageUrl": "/images/static5.jpg",
+        "videoUrl": "https://www.youtube.com/embed/GQ739okR6Mw",
+        "source": "Garden Works",
+        "videoLink": "https://www.youtube.com/embed/GQ739okR6Mw"
+    },
+    {
+        "id": 6,
+        "title": "Types of Bitter Gourd",
+        "imageUrl": "/images/static6.jpg",
+        "videoUrl": "https://www.youtube.com/embed/BodmA3ZTe9k",
+        "source": "K C Dash",
+        "videoLink": "https://www.youtube.com/embed/BodmA3ZTe9k"
+    },
+    {
+        "id": 7,
+        "title": "Health Benefits of Bitter Gourd",
+        "imageUrl": "/images/static7.jpg",
+        "videoUrl": "https://www.youtube.com/embed/LandUmqpkQI",
+        "source": "Healthpecial",
+        "videoLink": "https://www.youtube.com/embed/LandUmqpkQI"
+    },
+    {
+        "id": 8,
+        "title": "What's the Bitter Melon Good For",
+        "imageUrl": "/images/static8.jpg",
+        "videoUrl": "https://www.youtube.com/embed/hRAahDuQtSY",
+        "source": "The Active Foodie",
+        "videoLink": "https://www.youtube.com/embed/hRAahDuQtSY"
+    }
+]
