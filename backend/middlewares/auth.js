@@ -29,16 +29,33 @@ const upload = multer({
 });
 
 exports.isAuthenticatedUser = async (req, res, next) => {
-  const token = req.header('Authorization').split(' ')[1];
-  if (!token) {
-    return res.status(401).json({ message: 'Login first to access this resource' });
+  const authHeader = req.header('Authorization');
+  console.log('Auth Header:', authHeader); // Add this line for debugging
+
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header is missing' });
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = await User.findById(decoded.id);
+  const token = authHeader.split(' ')[1];
+  console.log('Token:', token); // Add this line for debugging
 
-  next();
+  if (!token) {
+    return res.status(401).json({ message: 'Token is missing in the Authorization header' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Decoded:', decoded); // Add this line for debugging
+
+    req.user = await User.findById(decoded.id);
+    console.log('User:', req.user); // Add this line for debugging
+
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
 };
+
 
 exports.authorizeRoles = (...roles) => {
   return (req, res, next) => {

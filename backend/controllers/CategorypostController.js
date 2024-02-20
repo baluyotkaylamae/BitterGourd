@@ -4,23 +4,21 @@ const mongoose = require('mongoose');
 exports.createCategory = async (req, res) => {
   console.log('Full Request:', req);
   try {
-    // console.log('Request Body:', req.body);
+  
     const category = new Category(req.body);
     await category.save();
     res.status(201).json(category);
   } catch (error) {
     if (error.name === 'ValidationError') {
-      // Handle validation errors, such as required fields or unique constraints
+   
       res.status(400).json({ error: error.message });
     } else {
-      // Handle other errors, such as database errors
-      console.error(error); // Log the error for debugging
+     
+      console.error(error);
       res.status(500).json({ error: 'Unable to create category' });
     }
   }
 };
-
-
 exports.getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find();
@@ -29,13 +27,10 @@ exports.getAllCategories = async (req, res) => {
     res.status(500).json({ error: 'Unable to retrieve categories' });
   }
 };
-
 exports.getCategoryById = async (req, res) => {
   try {
-    const categoryId = req.params.id; // Extract the ID from the URL parameters
-    console.log('Requested category ID:', categoryId); // Log the requested ID
-
-    // Use the retrieved category
+    const categoryId = req.params.id; 
+    console.log('Requested category ID:', categoryId); 
     const category = await Category.findById(categoryId);
 
     if (!category) {
@@ -47,8 +42,7 @@ exports.getCategoryById = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Unable to retrieve category' });
   }
-};
-
+}; 
 exports.updateCategory = async (req, res) => {
   try {
     const category = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });

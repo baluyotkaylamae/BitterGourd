@@ -1,17 +1,15 @@
 const Comment = require('../models/comment');
 
-// Create a new comment on a specific post
 exports.createCommentOnPost = async (req, res) => {
     try {
-      const postId = req.params.postId; // Corrected to req.params.postId
+      const postId = req.params.postId; 
       const { text, author } = req.body;
-      const newComment = await Comment.create({ text, author, post: postId }); // Updated to pass postId as post
+      const newComment = await Comment.create({ text, author, post: postId }); 
       res.status(201).json({ success: true, data: newComment });
     } catch (err) {
       res.status(400).json({ success: false, error: err.message });
     }
   };
-  
   exports.getAllCommentsForPost = async (req, res) => {
     try {
       const postId = req.params.postId;
@@ -19,19 +17,18 @@ exports.createCommentOnPost = async (req, res) => {
         path: 'replies',
         populate: {
           path: 'author',
-          select: 'name avatar' // Assuming you want to populate author's name and avatar for replies
+          select: 'name avatar'
         }
-      }).populate('author', 'name avatar'); // Populate author field with name and avatar for comments
+      }).populate('author', 'name avatar'); 
       res.status(200).json({ success: true, data: comments });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
     }
 };
-
   exports.addReplyToComment = async (req, res) => {
     try {
         const { text, author } = req.body;
-        const commentId = req.params.commentId; // Assuming you pass the commentId in the URL
+        const commentId = req.params.commentId; 
         const newReply = { text, author };
         const updatedComment = await Comment.findByIdAndUpdate(
             commentId,
@@ -43,20 +40,6 @@ exports.createCommentOnPost = async (req, res) => {
         res.status(400).json({ success: false, error: err.message });
     }
 };
-// exports.likeComment = async (req, res) => {
-//   try {
-//     const { commentId } = req.params; // Remove the extra commentId here
-//     const { userId } = req.body;
-//     const updatedComment = await Comment.findByIdAndUpdate(
-//       commentId,
-//       { $addToSet: { likes: userId } }, // Add userId to likes array if not already present
-//       { new: true }
-//     );
-//     res.status(200).json({ success: true, data: updatedComment });
-//   } catch (err) {
-//     res.status(400).json({ success: false, error: err.message });
-//   }
-// };
 exports.likeComment = async (req, res) => {
   try {
     const { commentId, replyId } = req.params;
@@ -65,17 +48,15 @@ exports.likeComment = async (req, res) => {
     let updatedComment;
 
     if (replyId) {
-      // If replyId is provided, update the specified reply's likes
       updatedComment = await Comment.findOneAndUpdate(
-        { _id: commentId, 'replies._id': replyId }, // Find the comment with the given commentId and matching replyId
-        { $addToSet: { 'replies.$.likes': userId } }, // Add userId to likes array of the matching reply
+        { _id: commentId, 'replies._id': replyId }, 
+        { $addToSet: { 'replies.$.likes': userId } }, 
         { new: true }
       );
     } else {
-      // If no replyId is provided, update the likes of the main comment
       updatedComment = await Comment.findByIdAndUpdate(
         commentId,
-        { $addToSet: { likes: userId } }, // Add userId to likes array if not already present
+        { $addToSet: { likes: userId } },
         { new: true }
       );
     }

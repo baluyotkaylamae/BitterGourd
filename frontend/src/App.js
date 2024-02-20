@@ -42,6 +42,10 @@ import StaticPage6 from './Components/Static/StaticPage6';
 import StaticPage7 from './Components/Static/StaticPage7';
 import StaticPage8 from './Components/Static/StaticPage8';
 import StaticPageContent from './Components/Static/StaticPageContent';
+import CreateTopic from './Components/Forums/createTopic';
+import ListTopics from './Components/Forums/ListTopics';
+import UpdateTopic from './Components/Forums/UpdateTopic';
+// import TopicDetail from './TopicDetail';
 
 function App() {
   return (
@@ -119,30 +123,33 @@ function App() {
               <UpdatePost />
             </ProtectedRoute>
           } end />
+          {/* forum */}
+          <Route exact path="/topics" element={<ListTopics/>} />
+          <Route exact path="/topics/create" element ={<CreateTopic/>} />
+          <Route exact path="/topics/:id/edit" element ={ <UpdateTopic/>} />
+          {/* <Route exact path="/topics/:id" component={TopicDetail} /> */}
 
 
-         
-        
           <Route path="/posts/:postId" element={<PostDetails />} />
           <Route path="/form" element={<AnswerForm />} /> {/* Add the new route for AnswerForm
           
-           {/* CateforyPages */}
-          <Route path="/tutorials" element={<TutorialPage/>} />
-          <Route path="/Tips" element={<Tips/>} />
-          <Route path="/Facts" element={<Facts/>} />
+           {/* CategoryPages */}
+          <Route path="/tutorials" element={<TutorialPage />} />
+          <Route path="/Tips" element={<Tips />} />
+          <Route path="/Facts" element={<Facts />} />
 
           {/* videos */}
-          <Route path="/statichome" element={<StaticHome/>} />
-          <Route path="/staticvid1" element={<StaticPage1/>} />
-          <Route path="/staticvid2" element={<StaticPage2/>} />
-          <Route path="/staticvid3" element={<StaticPage3/>} />
-          <Route path="/staticvid4" element={<StaticPage4/>} />
-          <Route path="/staticvid5" element={<StaticPage5/>} />
-          <Route path="/staticvid6" element={<StaticPage6/>} />
-          <Route path="/staticvid7" element={<StaticPage7/>} />
-          <Route path="/staticvid8" element={<StaticPage8/>} />
+          <Route path="/statichome" element={<StaticHome />} />
+          <Route path="/staticvid1" element={<StaticPage1 />} />
+          <Route path="/staticvid2" element={<StaticPage2 />} />
+          <Route path="/staticvid3" element={<StaticPage3 />} />
+          <Route path="/staticvid4" element={<StaticPage4 />} />
+          <Route path="/staticvid5" element={<StaticPage5 />} />
+          <Route path="/staticvid6" element={<StaticPage6 />} />
+          <Route path="/staticvid7" element={<StaticPage7 />} />
+          <Route path="/staticvid8" element={<StaticPage8 />} />
           <Route path="/staticvidcontent/:videoId" element={<StaticPageContent />} />
-          <Route path="/video1" element={<Video1/>} />
+          <Route path="/video1" element={<Video1 />} />
 
           {/* login */}
           <Route path="/login" element={<Login />} exact="true" />

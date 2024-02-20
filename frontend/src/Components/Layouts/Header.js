@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import ForumIcon from '@mui/icons-material/Forum';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import { getUser, logout } from '../../utils/helpers';
 import './FH.css';
@@ -97,6 +98,14 @@ const Header = () => {
               <IconButton style={{ color: 'black' }}>
                 <EmojiObjectsIcon />
                 Facts
+              </IconButton>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="/walapa">
+              <IconButton style={{ color: 'black' }}>
+                <ForumIcon />
+                Forum
               </IconButton>
             </Link>
           </Grid>
