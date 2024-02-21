@@ -15,6 +15,12 @@ router.post('/comments/:commentId/like', commentController.likeComment)
 
 router.post('/comments/:commentId/replies/:replyId/like', commentController.likeComment);
 
+router.delete('/delete/comment/:id', commentController.deleteComment);
+
+// Update a comment
+router.put('/update/comment/:commentId', commentController.updateComment);
+
+
 // // Get comment by ID
 // router.get('/comments/:id', commentController.getCommentById);
 
