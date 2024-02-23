@@ -55,7 +55,7 @@ const Header = () => {
             <Typography variant="h6" component="div" className="text-ye text-black" style={{ textAlign: 'left' }}>
               BitterFloral Guard
             </Typography>
-            
+
           </Grid>
           <Grid item flexGrow={1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -102,12 +102,23 @@ const Header = () => {
             </Link>
           </Grid>
           <Grid item>
-            <Link to="/walapa">
-              <IconButton style={{ color: 'black' }}>
-                <ForumIcon />
-                Forum
-              </IconButton>
-            </Link>
+            {userAuthenticated ? (
+              <Link to="/forums">
+                <IconButton style={{ color: 'black' }}>
+                  <ForumIcon />
+                  User Forums
+                </IconButton>
+              </Link>
+            ) : (
+              <Tooltip title="Login required">
+                <span>
+                  <IconButton disabled style={{ color: 'black' }}>
+                    <ForumIcon />
+                    User Forums
+                  </IconButton>
+                </span>
+              </Tooltip>
+            )}
           </Grid>
           <Grid item>
             <Box>

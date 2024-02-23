@@ -1,70 +1,185 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react'
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Autocomplete from '@mui/material/Autocomplete';
+import { Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import axios from 'axios';
-import Select from 'react-select';
+import { getToken } from '../../utils/helpers';
 
-const CreateTopic = () => {
-  const [formData, setFormData] = useState({
-    title: '',
-    category: '',
-    content: '',
-    image: null,
-  });
-  const [categories, setCategories] = useState([]);
+const defaultImg = '/images/upload.png'
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
-  const handleCategoryChange = (selectedOption) => {
-    setFormData({ ...formData, category: selectedOption });
-  };
+const NewTopic = ({ handleClose, open, handleChange, newTopic, setNewTopic, setSuccess }) => {
 
-  const handleImageChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
-  };
+    const [categories, setCategories] = useState([]);
+    const [imgPreview, setimgPreview] = useState(defaultImg)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    data.append('title', formData.title);
-    data.append('category', formData.category.value); // Use formData.category.value for the selected category ID
-    data.append('content', formData.content);
-    data.append('image', formData.image);
+    const getAllCategories = async () => {
 
-    try {
-      const res = await axios.post('http://localhost:4001/api/create-topic', data);
-      console.log('Topic created:', res.data);
-      // You can redirect or perform any other actions after successful topic creation
-    } catch (error) {
-      console.error('Error creating topic:', error);
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${getToken()}`
+            }
+        }
+
+        try {
+
+            const { data } = await axios.get(`http://localhost:4001/api/categories`, config)
+
+            setCategories(data.categories)
+
+        } catch (err) {
+            console.log(err);
+        }
     }
-  };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:4001/api/categories');
-        setCategories(response.data.categories.map((category) => ({ value: category._id, label: category.name })));
-      } catch (error) {
-        console.error('Failed to fetch categories:', error);
-      }
-    };
+    useEffect(() => {
 
-    fetchData();
-  }, []);
+        getAllCategories();
 
-  return (
-    <div className="create-topic-container">
-      <h2>Create New Topic</h2>
-      <form onSubmit={handleSubmit} className="topic-form">
-        <input type="text" name="title" placeholder="Title" onChange={handleChange} className="input-field" />
-        <Select options={categories} onChange={handleCategoryChange} placeholder="Select Category" className="select-field" />
-        <textarea name="content" placeholder="Content" onChange={handleChange} className="textarea-field"></textarea>
-        <input type="file" name="image" onChange={handleImageChange} className="file-input" />
-        <button type="submit" className="submit-button">Create Topic</button>
-      </form>
-    </div>
-  );
-};
+    }, []);
 
-export default CreateTopic;
+    useEffect(() => {
+        if (newTopic.image) {
+            setimgPreview(newTopic.image)
+        }
+    }, [newTopic])
+
+    const createNewTopic = async () => {
+        const config = {
+            headers: {
+                'Content-type': 'multipart/form-data',
+                'Authorization': `Bearer ${getToken()}`
+            }
+        }
+
+        try {
+
+            const { data } = await axios.post(`http://localhost:4001/api/create-topic`, newTopic, config)
+            setNewTopic({
+                title: '',
+                categories: '',
+                content: '',
+                image: '',
+            })
+            setSuccess(true);
+            setimgPreview(defaultImg)
+            handleClose();
+            alert('Succefully created')
+            setSuccess(false);
+
+        } catch (err) {
+            console.log(err);
+            alert('Error occured')
+        }
+    }
+
+    return (
+        <React.Fragment>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                    component: 'form',
+                    onSubmit: (event) => {
+                        event.preventDefault();
+                        createNewTopic();
+                    },
+                    sx: {
+                        background: 'linear-gradient(to right, #e3eaa7, #b5e7a0)',
+                        color: 'white', 
+                        padding: '20px', 
+                        minWidth: '500px',
+                    },
+                }}
+            >
+               
+                <DialogContent sx={{ minWidth: '500px' }}>
+                    <Autocomplete
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        options={categories}
+                        getOptionLabel={(option) => option.name}
+                        getOptionKey={(option) => option._id}
+                        onChange={(e, value) => {
+                            if (value == null) {
+                                value = { _id: '' }
+                            }
+                            handleChange({ target: { value: value._id, name: 'categories' } })
+                        }
+                        }
+                        renderInput={(params) => <TextField {...params} label="Category" name='category'
+
+                        />}
+                    />
+                    <TextField
+                        autoFocus
+                        sx={{ mt: 3 }}
+                        margin="dense"
+                        id="title"
+                        name="title"
+                        onChange={handleChange}
+                        label="Title"
+                        type="text"
+                        fullWidth
+                        size='medium'
+                        variant="outlined"
+                    />
+                    <TextField
+                        sx={{ mt: 3 }}
+                        autoFocus
+                        margin="dense"
+                        id="content"
+                        name="content"
+                        onChange={handleChange}
+                        label="Content/Question/Topic"
+                        type="text"
+                        size='medium'
+                        fullWidth
+                        multiline
+                        rows={4}
+                        variant="outlined"
+                    />
+                    <Box sx={{ border: 1, mt: 3, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src={imgPreview} width={100} style={{ paddingTop: 10 }} />
+                        <Button
+                            sx={{ my: 3 }}
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            tabIndex={-1}
+                            startIcon={<CloudUploadIcon />}
+                        >
+                            Browse
+                            <VisuallyHiddenInput type="file" name='image' onChange={handleChange} />
+                        </Button>
+                    </Box>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} sx={{ color: 'red' }}>Cancel</Button>
+                    <Button type="submit" sx={{ color: 'blue' }}>Add Topic</Button>
+                </DialogActions>
+            </Dialog>
+        </React.Fragment>
+    );
+}
+
+export default NewTopic

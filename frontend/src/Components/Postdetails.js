@@ -373,7 +373,7 @@ const PostDetails = () => {
                 </div>
             </div>
 
-            <section className="gradient-custom">
+            <section >
                 <div className="container my-4 py-5">
                     <div className="row d-flex justify-content-center">
                         <div className="col-md-12 col-lg-10 col-xl-8">

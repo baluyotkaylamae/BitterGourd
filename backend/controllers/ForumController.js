@@ -94,6 +94,10 @@ exports.getForumPostById = async (req, res) => {
     const Topic = await Forum.findById(id)
     .populate('categories')
     .populate('users')
+    // .populate({
+    //     path: 'users',
+    //     select: 'avatar', // Include profile image in selection
+    // })
     .populate({
         path:'Comments.user',
         ref: 'User'
@@ -104,7 +108,7 @@ exports.getForumPostById = async (req, res) => {
     })
 
     const TopicRelated = await Forum.find({
-        categories: forumTopic.categories._id
+        categories: Topic.categories._id
     }).where({
         _id:{
             $ne: id
@@ -194,3 +198,255 @@ exports.deleteForumPostById = async (req, res) => {
     }
 
 };
+
+
+exports.CreateComment = async (req, res, next) => {
+
+    try {
+
+        const topicId = req.params.id;
+        const userId = req.user._id;
+
+        const Topic = await Forum.findById(topicId);
+
+        if (!Topic) {
+            return res.status(404).json({
+                success: false,
+                message: 'Forum topic not found'
+            })
+        }
+
+        const newComment = {
+            user: userId,
+            comment: req.body.comment,
+        }
+
+        Topic.Comments.push(newComment);
+        Topic.save();
+
+        res.status(201).json({
+            success: true,
+            message: 'Comment posted',
+            Topic: Topic,
+        })
+
+    } catch (err) {
+
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Error occured'
+        })
+
+    }
+}
+
+exports.CommentUpdate = async (req, res, next) => {
+
+    try {
+
+        const { commentId, forumTopicId, comment } = req.body;
+
+        const Topic = await Forum.findById(forumTopicId);
+
+        // finding nemo, joke, finding comment and updating
+        Topic.Comments
+            .find(comment => comment._id.toString() == commentId)
+            .comment = comment;
+
+        Topic.save();
+
+        res.status(200).json({
+            success: true,
+            Topic: Topic
+        })
+
+    } catch (err) {
+
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Error occured'
+        })
+
+    }
+}
+
+exports.deleteComment = async (req, res, next) => {
+
+    try {
+
+        const { commentId, forumTopicId } = req.query;
+
+        const Topic = await Forum.findById(forumTopicId)
+
+        const updatedComments = Topic
+            .Comments.filter(comment => comment._id.toString() !== commentId);
+
+        Topic.Comments = updatedComments;
+
+        Topic.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Comment deleted',
+            Topic: Topic,
+        })
+
+    } catch (err) {
+
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Error occured'
+        })
+
+    }
+
+}
+
+exports.ReplyCreate = async (req, res, next) => {
+
+    try {
+
+        const { commentId, forumTopicId, comment } = req.body;
+
+        const Topic = await Forum.findById(forumTopicId); // 1. forum topic
+
+        Topic.Comments
+            .find(comment => comment._id.toString() == commentId) // 2. find comment in forum topic
+            .replies.push({ // 3. push new comment in replies 
+                comment,
+                user: req.user._id
+            })
+
+        Topic.save(); // 4. saving changes
+
+        res.status(200).json({
+            success: true,
+            Topic: Topic
+        })
+
+    } catch (err) {
+
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Error occured'
+        })
+
+    }
+}
+
+exports.editRepliedComment = async (req, res, next) => {
+
+    try {
+
+        const { commentId, forumTopicId, comment, replyId } = req.body;
+
+        const Topic = await Forum.findById(forumTopicId);
+
+        if (!Topic) {
+            return res.status(404).json({
+                success: false,
+                message: 'Forum topic not found'
+            })
+        }
+
+        Topic.Comments
+            .find(comment => comment._id.toString() == commentId) // find comment in forum topic
+            .replies.find(replyComment => replyComment._id.toString() == replyId) // find reply comment in userComments array
+            .comment = comment; // change the replied comment
+
+        Topic.save();
+
+        res.status(200).json({
+            success: true,
+            Topic: Topic
+        })
+
+    } catch (err) {
+
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Error something went wrong'
+        })
+
+    }
+
+}
+
+exports.deleteRepliedComment = async (req, res, next) => {
+
+    try {
+
+        const { commentId, forumTopicId, replyId } = req.query;
+
+        const Topic = await Forum.findById(forumTopicId)
+
+        const updatedRepliedComments = Topic
+            .Comments.find(comment => comment._id.toString() == commentId)
+            .replies.filter(comment => comment._id.toString() !== replyId)
+
+        Topic
+            .Comments.find(comment => comment._id.toString() == commentId)
+            .replies = updatedRepliedComments;
+
+        Topic.save()
+
+        res.status(200).json({
+            success: true,
+            message: 'Reply deleted',
+            Topic: Topic,
+        })
+
+    } catch (err) {
+
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Error occured'
+        })
+
+    }
+}
+
+exports.categorizeTopics = async (req, res, next) => {
+    const categorizeForums = await Forum.aggregate([
+        {
+            $lookup: {
+                from: 'categories', // Use the actual name of your categories collection
+                localField: 'categories',
+                foreignField: '_id',
+                as: 'category'
+            }
+        },
+        {
+            $unwind: '$category'
+        },
+        {
+            $group: {
+                _id: '$category._id',
+                name: { $first: '$category.name' },
+                description: { $first: '$category.description' },
+                forums: { $push: '$$ROOT' }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                categoryId: '$_id',
+                name: 1,
+                description: 1,
+                forums: 1
+            }
+        }
+    ]);
+
+    res.status(200).json({
+        success: true,
+        categorizeForums: categorizeForums
+    })
+
+}

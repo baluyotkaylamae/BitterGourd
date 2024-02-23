@@ -49,7 +49,7 @@ const forumSchema = new mongoose.Schema({
                 required: true,
                 ref: 'User'
             },
-            reply: {
+            comment: {
                 type: String,
                 required: true,
             },

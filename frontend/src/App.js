@@ -42,10 +42,11 @@ import StaticPage6 from './Components/Static/StaticPage6';
 import StaticPage7 from './Components/Static/StaticPage7';
 import StaticPage8 from './Components/Static/StaticPage8';
 import StaticPageContent from './Components/Static/StaticPageContent';
-import CreateTopic from './Components/Forums/createTopic';
-import ListTopics from './Components/Forums/ListTopics';
-import UpdateTopic from './Components/Forums/UpdateTopic';
+// import CreateTopic from './Components/Forums/createTopic';
+import Forum from './Components/Forums/ForumPage';
+// import UpdateTopic from './Components/Forums/UpdateTopic';
 // import TopicDetail from './TopicDetail';
+import UpdateTopic from './Components/Forums/UpdateTopic';
 
 function App() {
   return (
@@ -124,10 +125,12 @@ function App() {
             </ProtectedRoute>
           } end />
           {/* forum */}
-          <Route exact path="/topics" element={<ListTopics/>} />
+          {/* <Route exact path="/topics" element={<ListTopics/>} />
           <Route exact path="/topics/create" element ={<CreateTopic/>} />
           <Route exact path="/topics/:id/edit" element ={ <UpdateTopic/>} />
-          {/* <Route exact path="/topics/:id" component={TopicDetail} /> */}
+          <Route exact path="/topics/:id" component={TopicDetail} /> */}
+            <Route path='/forums' element={<Forum />} />
+            <Route path='/edit/topic/:id' element={<UpdateTopic />} />
 
 
           <Route path="/posts/:postId" element={<PostDetails />} />

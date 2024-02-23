@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import { Box, Typography } from '@mui/material';
-import { BarChart, PieChart } from '@mui/x-charts';
+import { BarChart, LineChart } from '@mui/x-charts';
 
 const chartSetting = {
   width: 500,
@@ -48,12 +48,53 @@ const abbreviatedBarChartDataset = barChartDataset.map((data, index) => ({
   quarter: `Q${index + 1}`,
 }));
 
-const pieChartData = [
-  { id: 0, value: 5, label: 'Never' },
-  { id: 1, value: 10, label: 'Rarely' },
-  { id: 2, value: 35, label: 'Always' },
+// const pieChartData = [
+//   { id: 0, value: 5, label: 'Never' },
+//   { id: 1, value: 10, label: 'Rarely' },
+//   { id: 2, value: 35, label: 'Always' },
+// ];
+const lineChartData = [
+  {
+    quarter: 'Q1.How often Do you Monitor Your BitterGourd?',
+    Never: 5,
+    Rarely: 4,
+    Always: 7,
+
+  },
+  {
+    quarter: 'Q2. How often do you see pollinators?',
+    Never: 7,
+    Rarely: 10,
+    Always: 9,
+
+  },
+  {
+    quarter: 'Q3. How often do you prune your bittergourd?',
+    Never: 20,
+    Rarely: 2,
+    Always: 8,
+
+  },
+  {
+    quarter: 'Q4. How often do you experience having many flowers but no fruit in bittergourd plant?',
+    Never: 10,
+    Rarely: 2,
+    Always: 18,
+
+  },
+  {
+    quarter: 'Q5.How often do you use manual pollination?',
+    Never: 3,
+    Rarely: 12,
+    Always: 18,
+
+  }
 ];
 
+const abbreviatedLineChartDataset = lineChartData.map((data, index) => ({
+  ...data,
+  quarter: `Q${index + 1}`,
+}));
 const Dashboard = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, p: 3 }}>
@@ -62,7 +103,7 @@ const Dashboard = () => {
         <Sidebar />
 
         <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, alignItems: 'center' }}>
-          {/* Pie Chart */}
+          {/* Line Chart */}
           <Typography variant="h4" gutterBottom>
             Analytics
           </Typography>
@@ -70,15 +111,19 @@ const Dashboard = () => {
             <Typography variant="h5" gutterBottom>
               How often do you monitor the Bitter Gourd Plant?
             </Typography>
-            <PieChart
+            <LineChart
+              dataset={abbreviatedLineChartDataset}
+              xAxis={[{ scaleType: 'band', dataKey: 'quarter' }]}
               series={[
-                {
-                  data: pieChartData,
-                  highlightScope: { faded: 'global', highlighted: 'item' },
-                  faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                },
+                { dataKey: 'Never', label: 'Never' },
+                { dataKey: 'Rarely', label: 'Rarely' },
+                { dataKey: 'Always', label: 'Always' }
+
+
+
               ]}
-              height={200}
+
+              {...chartSetting}
             />
           </Box>
 
