@@ -6,6 +6,14 @@ import { getUser } from '../utils/helpers';
 import ReplyIcon from '@mui/icons-material/Reply';
 import IconButton from '@mui/material/IconButton';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
+
+// import { Dialog } from '@mui/material';
 
 const PostDetails = () => {
     const { postId } = useParams();
@@ -24,6 +32,11 @@ const PostDetails = () => {
     const [likedComments, setLikedComments] = useState({});
     const [likedReplies, setLikedReplies] = useState({});
     const [replyLikes, setReplyLikes] = useState({});
+    const [editingCommentId, setEditingCommentId] = useState(null);
+    const [editedCommentText, setEditedCommentText] = useState('');
+    const [showOptions, setShowOptions] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [menuAnchorEl, setMenuAnchorEl] = useState(null);
 
     const initialCommentsToShow = showAllComments ? data : data.slice(0, 3);
 
@@ -318,6 +331,63 @@ const PostDetails = () => {
         return new Date(dateTimeString).toLocaleString('en-US', options);
     };
 
+    const handleDeleteComment = async (commentId) => {
+        try {
+            console.log('Deleting comment with ID:', commentId); // Log the comment ID
+            // Implement deletion logic here, for example:
+            await axios.delete(`http://localhost:4001/api/delete/comment/${commentId}`);
+
+            // After deletion, you might want to fetch the updated comments list
+            fetchComments();
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+        }
+    };
+
+    const startEditingComment = (commentId, initialText) => {
+        setEditingCommentId(commentId);
+        setEditedCommentText(initialText);
+    };
+
+    // Function to cancel editing a comment
+    const cancelEditingComment = () => {
+        setEditingCommentId(null);
+        setEditedCommentText('');
+    };
+
+    // Function to save edited comment
+    const saveEditedComment = async (commentId) => {
+        try {
+            // Implement logic to update the comment on the backend
+            await axios.put(`http://localhost:4001/api/update/comment/${commentId}`, { text: editedCommentText });
+
+            // Fetch updated comments after saving edit
+            fetchComments();
+
+            // Reset editing state
+            setEditingCommentId(null);
+            setEditedCommentText('');
+        } catch (error) {
+            console.error('Error editing comment:', error);
+        }
+    };
+
+    const toggleOptions = () => {
+        setShowOptions(prevState => !prevState);
+    };
+
+    const handleMenuOpen = (event, commentId) => {
+        setMenuAnchorEl(event.currentTarget);
+        setSelectedCommentId(commentId);
+    };
+
+    // Function to close the menu
+    const handleMenuClose = () => {
+        setMenuAnchorEl(null);
+        setSelectedCommentId(null);
+    };
+
+
     return (
         <div className="container mt-4 post-details-container">
             <h1 style={{ textAlign: 'center' }}>{post.name}</h1>
@@ -386,14 +456,47 @@ const PostDetails = () => {
                                                 <div className="d-flex flex-start">
                                                     <img src={comment.author.avatar.url} alt="Avatar" className="rounded-circle shadow-1-strong me-3" width="65" height="65" />
                                                     <div className="flex-grow-1 flex-shrink-1">
-                                                        <div className="d-flex justify-content-between align-items-center">
-                                                            <p className="mb-1">{comment.author.name} <span className="small">- {formatDateTime(comment.dateCreated)}</span></p>
-                                                            <a href="#!" onClick={() => openReplyModal(comment._id)}>
-                                                                <ReplyIcon fontSize="smallrep" />
-                                                            </a>
-
+                                                        <div>
+                                                            <div className="d-flex justify-content-between align-items-center">
+                                                                <p className="mb-1">{comment.author.name} <span className="small">- {formatDateTime(comment.dateCreated)}</span></p>
+                                                                <a href="#!" onClick={() => openReplyModal(comment._id)}>
+                                                                    <ReplyIcon fontSize="smallrep" />
+                                                                </a>
+                                                                {currentUser && comment.author._id === currentUser._id && (
+                                                                    <div>
+                                                                    <IconButton onClick={(event) => handleMenuOpen(event, comment._id)}>
+                                                                        <MoreHorizIcon />
+                                                                    </IconButton>
+                                                                    <Menu
+                                                                        anchorEl={menuAnchorEl}
+                                                                        open={selectedCommentId === comment._id}
+                                                                        onClose={handleMenuClose}
+                                                                    >
+                                                                        <MenuItem onClick={() => { handleMenuClose(); startEditingComment(comment._id, comment.text); }}>
+                                                                            <EditIcon /> Edit
+                                                                        </MenuItem>
+                                                                        <MenuItem onClick={() => { handleMenuClose(); handleDeleteComment(comment._id); }}>
+                                                                            <DeleteIcon /> Delete
+                                                                        </MenuItem>
+                                                                    </Menu>
+                                                                </div>
+                                                                )}
+                                                            </div>
+                                                            <div className="mb-3">
+                                                                {/* Render edit form if the comment is being edited */}
+                                                                {editingCommentId === comment._id ? (
+                                                                    <div>
+                                                                        <textarea value={editedCommentText} onChange={(e) => setEditedCommentText(e.target.value)} />
+                                                                        <button onClick={() => saveEditedComment(comment._id)}>Save</button>
+                                                                        <button onClick={cancelEditingComment}>Cancel</button>
+                                                                    </div>
+                                                                ) : (
+                                                                    // Render comment text
+                                                                    <p>{comment.text}</p>
+                                                                )}
+                                                            </div>
                                                         </div>
-                                                        <p className="mb-3">{comment.text}</p>
+
                                                         <div className="d-flex   justify-content-between align-items-center">
                                                             <div>
                                                                 <p className="small">{comment.likesCount || 0} Likes</p>
