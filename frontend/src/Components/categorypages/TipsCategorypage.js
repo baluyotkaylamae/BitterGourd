@@ -66,7 +66,7 @@ const TipsPosts = () => {
                         <TipsPostCard key={post._id} post={post} />
                     ))
                 ) : (
-                    <p className="no-products-message">No tutorial posts found.</p>
+                    <p className="no-products-message">No Tips/Recommendations Posts Found.</p>
                 )}
             </div>
         </div>
