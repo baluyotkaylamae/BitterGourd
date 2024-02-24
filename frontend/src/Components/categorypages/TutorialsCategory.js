@@ -12,14 +12,14 @@ const TutorialPostCard = ({ post }) => {
                     alt={post.name}
                     className="card-img-top product-image"
                 />
-                <div className="card-body card-des">
-                    <h6 className="card-title card-title-des">
+              <div className="ampalaya-card-body ampalaya-body">
+                    <h6 className="ampalya-title ampalaya-title-des">
                         {post.title}
                     </h6>
-                    <p className="card-text">
+                    <p className="Ampalaya-card-text ampalaya-card-des">
                         {post.description.slice(0, 100) + '...'}
                     </p>
-                    <Link to={`/posts/${post._id}`} className="btn json-button text-black">
+                    <Link to={`/posts/${post._id}`} className="btn Ampalaya-button text-black">
                         See More
                     </Link>
                 </div>
