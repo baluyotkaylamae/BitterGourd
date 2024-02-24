@@ -1,100 +1,104 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Box, Card, CardContent, Divider, Typography } from '@mui/material';
+import { Box, Card, CardContent, Typography, Grid } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
 import { getToken } from '../../utils/helpers';
+import './forum.css'
 
 const AllTopics = memo(({ setTopic, setValue, sortType, setCategory }) => {
-    const [loading, setLoading] = useState();
-
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${getToken()}`
-        }
-    }
-
-    const [Topic, setForumTopics] = useState([]);
-
-    const getAllTopics = async () => {
-        setLoading(true);
-        try {
-            const { data } = await axios.get(`http://localhost:4001/api/topics?sortType=${sortType}`, config);
-            setLoading(false);
-            setForumTopics(data.Topic);
-        } catch (err) {
-            setLoading(false);
-            alert("Error occurred");
-            console.log(err);
-        }
-    }
+    const [loading, setLoading] = useState(false);
+    const [topics, setTopics] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
+        const getAllTopics = async () => {
+            setLoading(true);
+            try {
+                const { data } = await axios.get(`http://localhost:4001/api/topics?sortType=${sortType}`, {
+                    headers: {
+                        'Authorization': `Bearer ${getToken()}`
+                    }
+                });
+                setTopics(data.Topic);
+                setLoading(false);
+            } catch (err) {
+                setLoading(false);
+                setError(err);
+            }
+        };
         getAllTopics();
     }, [sortType]);
 
     const handleTopic = (id) => {
         setTopic(id);
         setValue('5');
-    }
+    };
 
     const gotoCategory = (id) => {
         setCategory(id);
         setValue('4');
-    }
+    };
 
     return (
-        <>
-            {Topic.map(topic => (
-                <Card key={topic._id} sx={{
-                    my: 1, cursor: 'pointer',
-                    "&:hover": {
-                        backgroundColor: "#e6ffe6"
-                     
-                    },
-                }}
-                >
+        <div className="container mt-4">
+            <h1 className='prod-t'>All Topics</h1>
+            {loading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p className="error-message">Error: {error.message}</p>
+            ) : topics.length > 0 ? (
+                <div className="row">
+                    {topics.map(topic => (
+                        <div key={topic._id} className="col-lg-4 col-md-6 col-sm-12 mb-4">
+                            <Card className="prodcard-Ampalaya">
+                                {topic.image && (
+                                    <div className="ampalaya-img-container"> {/* Add a container for the card image */}
+                                        <img src={topic.image.url} alt={topic.title} className="ampalaya-image" />
+                                    </div>
+                                )}
+                                <CardContent className="ampalaya-body ampalaya-card-des">
+                                    <Typography className="ampalaya-title ampalaya-title-des" onClick={() => handleTopic(topic._id)}  style={{ fontWeight: 'bold' }}>
+                                        {topic.title}
+                                    </Typography>
+                                    <Typography className="card-text">
+                                        {topic.content.slice(0, 100) + '...'}
+                                    </Typography>
+                                    <Typography className="btn Ampalaya-button text-black" onClick={() => handleTopic(topic._id)}>
+                                        See More
+                                    </Typography>
+                                    <Box display={'flex'} alignItems={'center'} flex={'row'} justifyContent={'space-between'}>
+                                        <Typography className="ampalaya-footer-timestamps" fontSize={'16px'} sx={{ mt: -0.6 }}>
+                                            Published Date:
+                                            <Box display={'flex'} alignItems={'center'} flex={'row'} justifyContent={'space-between'}>
+                                                {new Date(topic.createdAt).toLocaleDateString('en-PH', { month: 'long', day: '2-digit', year: 'numeric' })}
 
-                    <CardContent>
-                        <Typography
-                            onClick={() => handleTopic(topic._id)}
-                            variant='h5'
-                            sx={{
-                                mb: 0.5,
-                                cursor: 'pointer',
-                                "&:hover": {
-                                    color: '#80ff80'
-                                },
-                                fontWeight: 'bold'
-                            }}>
-                            {topic.title}
-                        </Typography>
-                        <Typography sx={{ px: 0.3, fontWeight: 300 }}>
-                            {topic.users.name} · <Typography variant='span' onClick={() => gotoCategory(topic.categories._id)} sx={{
-                                cursor: 'pointer',
-                                "&:hover": {
-                                    color: '#666666'
+                                            </Box>
+                                        </Typography>
 
-                                },
-                            }}>{topic.categories.name}</Typography>
-                        </Typography>
-                        <Box display={'flex'} alignItems={'center'} flex={'row'} justifyContent={'space-between'}>
-                            <Box>
-                                <Typography fontSize={'16px'} sx={{ mt: -0.6 }}>Published Date: {new Date(topic.createdAt).toLocaleDateString('en-PH', { month: 'long', day: '2-digit', year: 'numeric' })}</Typography>
-                            </Box>
-                            <Box>
-                                <Typography fontSize={'16px'} sx={{ mt: -0.6 }}>Recent Activity: {new Date(topic.updatedAt).toLocaleDateString('en-PH', { month: 'long', day: '2-digit', year: 'numeric' })}</Typography>
-                            </Box>
-                        </Box>
-                        <Box display={'flex'} alignItems={'center'} flex={'row'} mt={1}>
-                            <ChatBubbleOutlineIcon sx={{ mr: 1.5, color: '#666666' }} fontSize='medium' />
-                            <Typography fontSize={'20px'} sx={{ mt: -0.6 }}>{getTotalComments(topic?.Comments)}</Typography>
-                        </Box>
-                    </CardContent>
-                </Card>
-            ))}
-        </>
-    )
-})
+                                        <Typography className="ampalaya-footer-timestamps" fontSize={'16px'} sx={{ mt: -0.6 }}>
+                                            Recent Activity:
+                                            <Box display={'flex'} alignItems={'center'} flex={'row'} justifyContent={'space-between'}>
+                                                {new Date(topic.updatedAt).toLocaleDateString('en-PH', { month: 'long', day: '2-digit', year: 'numeric' })}
+                                            </Box>
+                                        </Typography>
+                                    </Box>
+                                    <Box display={'flex'} alignItems={'center'} flex={'row'} mt={1}>
+                                        <Typography fontSize={'20px'} sx={{ mt: -0.6 }}>
+                                            {getTotalComments(topic?.Comments)}
+                                        </Typography>
+                                        <ChatBubbleOutlineIcon sx={{ ml: 1.5, color: '#666666' }} fontSize='medium' />
+                                    </Box>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p className="no-products-message">No topics found.</p>
+            )}
+        </div>
+    );
+});
 
 const getTotalComments = (comments) => {
     let totalComments = 0;

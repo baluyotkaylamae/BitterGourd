@@ -343,7 +343,7 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
                                 },
                             }}
                         >
-                            in {Topic.category?.name}
+                            in {Topic.categories?.name}
                         </Typography>
 
                         <div ref={compRef}></div>

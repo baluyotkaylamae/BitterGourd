@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../post.css';
+import './category.css';
 
 const FactsPostCard = ({ post }) => {
     return (
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div className="card product-cart-text prodcard-JSON">
-                <img
-                    src={post.images[0].url}
-                    alt={post.name}
-                    className="card-img-top product-image"
-                />
-                <div className="card-body card-des">
-                    <h6 className="card-title card-title-des">
+            <div className="card prodcard-Ampalaya">
+                <div className="ampalaya-img-container">
+                    <img
+                        src={post.images[0].url}
+                        alt={post.name}
+                        className="ampalaya-image"
+                    />
+                </div>
+                <div className="ampalaya-card-body ampalaya-body">
+                    <h6 className="ampalya-title ampalaya-title-des">
                         {post.title}
                     </h6>
-                    <p className="card-text">
+                    <p className="Ampalaya-card-text ampalaya-card-des">
                         {post.description.slice(0, 100) + '...'}
                     </p>
-                    <Link to={`/posts/${post._id}`} className="btn json-button text-black">
+                    <Link to={`/posts/${post._id}`} className="btn Ampalaya-button text-black">
                         See More
                     </Link>
+                   
                 </div>
             </div>
         </div>
@@ -48,7 +51,6 @@ const FactsPosts = () => {
                 setLoading(false);
             }
         };
-        
 
         fetchFactsPosts();
     }, []);

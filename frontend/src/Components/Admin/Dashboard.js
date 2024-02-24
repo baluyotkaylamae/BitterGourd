@@ -109,7 +109,7 @@ const Dashboard = () => {
           </Typography>
           <Box sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
             <Typography variant="h5" gutterBottom>
-              How often do you monitor the Bitter Gourd Plant?
+             Personal experience
             </Typography>
             <LineChart
               dataset={abbreviatedLineChartDataset}

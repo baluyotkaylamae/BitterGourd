@@ -37,12 +37,12 @@ const forumSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        likes: [
-            {
-              type: mongoose.Schema.Types.ObjectId,
-              ref: 'User' // Assuming you have a User model
-            }
-          ],
+        // likes: [
+        //     {
+        //       type: mongoose.Schema.Types.ObjectId,
+        //       ref: 'User' // Assuming you have a User model
+        //     }
+        //   ],
         replies: [{
             user: {
                 type: mongoose.Schema.Types.ObjectId,
@@ -53,12 +53,12 @@ const forumSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
-            likes: [
-                {
-                  type: mongoose.Schema.Types.ObjectId,
-                  ref: 'User' // Assuming you have a User model
-                }
-              ],
+            // likes: [
+            //     {
+            //       type: mongoose.Schema.Types.ObjectId,
+            //       ref: 'User' // Assuming you have a User model
+            //     }
+            //   ],
             createdAt: {
                 type: Date,
                 default: Date.now()

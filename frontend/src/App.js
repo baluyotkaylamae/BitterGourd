@@ -125,10 +125,7 @@ function App() {
             </ProtectedRoute>
           } end />
           {/* forum */}
-          {/* <Route exact path="/topics" element={<ListTopics/>} />
-          <Route exact path="/topics/create" element ={<CreateTopic/>} />
-          <Route exact path="/topics/:id/edit" element ={ <UpdateTopic/>} />
-          <Route exact path="/topics/:id" component={TopicDetail} /> */}
+         
             <Route path='/forums' element={<Forum />} />
             <Route path='/edit/topic/:id' element={<UpdateTopic />} />
 

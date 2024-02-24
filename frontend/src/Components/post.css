@@ -35,6 +35,19 @@
     margin-bottom: 10px;
 }
 
+
+.card-title {
+    overflow: hidden; /* Hide any overflow */
+    text-overflow: ellipsis; /* Display ellipsis for overflow text */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.card-text {
+    overflow: hidden; /* Hide any overflow */
+    text-overflow: ellipsis; /* Display ellipsis for overflow text */
+    height: 150px; /* Set a fixed height for the content area */
+}
+
 .json-button {
     width: 100%;
     background-color: #75f771;

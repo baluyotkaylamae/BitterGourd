@@ -1,44 +1,85 @@
-.create-topic-container {
-    width: 80%;
-    margin: auto;
-  }
-  
-  .topic-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .input-field {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-  }
-  
-  .textarea-field {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    resize: vertical;
-  }
-  
-  .file-input {
-    margin-bottom: 10px;
-  }
-  
-  .submit-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
-  
+.ampalaya-img-container {
+  height: 200px; /* Set a fixed height for the card image container */
+  overflow: hidden; /* Hide any overflow */
+}
+
+.ampalaya-img-container img {
+  width: 100%; /* Ensure the image fills the container */
+  height: 100%; /* Ensure the image fills the container */
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+.ampalaya-body {
+  height: 350px; /* Set a fixed height for the card body */
+  overflow: hidden; /* Hide any overflow */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Add this CSS to make the font size smaller */
+.ampalaya-footer-timestamps {
+  font-size: 14px; /* Adjust the font size as needed */
+}
+
+.ampalaya-card-des {
+  font-size: 1rem;
+  line-height: 1.4;
+  /* Improve readability */
+  margin-bottom: 10px;
+}
+
+.ampalaya-title-des {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin: 10px 0;
+}
+
+.ampalaya-image {
+  width: 100%;
+  height: auto;
+  /* Maintain aspect ratio */
+  object-fit: cover;
+}
+
+.prodcard-Ampalaya {
+  border: 2px solid #7db369;
+  height: auto;
+  /* Adjust the height to fit content */
+  width: 100%;
+  /* Adjust the width to fill the container */
+  transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  margin-bottom: 20px;
+  /* Add some space between cards */
+}
+
+.prodcard-Ampalaya:hover {
+  /* transform: scale(1.06); */
+  box-shadow: 0 0 20px #ccf7b9;
+}
+
+.Ampalaya-button {
+  width: 100%;
+  background-color: #75f771;
+  color: whitesmoke;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  /* Remove default button underline */
+}
+
+.Ampalaya-button:hover {
+  background-color: #fdd96b;
+  color: #e8dd80;
+}
+
+.Ampalaya-card-text {
+  overflow: hidden; /* Hide any overflow */
+  text-overflow: ellipsis; /* Display ellipsis for overflow text */
+  height: 150px; /* Set a fixed height for the content area */
+}

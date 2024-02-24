@@ -14,7 +14,7 @@ const Post = () => {
     const [likedPosts, setLikedPosts] = useState([]);
     const currentUser = getUser();
 
-    
+
 
 
     useEffect(() => {
@@ -114,18 +114,23 @@ const Post = () => {
                                         <hr />
                                         <div>Comments: {post.commentsCount}</div>
                                         <div>Likes: {likeCounts[post._id] || 0}</div> {/* Display like count */}
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => handleReaction(post._id)}
-                                            startIcon={<ThumbUpIcon style={{ color: post.likes && post.likes.includes(currentUser._id) ? 'blue' : 'inherit' }} />}
-                                        >
-                                            Like
-                                        </Button>
-                                        <IconButton component={Link} to={`/posts/${post._id}`}>
-                                            <ChatBubbleOutlineIcon />
-                                            <span className="comment-text">Comment</span>
-                                        </IconButton>
+
+                                        <div className="reaction-container">
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={() => handleReaction(post._id)}
+                                                startIcon={<ThumbUpIcon style={{ color: post.likes && post.likes.includes(currentUser._id) ? 'blue' : 'inherit' }} />}
+                                                className="like-button"
+                                            >
+                                                Like
+                                            </Button>
+                                            <IconButton component={Link} to={`/posts/${post._id}`}>
+                                                <ChatBubbleOutlineIcon />
+                                                <span className="comment-text">Comment</span>
+                                            </IconButton>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
