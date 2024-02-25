@@ -185,6 +185,8 @@ const PostDetails = () => {
         } catch (error) {
             console.error('Error submitting reply:', error);
         }
+        handleMenuClose();
+        setReplyTextAreaVisible(false);
     };
 
     // const handleLike = async (commentId) => {
@@ -290,7 +292,9 @@ const PostDetails = () => {
 
     const handleReplyCancel = () => {
         setReplyModalVisible(false); // Hide modal
-        setReplyTextAreaVisible(false); // Hide reply textarea
+         // Hide reply textarea
+        handleMenuClose();
+        setReplyTextAreaVisible(false);
     };
 
     const toggleRepliesVisibility = (commentId) => {
@@ -449,7 +453,7 @@ const PostDetails = () => {
                         <div className="col-md-12 col-lg-10 col-xl-8">
                             <div className="card">
                                 <div className="card-body p-9">
-                                    <h4 className="text-center mb-4 pb-2">comments section</h4>
+                                    <h4 className="text-center mb-4 pb-2">Comment Section</h4>
                                     <div className="comments-list">
                                         {initialCommentsToShow.map(comment => (
                                             <div key={comment._id} className="comment">
@@ -462,24 +466,24 @@ const PostDetails = () => {
                                                                 <a href="#!" onClick={() => openReplyModal(comment._id)}>
                                                                     <ReplyIcon fontSize="smallrep" />
                                                                 </a>
-                                                                {currentUser && comment.author._id === currentUser._id && (
+                                                                {currentUser && comment.author._id === currentUser._id && !replyTextAreaVisible && (
                                                                     <div>
-                                                                    <IconButton onClick={(event) => handleMenuOpen(event, comment._id)}>
-                                                                        <MoreHorizIcon />
-                                                                    </IconButton>
-                                                                    <Menu
-                                                                        anchorEl={menuAnchorEl}
-                                                                        open={selectedCommentId === comment._id}
-                                                                        onClose={handleMenuClose}
-                                                                    >
-                                                                        <MenuItem onClick={() => { handleMenuClose(); startEditingComment(comment._id, comment.text); }}>
-                                                                            <EditIcon /> Edit
-                                                                        </MenuItem>
-                                                                        <MenuItem onClick={() => { handleMenuClose(); handleDeleteComment(comment._id); }}>
-                                                                            <DeleteIcon /> Delete
-                                                                        </MenuItem>
-                                                                    </Menu>
-                                                                </div>
+                                                                        <IconButton onClick={(event) => handleMenuOpen(event, comment._id)}>
+                                                                            <MoreHorizIcon />
+                                                                        </IconButton>
+                                                                        <Menu
+                                                                            anchorEl={menuAnchorEl}
+                                                                            open={selectedCommentId === comment._id}
+                                                                            onClose={handleMenuClose}
+                                                                        >
+                                                                            <MenuItem onClick={() => { handleMenuClose(); startEditingComment(comment._id, comment.text); }}>
+                                                                                <EditIcon /> Edit
+                                                                            </MenuItem>
+                                                                            <MenuItem onClick={() => { handleMenuClose(); handleDeleteComment(comment._id); }}>
+                                                                                <DeleteIcon /> Delete
+                                                                            </MenuItem>
+                                                                        </Menu>
+                                                                    </div>
                                                                 )}
                                                             </div>
                                                             <div className="mb-3">
