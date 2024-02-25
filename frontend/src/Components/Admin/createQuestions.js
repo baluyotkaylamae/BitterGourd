@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import Dashboard from './Dashboard';
+import Sidebar from './Sidebar';
 import './Crud.css'; // Import CSS file for styling
 
 const CreateQuestion = () => {
@@ -46,7 +46,7 @@ const CreateQuestion = () => {
 
   return (
     <div className="container mt-5">
-      <Dashboard />
+      <Sidebar />
       <div className="row">
         <div className="col-md-3">
         </div>
