@@ -47,6 +47,7 @@ import Forum from './Components/Forums/ForumPage';
 // import UpdateTopic from './Components/Forums/UpdateTopic';
 // import TopicDetail from './TopicDetail';
 import UpdateTopic from './Components/Forums/UpdateTopic';
+import './fonts.css'; 
 
 function App() {
   return (

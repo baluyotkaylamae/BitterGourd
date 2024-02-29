@@ -11,7 +11,7 @@
 
 .prodcard-JSON:hover {
     /* transform: scale(1.06); */
-    box-shadow: 0 0 20px #ccf7b9;
+    box-shadow: 0 0 20px #7e9873;
 }
 
 .product-image {
@@ -45,7 +45,8 @@
 .card-text {
     overflow: hidden; /* Hide any overflow */
     text-overflow: ellipsis; /* Display ellipsis for overflow text */
-    height: 150px; /* Set a fixed height for the content area */
+    height: 50px; /* Set a fixed height for the content area */
+    text-align: left;
 }
 
 .json-button {

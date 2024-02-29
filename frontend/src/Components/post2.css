@@ -1,24 +1,26 @@
 /* Center the post container */
 .post-container {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Align items vertically */
-    height: 90vh; /* Set post container height to fill the viewport */
-    padding: 30px; /* Add padding for better spacing */
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.post-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
 }
 
 /* Adjust width of the post container */
 .post-scroll {
-    max-height: 90vh;
-    max-width: 10000px; /* Adjust height as needed */
-    overflow-y: auto;
+    padding-right: 20px;
 }
 
 /* Style for individual post */
 .post {
-    width: 100%; /* Adjust width as needed */
-    margin-bottom: 20px; /* Adjust margin as needed */
+    width: 60%;
+    max-width: 1000px; /* Adjust max-width as needed */
+    margin: 0 auto 20px; /* Center horizontally and add bottom margin */
 }
+
 .actions {
     display: flex;
     gap: 10px;
@@ -30,3 +32,4 @@
     color: #007bff;
     cursor: pointer;
 }
+

@@ -13,3 +13,52 @@
   height: 100%; /* Make the image fill the container vertically */
   object-fit: fill; /* Scale the image as large as possible without stretching */
 }
+
+@keyframes firefly {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* Keyframes for firefly animation */
+@keyframes firefly {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-5px, -5px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Firefly styles */
+.firefly {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background-color: #ffff00;
+  border-radius: 50%;
+  animation: firefly 3s ease-in-out infinite, blink 2s infinite; /* Combine firefly and blink animations */
+}
+
+@keyframes firefly {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-5px, -5px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Blinking animation */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; } /* Reduce opacity randomly for blinking effect */
+  100% { opacity: 1; }
+}
+
+/* Additional styling for individual fireflies */
+.firefly:nth-child(1) {
+  animation-delay: 0.2s; /* Delay the blink animation for the first firefly */
+}
+
+.firefly:nth-child(2) {
+  animation-delay: 1.5s; /* Delay the blink animation for the second firefly */
+}
+
+
+/* Add more .firefly styles for additional fireflies */
+

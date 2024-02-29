@@ -52,9 +52,9 @@ const Header = () => {
             </Link>
           </Grid>
           <Grid item flexGrow={1}>
-            <Typography variant="h6" component="div" className="text-ye text-black" style={{ textAlign: 'left' }}>
+            {/* <Typography variant="h6" component="div" className="text-ye text-black" style={{ textAlign: 'left' }}>
               BitterFloral Guard
-            </Typography>
+            </Typography> */}
 
           </Grid>
           <Grid item flexGrow={1}>
@@ -106,7 +106,7 @@ const Header = () => {
               <Link to="/forums">
                 <IconButton style={{ color: 'black' }}>
                   <ForumIcon />
-                  User Forums
+                  Forums
                 </IconButton>
               </Link>
             ) : (
@@ -114,7 +114,7 @@ const Header = () => {
                 <span>
                   <IconButton disabled style={{ color: 'black' }}>
                     <ForumIcon />
-                    User Forums
+                    Forums
                   </IconButton>
                 </span>
               </Tooltip>
