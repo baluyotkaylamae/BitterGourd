@@ -16,7 +16,7 @@ const FactsPostCard = ({ post }) => {
                 </div>
                 <div className="ampalaya-card-body ampalaya-body">
                     <h6 className="ampalya-title ampalaya-title-des">
-                        {post.title}
+                        {post.name}
                     </h6>
                     <p className="Ampalaya-card-text ampalaya-card-des">
                         {post.description.slice(0, 100) + '...'}

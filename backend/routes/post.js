@@ -17,6 +17,19 @@ const {
 } = require('../controllers/PostController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
+
+// Search route for posts
+router.get('/search', async (req, res) => {
+  const searchTerm = req.query.q;
+
+  try {
+    const posts = await Post.find({ name: { $regex: new RegExp(searchTerm, 'i') } });
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred while searching for posts.', error: error.message });
+  }
+});
+
 router.get('/posts', getPosts);
 // router.get('/recent-posts', getRecentPosts);
 

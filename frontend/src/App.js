@@ -47,7 +47,9 @@ import Forum from './Components/Forums/ForumPage';
 // import UpdateTopic from './Components/Forums/UpdateTopic';
 // import TopicDetail from './TopicDetail';
 import UpdateTopic from './Components/Forums/UpdateTopic';
-import './fonts.css'; 
+import SearchPage from './Components/Layouts/Searchpage'; 
+
+import './fonts.css';
 
 function App() {
   return (
@@ -125,10 +127,12 @@ function App() {
               <UpdatePost />
             </ProtectedRoute>
           } end />
+
+          <Route path="/search" element={<SearchPage/>} />
           {/* forum */}
-         
-            <Route path='/forums' element={<Forum />} />
-            <Route path='/edit/topic/:id' element={<UpdateTopic />} />
+
+          <Route path='/forums' element={<Forum />} />
+          <Route path='/edit/topic/:id' element={<UpdateTopic />} />
 
 
           <Route path="/posts/:postId" element={<PostDetails />} />

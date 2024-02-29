@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, IconButton, Box, InputBase, Tooltip, Avatar, Grid } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -17,9 +17,15 @@ const settings = ['Profile'];
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const user = getUser();
   const userAuthenticated = !!user;
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -42,6 +48,16 @@ const Header = () => {
     window.location.href = '/';
   };
 
+  const handleSearch = () => {
+    // Redirect to search page with the search term as a query parameter
+    navigate(`/search?q=${searchTerm}`);
+  };
+
+  useEffect(() => {
+    // Clear search term when the location changes
+    setSearchTerm('');
+  }, [location]);
+
   return (
     <AppBar position="static" style={{ background: 'linear-gradient(to right, #93c570, #a5d582)' }}>
       <Toolbar>
@@ -52,20 +68,16 @@ const Header = () => {
             </Link>
           </Grid>
           <Grid item flexGrow={1}>
-            {/* <Typography variant="h6" component="div" className="text-ye text-black" style={{ textAlign: 'left' }}>
-              BitterFloral Guard
-            </Typography> */}
-
-          </Grid>
-          <Grid item flexGrow={1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton style={{ color: 'black' }}>
+              <IconButton style={{ color: 'black' }} onClick={handleSearch}>
                 <SearchIcon />
               </IconButton>
               <InputBase
                 placeholder="Search..."
                 inputProps={{ 'aria-label': 'search' }}
                 style={{ marginLeft: '5px', width: '600px', backgroundColor: '#fff', padding: '5px', borderRadius: '5px' }}
+                onChange={handleChange}
+                value={searchTerm}
               />
             </div>
           </Grid>
