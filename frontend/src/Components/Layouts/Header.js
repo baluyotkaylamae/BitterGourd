@@ -83,7 +83,7 @@ const Header = () => {
           </Grid>
           <Grid item>
             <Link to="/statichome">
-              <IconButton style={{ color: 'black' }}>
+              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px' }}>
                 <OndemandVideoIcon />
                 Info Vid.
               </IconButton>
@@ -91,7 +91,7 @@ const Header = () => {
           </Grid>
           <Grid item>
             <Link to="/Tutorials">
-              <IconButton style={{ color: 'black' }}>
+              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px'}}>
                 <LibraryBooksIcon />
                 Tutorials
               </IconButton>
@@ -99,7 +99,7 @@ const Header = () => {
           </Grid>
           <Grid item>
             <Link to="/Tips">
-              <IconButton style={{ color: 'black' }}>
+              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px' }}>
                 <FavoriteIcon />
                 Tips/Recom.
               </IconButton>
@@ -107,7 +107,7 @@ const Header = () => {
           </Grid>
           <Grid item>
             <Link to="/Facts">
-              <IconButton style={{ color: 'black' }}>
+              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px'}}>
                 <EmojiObjectsIcon />
                 Facts
               </IconButton>
@@ -116,7 +116,7 @@ const Header = () => {
           <Grid item>
             {userAuthenticated ? (
               <Link to="/forums">
-                <IconButton style={{ color: 'black' }}>
+                <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px' }}>
                   <ForumIcon />
                   Forums
                 </IconButton>
@@ -124,7 +124,7 @@ const Header = () => {
             ) : (
               <Tooltip title="Login required">
                 <span>
-                  <IconButton disabled style={{ color: 'black' }}>
+                  <IconButton disabled style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px' }}>
                     <ForumIcon />
                     Forums
                   </IconButton>

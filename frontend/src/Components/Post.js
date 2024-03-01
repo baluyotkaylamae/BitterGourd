@@ -158,7 +158,7 @@ const Post = () => {
                             <div className="card product-cart-text prodcard-JSON">
                                 <br/>
                                 <div>
-                                    <h6 style={{ fontFamily: 'Arial', fontSize: '20px', fontWeight: 'bold', color: '#333' }} className="card-title card-title-des">
+                                    <h6 style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '20px', fontWeight: 'bold', color: '#333' }} className="card-title card-title-des">
                                         {post.name}
                                     </h6>
                                     <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginLeft: '15px' }}>
@@ -172,15 +172,15 @@ const Post = () => {
                                     className="card-img-top product-image"
                                 />
                                 <div className="card-body card-des">
-                                    <p style={{ fontFamily: 'Arial', fontSize: '20px', color: '#333' }} className="card-text">
+                                    <p style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '20px', color: '#333' }} className="card-text">
                                         {post.description.slice(0, 100) + '...'}
                                         <Link to={`/posts/${post._id}`} className="see-more-link" style={{ color: 'green' }}>
                                             See More
                                         </Link>
                                     </p>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <div style={{ marginRight: '10px', fontFamily: 'Arial', fontSize: '20px', fontWeight: 'normal', color: '#333' }}><ThumbUpIcon style={{ color: 'green' }} /> {likeCounts[post._id] || 0}</div>
-                                        <div style={{ fontFamily: 'Arial', fontSize: '20px', fontWeight: 'normal', color: '#333' }}><ChatBubbleOutlineIcon style={{ color: 'green' }} />{post.commentsCount}</div>
+                                        <div style={{ marginRight: '10px', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '20px', fontWeight: 'normal', color: '#333' }}><ThumbUpIcon style={{ color: 'green' }} /> {likeCounts[post._id] || 0}</div>
+                                        <div style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '20px', fontWeight: 'normal', color: '#333' }}><ChatBubbleOutlineIcon style={{ color: 'green' }} />{post.commentsCount}</div>
                                     </div>
 
 
@@ -198,7 +198,7 @@ const Post = () => {
                                             Like
                                         </Button>
                                         <IconButton component={Link} to={`/posts/${post._id}`}>
-                                            <ChatBubbleOutlineIcon style={{ color: 'green' }}/>
+                                            <ChatBubbleOutlineIcon style={{ color: 'green' , fontFamily: 'Helvetica Neue, Arial, sans-serif'}}/>
                                             <span className="comment-text">Comment</span>
                                         </IconButton>
                                     </div>

@@ -6,7 +6,7 @@ import '../post.css';
 const TutorialPostCard = ({ post }) => {
     return (
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div className="card product-cart-text prodcard-JSON">
+            <div className="card product-cart-text prodcard-JSON" >
                 <img
                     src={post.images[0].url}
                     alt={post.name}
@@ -55,7 +55,7 @@ const TutorialPosts = () => {
 
     return (
         <div className="container mt-4">
-            <h1 className='prod-t'>Tutorial Posts</h1>
+            <h1 className='prod-t' style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '40px', fontWeight: 'bold', color: '#333' }}>Tutorial Posts</h1>
             <div className="row">
                 {loading ? (
                     <p>Loading...</p>

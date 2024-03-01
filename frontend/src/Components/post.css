@@ -1,11 +1,13 @@
 .prodcard-JSON {
-    border: 2px solid #7db369;
+    border: 2px solid #ffffff;
+    border-radius: 20px;
     height: auto;
     /* Adjust the height to fit content */
     width: 100%;
     /* Adjust the width to fill the container */
     transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
     margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* Add some space between cards */
 }
 

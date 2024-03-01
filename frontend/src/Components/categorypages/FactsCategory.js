@@ -57,7 +57,7 @@ const FactsPosts = () => {
 
     return (
         <div className="container mt-4">
-            <h1 className='prod-t'>Facts</h1>
+            <h1 className='prod-t' style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '40px', fontWeight: 'bold', color: '#333' }}>Facts</h1>
             <div className="row">
                 {loading ? (
                     <p>Loading...</p>

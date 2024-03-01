@@ -28,12 +28,17 @@ const StaticPageContent = () => {
         return <div>Loading...</div>; // Placeholder while data is being fetched
     }
 
+    // Shuffle the related videos array
+    const shuffledRelatedVideos = relatedVideos.sort(() => Math.random() - 0.5);
+    // Take only the first 3 videos
+    const displayedRelatedVideos = shuffledRelatedVideos.slice(0, 3);
+
     return (
-        <div className="static-page-content">
+        <div className="static-page-content" style={{ background: '#f0f0f0' }}>
             <br />
             <Grid container spacing={4}>
                 <Grid item xs={9} style={{ marginTop: '25px' }}>
-                    <div className="video-container" style={{ display: 'inline-block', textAlign: 'left', borderRadius: '15px', border: '4px solid lightgreen' }}>
+                    <div className="video-container" style={{ display: 'inline-block', textAlign: 'left', borderRadius: '30px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                         <iframe
                             width="1000"
                             height="600"
@@ -44,32 +49,32 @@ const StaticPageContent = () => {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         ></iframe>
-                        <CardContent>
+                        <CardContent style={{ background: 'white', borderRadius: '0px 0px 30px 30px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                             <h2>{video.title}</h2>
                             <Typography variant="body1">Source: <a href={video.sourceLink}>{video.source}</a></Typography>
                             <Typography variant="body1">Video Link: <a href={video.videoLink}>{video.videoUrl}</a></Typography>
                         </CardContent>
+
                     </div>
                 </Grid>
                 <Grid item xs={3} style={{ marginTop: '-20px' }} container alignItems="flex-start">
-                    <Box sx={{ p: 3, bgcolor: 'background.paper', maxWidth: '95%' }}>
+                    <Box sx={{ p: 3, bgcolor: 'background.paper', maxWidth: '95%' }} style={{ background: '#f0f0f0' }}>
                         <div className="related-videos">
                             <Typography variant="h6">Related Videos</Typography>
-                            {relatedVideos.map(relatedVideo => (
+                            {displayedRelatedVideos.map(relatedVideo => (
                                 <Link to={`/staticvidcontent/${relatedVideo.id}`} className="video-link" key={relatedVideo.id}>
-                                    <Card className="video-card" style={{ marginBottom: '20px', borderRadius: '15px', border: '4px solid lightgreen' }}>
+                                    <Card className="video-card" style={{ marginBottom: '20px', borderRadius: '30px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' ,  height: '100%' }}>
                                         <CardMedia
                                             component="img"
-                                            height="200"
+                                            height="140" // Set a fixed height for CardMedia
                                             image={relatedVideo.imageUrl}
                                             alt={relatedVideo.title}
-                                            style={{ borderRadius: '15px 15px 0 0' }}
+                                            style={{ objectFit: 'cover', width: '100%', height: '100%' }} // Maintain aspect ratio without stretching
                                         />
                                         <CardContent>
                                             <Typography variant="body2" sx={{ fontFamily: 'Arial', fontSize: '18px', fontWeight: 'bold' }}>{relatedVideo.title}</Typography>
                                         </CardContent>
                                     </Card>
-
                                 </Link>
                             ))}
                         </div>

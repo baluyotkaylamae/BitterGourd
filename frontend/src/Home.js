@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Banner.css';
 import Posts from './Components/Post'; // Import the Posts component
+import { Carousel } from 'react-bootstrap';
 
 const Home = () => {
   // Function to generate random position for fireflies
@@ -63,17 +64,38 @@ const Home = () => {
   }, []); // This is only triggered once when the component mounts
 
   return (
-    <div className="home-container" style={{ background: 'linear-gradient(to bottom, #f8fca4, #ccfca4)' }}>
+    <div className="home-container" style={{ background: '#f0f0f0' }}>
       <div className="banner-container">
         {/* Render fireflies */}
+
+        <div className="curved-banner">
+          <Carousel interval={2000} indicators={true}>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="/images/Bitterfloral Guard.png"
+                alt="First slide"
+              />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="/images/alamy1.jpg"
+                alt="Second slide"
+              />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="/images/palaya.png"
+                alt="Third slide"
+              />
+            </Carousel.Item>
+          </Carousel>
+        </div>
         {fireflies.map((firefly, index) => (
           <div key={index} className="firefly" style={{ top: firefly.top, left: firefly.left, animationDelay: `${firefly.blinkDelay}s` }}></div>
         ))}
-        <div className="curved-banner">
-          <div className="image-on-banner">
-            <img src='/images/Bitterfloral Guard.png' className="image-on-banner" alt="Image-on-banner" />
-          </div>
-        </div>
       </div>
       <Posts /> {/* Render the Posts component here */}
     </div>
