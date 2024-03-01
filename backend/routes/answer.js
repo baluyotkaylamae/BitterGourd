@@ -4,7 +4,7 @@ const answersController = require('../controllers/answersController');
 
 // Route to submit an answer
 router.post('/submit', answersController.submitAnswer);
-
+router.get('/answer', answersController.getAnswers);
 // Other routes can be defined here
 
 module.exports = router;

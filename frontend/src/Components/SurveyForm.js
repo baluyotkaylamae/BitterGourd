@@ -25,7 +25,8 @@ const AnswerForm = () => {
     fetchQuestions();
   }, []);
 
-  const handleInputChange = (index, option) => {
+  const handleInputChange = (index, e) => {
+    const option = e.target.value;
     const updatedFormData = [...formData];
     updatedFormData[index].selectedOption = option;
     setFormData(updatedFormData);
@@ -44,40 +45,94 @@ const AnswerForm = () => {
       await axios.post('http://localhost:4001/api/submit', formDataArray);
 
       console.log('Form submitted successfully');
-      // You can also add code to handle success message or redirect after submission
+      // Reload the page after successful submission
+      window.location.reload();
     } catch (error) {
       console.error('Error submitting form:', error);
       // You can also add code to handle error message
     }
   };
 
+  // Divide questions into three parts: first 5, next 5, and remaining
+  const part1Questions = questions.slice(0, 5);
+  const part2Questions = questions.slice(5, 10);
+  const part3Questions = questions.slice(10);
 
   return (
     <div className="survey-container">
-      <h1 className="form-title">Answer Form</h1>
-      <form onSubmit={handleSubmit}>
-        {questions.map((question, index) => (
-          <div key={question._id} className="question-container">
-            <p className="question-text">{question.questionText}</p>
-            {question.options.map((option) => (
-              <label key={option} className="radio-label">
-                <input
-                  type="radio"
-                  name={`question_${index}`}
-                  value={option}
-                  checked={formData[index]?.selectedOption === option}
-                  onChange={() => handleInputChange(index, option)}
-                />
-                {option}
-              </label>
+      <h1 className="form-title">ANALYTICS QUESTIONS</h1>
+
+      <div className="parts-container">
+        {/* Part 1 */}
+        <div className="part-container-horizontal">
+          <h2 className="part-title">A. Experience about Bitter Gourd</h2>
+          <form onSubmit={handleSubmit}>
+            {part1Questions.map((question, index) => (
+              <div key={question._id} className="question-container">
+                <p className="question-text">{question.questionText}</p>
+                <select
+                  value={formData[index]?.selectedOption}
+                  onChange={(e) => handleInputChange(index, e)}
+                >
+                  <option value="">Select an option</option>
+                  {question.options.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
             ))}
-            {index < questions.length - 1 && <div className="divider" />}
-          </div>
-        ))}
-        <button type="submit" className="submit-button">
+          </form>
+        </div>
+
+        {/* Part 2 */}
+        <div className="part-container-horizontal">
+          <h2 className="part-title">B. Bitter Gourd Cultivation Practices</h2>
+          <form onSubmit={handleSubmit}>
+            {part2Questions.map((question, index) => (
+              <div key={question._id} className="question-container">
+                <p className="question-text">{question.questionText}</p>
+                <select
+                  value={formData[index + 5]?.selectedOption}
+                  onChange={(e) => handleInputChange(index + 5, e)}
+                >
+                  <option value="">Select an option</option>
+                  {question.options.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </form>
+        </div>
+
+        {/* Part 3 */}
+        <div className="part-container-horizontal">
+          <h2 className="part-title">C. BitterFloral Guard Platform Expectation</h2>
+          <form onSubmit={handleSubmit}>
+            {part3Questions.map((question, index) => (
+              <div key={question._id} className="question-container">
+                <p className="question-text">{question.questionText}</p>
+                <select
+                  value={formData[index + 10]?.selectedOption}
+                  onChange={(e) => handleInputChange(index + 10, e)}
+                >
+                  <option value="">Select an option</option>
+                  {question.options.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </form>
+        </div>
+      </div>
+
+      {/* Submit button */}
+      <div className="submit-button-container">
+        <button type="submit" className="submit-button" onClick={handleSubmit}>
           Submit Answers
         </button>
-      </form>
+      </div>
     </div>
   );
 };

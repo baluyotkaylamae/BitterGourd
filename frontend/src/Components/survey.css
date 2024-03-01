@@ -55,3 +55,43 @@ body {
     background-color: #45a049;
   }
   
+
+  .survey-container {
+    max-width: 3000px; /* Adjust the max-width to make it wider */
+    margin: 50px auto;
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .parts-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  
+  .part-container-horizontal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 30px;
+    border-right: 2px solid #ccc; /* Add a border between parts */
+    padding-right: 20px; /* Adjust padding to separate content from border */
+  }
+  
+  .question-container {
+    margin-bottom: 20px;
+  }
+  
+  .submit-button {
+    margin-top: 50px;
+  }
+  
+  .submit-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
