@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar';
 import AnswerForm from '../SurveyForm'; // Import the AnswerForm component
 import { Box, Typography } from '@mui/material';
 import { BarChart, LineChart } from '@mui/x-charts';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import * as XLSX from 'xlsx';
+
 
 const chartSetting = {
   width: 500,
@@ -15,6 +19,9 @@ const Dashboard = () => {
   const [barChartData, setBarChartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const chartRef = useRef(null);
+  const chartContainerRef = useRef(null);
+
 
   useEffect(() => {
     const fetchSurveyAnswers = async () => {
@@ -41,9 +48,13 @@ const Dashboard = () => {
             lineChartDataMap.set(questionLabel, lineData);
 
             // For BarChart
-            const barData = barChartDataMap.get(questionLabel) || { questionId: questionLabel, 'Not effective': 0, Effective: 0, 'Very Effective': 0 };
-            barData[selectedOption]++;
-            barChartDataMap.set(questionLabel, barData);
+            const barData = barChartDataMap.get(questionLabel) || { questionId: questionLabel, 'Not effective': 0, 'Effective': 0, 'Very Effective': 0 };
+
+            // Validate and handle NaN values
+            if (!isNaN(barData[selectedOption])) {
+              barData[selectedOption]++;
+              barChartDataMap.set(questionLabel, barData);
+            }
           });
         });
 
@@ -62,6 +73,7 @@ const Dashboard = () => {
         setLoading(false); // Set loading state to false in case of error
       }
     };
+
 
     const mapQuestionIdToLabel = (questionId) => {
       switch (questionId) {
@@ -103,6 +115,56 @@ const Dashboard = () => {
     fetchSurveyAnswers();
   }, []);
 
+  //download Analytics as Pdf
+  const handleDownload = () => {
+    const pdf = new jsPDF();
+    if (chartContainerRef.current) {
+      setTimeout(() => {
+        html2canvas(chartContainerRef.current).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const imgWidth = 210; // Width of the image in mm (A4 size)
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          const marginLeft = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+          const marginTop = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
+          pdf.addImage(imgData, 'PNG', marginLeft, marginTop, imgWidth, imgHeight);
+          pdf.save('analytics.pdf');
+        });
+      }, 1000); // Adjust the delay time as needed
+    } else {
+      console.error('chartContainerRef.current is not defined or null');
+    }
+  };
+
+
+  const handleConvertToExcel = () => {
+    const wb = XLSX.utils.book_new();
+  
+    // Convert lineChartData to Excel format
+    const lineDataWS = XLSX.utils.json_to_sheet(lineChartData);
+    XLSX.utils.book_append_sheet(wb, lineDataWS, 'Line Chart Data');
+  
+    console.log('Original Bar Chart Data:', barChartData); // Log the original bar chart data
+  
+    // Filter out objects with NaN values from barChartData
+    const filteredBarChartData = barChartData.filter(data => (
+      data.questionId && 
+      !isNaN(data['Not effective']) && 
+      !isNaN(data['Effective']) && 
+      !isNaN(data['Very Effective'])
+    ));
+  
+    console.log('Filtered Bar Chart Data:', filteredBarChartData); // Log the filtered bar chart data
+  
+    // Convert filteredBarChartData to Excel format
+    const barDataWS = XLSX.utils.json_to_sheet(filteredBarChartData);
+    XLSX.utils.book_append_sheet(wb, barDataWS, 'Bar Chart Data');
+  
+    // Save the workbook as an Excel file
+    const excelFileName = 'analytics.xlsx';
+    XLSX.writeFile(wb, excelFileName);
+  };
+  
+
 
   if (loading) {
     return <Typography variant="body1">Loading...</Typography>;
@@ -116,18 +178,20 @@ const Dashboard = () => {
   const filteredLineChartData = lineChartData.filter(data => !data.questionId.startsWith('Q6') && !data.questionId.startsWith('Q7') && !data.questionId.startsWith('Q8') && !data.questionId.startsWith('Q9') && !data.questionId.startsWith('Q10') && !data.questionId.startsWith('Q11') && !data.questionId.startsWith('Q12')
     && !data.questionId.startsWith('Q13') && !data.questionId.startsWith('Q14') && !data.questionId.startsWith('Q15'));
 
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1, p: 3 }}>
 
       {/* Sidebar and Analytics */}
       <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <Sidebar />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box ref={chartContainerRef} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography variant="h4" gutterBottom>
             Analytics
           </Typography>
+
           {/* Line Chart */}
-          <Box sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
+          <Box ref={chartContainerRef} sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
             <Typography variant="h5" gutterBottom>
               A. Experience about Bitter Gourd
             </Typography>
@@ -140,10 +204,11 @@ const Dashboard = () => {
                 { dataKey: 'Always', label: 'Always' }
               ]}
               {...chartSetting}
+              ref={chartRef}
             />
           </Box>
           {/* Bar Chart */}
-          <Box sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
+          <Box ref={chartContainerRef} sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
             <Typography variant="h5" gutterBottom>
               B. Bitter Gourd Cultivation Practices
             </Typography>
@@ -156,12 +221,13 @@ const Dashboard = () => {
                 { dataKey: 'Very Effective', label: 'Very Effective' }
               ]}
               {...chartSetting}
+              ref={chartRef}
             />
 
 
           </Box>
 
-          <Box sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
+          <Box ref={chartContainerRef} sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
             <Typography variant="h5" gutterBottom>
               C. BitterFloral Guard Platform Expectation
             </Typography>
@@ -175,14 +241,22 @@ const Dashboard = () => {
               ]}
               horizontal
               {...chartSetting}
+              ref={chartRef}
             />
           </Box>
 
 
+
         </Box>
+
+        <div className="submit-button-container">
+          <button className="submit-button" onClick={handleDownload}>Download PDF</button>
+        </div>
+        <div className="submit-button-container">
+        <button className="submit-button" onClick={handleConvertToExcel}>Convert to Excel</button>
+        </div>
       </Box>
 
-      {/* Separate container for the survey form */}
       <Box sx={{ width: '55%' }}>
         <AnswerForm />
       </Box>

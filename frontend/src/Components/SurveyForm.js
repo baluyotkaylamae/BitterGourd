@@ -130,7 +130,7 @@ const AnswerForm = () => {
       {/* Submit button */}
       <div className="submit-button-container">
         <button type="submit" className="submit-button" onClick={handleSubmit}>
-          Submit Answers
+         INPUT
         </button>
       </div>
     </div>
