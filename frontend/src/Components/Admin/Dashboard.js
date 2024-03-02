@@ -138,32 +138,32 @@ const Dashboard = () => {
 
   const handleConvertToExcel = () => {
     const wb = XLSX.utils.book_new();
-  
+
     // Convert lineChartData to Excel format
     const lineDataWS = XLSX.utils.json_to_sheet(lineChartData);
     XLSX.utils.book_append_sheet(wb, lineDataWS, 'Line Chart Data');
-  
+
     console.log('Original Bar Chart Data:', barChartData); // Log the original bar chart data
-  
+
     // Filter out objects with NaN values from barChartData
     const filteredBarChartData = barChartData.filter(data => (
-      data.questionId && 
-      !isNaN(data['Not effective']) && 
-      !isNaN(data['Effective']) && 
+      data.questionId &&
+      !isNaN(data['Not effective']) &&
+      !isNaN(data['Effective']) &&
       !isNaN(data['Very Effective'])
     ));
-  
+
     console.log('Filtered Bar Chart Data:', filteredBarChartData); // Log the filtered bar chart data
-  
+
     // Convert filteredBarChartData to Excel format
     const barDataWS = XLSX.utils.json_to_sheet(filteredBarChartData);
     XLSX.utils.book_append_sheet(wb, barDataWS, 'Bar Chart Data');
-  
+
     // Save the workbook as an Excel file
     const excelFileName = 'analytics.xlsx';
     XLSX.writeFile(wb, excelFileName);
   };
-  
+
 
 
   if (loading) {
@@ -180,13 +180,15 @@ const Dashboard = () => {
 
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1, p: 3 }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 3, p: 3 }}>
 
-      {/* Sidebar and Analytics */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+      {/* Analytics Graph */}
+
+      <Box sx={{ gridColumn: 'span 2' }} />
+      <Box sx={{ gridColumn: 'span 5', overflowY: 'auto', height: 'calc(100vh - 64px)' }}>
         <Sidebar />
         <Box ref={chartContainerRef} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '30px', fontWeight: 'bold', color: '#333' }}>
             Analytics
           </Typography>
 
@@ -223,8 +225,6 @@ const Dashboard = () => {
               {...chartSetting}
               ref={chartRef}
             />
-
-
           </Box>
 
           <Box ref={chartContainerRef} sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
@@ -245,23 +245,24 @@ const Dashboard = () => {
             />
           </Box>
 
-
-
+          <div className="submit-button-container">
+            <button className="submit-button" onClick={handleDownload}>Download PDF</button>
+          </div>
+          <div className="submit-button-container">
+            <button className="submit-button" onClick={handleConvertToExcel}>Convert to Excel</button>
+          </div>
         </Box>
-
-        <div className="submit-button-container">
-          <button className="submit-button" onClick={handleDownload}>Download PDF</button>
-        </div>
-        <div className="submit-button-container">
-        <button className="submit-button" onClick={handleConvertToExcel}>Convert to Excel</button>
-        </div>
       </Box>
 
-      <Box sx={{ width: '55%' }}>
+      {/* Analytics Form */}
+      <Box sx={{ gridColumn: 'span 5', overflowY: 'auto', height: 'calc(100vh - 64px)' }}>
         <AnswerForm />
       </Box>
+
     </Box>
   );
+
+
 }
 
 export default Dashboard;

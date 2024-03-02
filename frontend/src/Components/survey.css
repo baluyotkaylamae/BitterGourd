@@ -72,14 +72,7 @@ body {
     margin-bottom: 40px;
   }
   
-  .part-container-horizontal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 30px;
-    border-right: 2px solid #ccc; /* Add a border between parts */
-    padding-right: 20px; /* Adjust padding to separate content from border */
-  }
+  
   
   .question-container {
     margin-bottom: 20px;
