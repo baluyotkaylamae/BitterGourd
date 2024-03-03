@@ -48,7 +48,7 @@ const Dashboard = () => {
             lineChartDataMap.set(questionLabel, lineData);
 
             // For BarChart
-            const barData = barChartDataMap.get(questionLabel) || { questionId: questionLabel, 'Not effective': 0, 'Effective': 0, 'Very Effective': 0 };
+            const barData = barChartDataMap.get(questionLabel) || { questionId: questionLabel, Not_effective: 0, Effective: 0, Very_Effective: 0 };
 
             // Validate and handle NaN values
             if (!isNaN(barData[selectedOption])) {
@@ -135,35 +135,38 @@ const Dashboard = () => {
     }
   };
 
-
   const handleConvertToExcel = () => {
     const wb = XLSX.utils.book_new();
-  
-    // Convert lineChartData to Excel format
-    const lineDataWS = XLSX.utils.json_to_sheet(lineChartData);
+
+    // Flatten barChartData array
+    const flattenedBarChartData = barChartData.map(data => {
+      return {
+        questionId: data.questionId,
+        Not_effective: data.Not_effective,
+        Effective: data.Effective,
+        Very_Effective: data.Very_Effective
+      };
+    });
+
+    // Filter lineChartData to exclude Q6 to Q15
+    const filteredLineChartData = lineChartData.filter(data => {
+      const questionNumber = parseInt(data.questionId.substr(1)); // Extract the question number
+      return questionNumber <= 5; // Include questions 1 to 5
+    });
+
+    // Convert filteredLineChartData to Excel format
+    const lineDataWS = XLSX.utils.json_to_sheet(filteredLineChartData);
     XLSX.utils.book_append_sheet(wb, lineDataWS, 'Line Chart Data');
-  
-    console.log('Original Bar Chart Data:', barChartData); // Log the original bar chart data
-  
-    // Filter out objects with NaN values from barChartData
-    const filteredBarChartData = barChartData.filter(data => (
-      data.questionId && 
-      !isNaN(data['Not effective']) && 
-      !isNaN(data['Effective']) && 
-      !isNaN(data['Very Effective'])
-    ));
-  
-    console.log('Filtered Bar Chart Data:', filteredBarChartData); // Log the filtered bar chart data
-  
-    // Convert filteredBarChartData to Excel format
-    const barDataWS = XLSX.utils.json_to_sheet(filteredBarChartData);
+
+    // Convert flattenedBarChartData to Excel format
+    const barDataWS = XLSX.utils.json_to_sheet(flattenedBarChartData);
     XLSX.utils.book_append_sheet(wb, barDataWS, 'Bar Chart Data');
-  
+
     // Save the workbook as an Excel file
     const excelFileName = 'analytics.xlsx';
     XLSX.writeFile(wb, excelFileName);
   };
-  
+
 
 
   if (loading) {
@@ -175,14 +178,13 @@ const Dashboard = () => {
   }
 
   // Filter lineChartData to exclude Q6 to Q10
-  const filteredLineChartData = lineChartData.filter(data => !data.questionId.startsWith('Q6') && !data.questionId.startsWith('Q7') && !data.questionId.startsWith('Q8') && !data.questionId.startsWith('Q9') && !data.questionId.startsWith('Q10') && !data.questionId.startsWith('Q11') && !data.questionId.startsWith('Q12')
-    && !data.questionId.startsWith('Q13') && !data.questionId.startsWith('Q14') && !data.questionId.startsWith('Q15'));
+  const fLineChartData = lineChartData.filter(data => !data.questionId.startsWith('Q6') && !data.questionId.startsWith('Q7') && !data.questionId.startsWith('Q8') && !data.questionId.startsWith('Q9') && !data.questionId.startsWith('Q10') && !data.questionId.startsWith('Q11') && !data.questionId.startsWith('Q12') && !data.questionId.startsWith('Q13') && !data.questionId.startsWith('Q14') && !data.questionId.startsWith('Q15'));
 
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1, p: 3 }}>
 
-      {/* Sidebar and Analytics */}
+      Sidebar and Analytics
       <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <Sidebar />
         <Box ref={chartContainerRef} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -196,7 +198,7 @@ const Dashboard = () => {
               A. Experience about Bitter Gourd
             </Typography>
             <LineChart
-              dataset={filteredLineChartData}
+              dataset={fLineChartData}
               xAxis={[{ scaleType: 'band', dataKey: 'questionId' }]}
               series={[
                 { dataKey: 'Never', label: 'Never' },
@@ -213,12 +215,12 @@ const Dashboard = () => {
               B. Bitter Gourd Cultivation Practices
             </Typography>
             <BarChart
-              dataset={barChartData.filter(data => data.questionId.startsWith('Q6') || data.questionId.startsWith('Q7') || data.questionId.startsWith('Q8') || data.questionId.startsWith('Q9') || data.questionId.startsWith('Q15'))}
+              dataset={barChartData.filter(data => data.questionId.startsWith('Q6') || data.questionId.startsWith('Q7') || data.questionId.startsWith('Q8') || data.questionId.startsWith('Q9') || data.questionId.startsWith('Q10'))}
               xAxis={[{ scaleType: 'band', dataKey: 'questionId' }]}
               series={[
-                { dataKey: 'Not effective', label: 'Not effective' },
+                { dataKey: 'Not_effective', label: 'Not_effective' },
                 { dataKey: 'Effective', label: 'Effective' },
-                { dataKey: 'Very Effective', label: 'Very Effective' }
+                { dataKey: 'Very_Effective', label: 'Very_Effective' }
               ]}
               {...chartSetting}
               ref={chartRef}
@@ -235,9 +237,9 @@ const Dashboard = () => {
               dataset={barChartData.filter(data => data.questionId.startsWith('Q11') || data.questionId.startsWith('Q12') || data.questionId.startsWith('Q13') || data.questionId.startsWith('Q14') || data.questionId.startsWith('Q15'))}
               xAxis={[{ scaleType: 'band', dataKey: 'questionId' }]}
               series={[
-                { dataKey: 'Not effective', label: 'Not effective' },
+                { dataKey: 'Not_effective', label: 'Not_effective' },
                 { dataKey: 'Effective', label: 'Effective' },
-                { dataKey: 'Very Effective', label: 'Very Effective' }
+                { dataKey: 'Very_Effective', label: 'Very_Effective' }
               ]}
               horizontal
               {...chartSetting}
@@ -253,7 +255,7 @@ const Dashboard = () => {
           <button className="submit-button" onClick={handleDownload}>Download PDF</button>
         </div>
         <div className="submit-button-container">
-        <button className="submit-button" onClick={handleConvertToExcel}>Convert to Excel</button>
+          <button className="submit-button" onClick={handleConvertToExcel}>Convert to Excel</button>
         </div>
       </Box>
 
