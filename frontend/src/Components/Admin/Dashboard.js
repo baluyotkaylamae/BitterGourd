@@ -115,25 +115,24 @@ const Dashboard = () => {
     fetchSurveyAnswers();
   }, []);
 
-  //download Analytics as Pdf
   const handleDownload = () => {
     const pdf = new jsPDF();
     if (chartContainerRef.current) {
-      setTimeout(() => {
-        html2canvas(chartContainerRef.current).then(canvas => {
-          const imgData = canvas.toDataURL('image/png');
-          const imgWidth = 210; // Width of the image in mm (A4 size)
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
-          const marginLeft = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
-          const marginTop = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
-          pdf.addImage(imgData, 'PNG', marginLeft, marginTop, imgWidth, imgHeight);
-          pdf.save('analytics.pdf');
-        });
-      }, 1000); // Adjust the delay time as needed
+      const chartElement = chartContainerRef.current;
+      html2canvas(chartElement).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 150; // Adjusted width of the image in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const marginLeft = 20; // Adjusted left margin in mm
+        const marginTop = 20; // Adjusted top margin in mm
+        pdf.addImage(imgData, 'PNG', marginLeft, marginTop, imgWidth, imgHeight);
+        pdf.save('analytics.pdf');
+      });
     } else {
       console.error('chartContainerRef.current is not defined or null');
     }
   };
+  
 
   const handleConvertToExcel = () => {
     const wb = XLSX.utils.book_new();
