@@ -60,16 +60,16 @@ const AnswerForm = () => {
 
   return (
     <div className="survey-container">
-      <h1 className="form-title">ANALYTICS QUESTIONS</h1>
-
+      <p className="form-title" style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '20px', fontWeight: 'bold', color: '#333' }}>
+        ANALYTICS QUESTIONS</p>
       <div className="parts-container">
         {/* Part 1 */}
         <div className="part-container-horizontal">
-          <h2 className="part-title">A. Experience about Bitter Gourd</h2>
+          <h2 className="part-title" style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '20px', fontWeight: 'bold', color: '#333', textAlign: 'left'}}>A. Experience about Bitter Gourd</h2>
           <form onSubmit={handleSubmit}>
             {part1Questions.map((question, index) => (
               <div key={question._id} className="question-container">
-                <p className="question-text">{question.questionText}</p>
+                <p className="question-text" style={{ textAlign: 'left' }}>{question.questionText}</p>
                 <select
                   value={formData[index]?.selectedOption}
                   onChange={(e) => handleInputChange(index, e)}
@@ -82,15 +82,11 @@ const AnswerForm = () => {
               </div>
             ))}
           </form>
-        </div>
-
-        {/* Part 2 */}
-        <div className="part-container-horizontal">
-          <h2 className="part-title">B. Bitter Gourd Cultivation Practices</h2>
+          <h2 className="part-title" style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '20px', fontWeight: 'bold', color: '#333', textAlign: 'left'}}>B. Bitter Gourd Cultivation Practices</h2>
           <form onSubmit={handleSubmit}>
             {part2Questions.map((question, index) => (
               <div key={question._id} className="question-container">
-                <p className="question-text">{question.questionText}</p>
+                <p className="question-text" style={{ textAlign: 'left' }}>{question.questionText}</p>
                 <select
                   value={formData[index + 5]?.selectedOption}
                   onChange={(e) => handleInputChange(index + 5, e)}
@@ -103,15 +99,12 @@ const AnswerForm = () => {
               </div>
             ))}
           </form>
-        </div>
-
-        {/* Part 3 */}
-        <div className="part-container-horizontal">
-          <h2 className="part-title">C. BitterFloral Guard Platform Expectation</h2>
+        
+          <h2 className="part-title" style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '20px', fontWeight: 'bold', color: '#333', textAlign: 'left'}}>C. BitterFloral Guard Platform Expectation</h2>
           <form onSubmit={handleSubmit}>
             {part3Questions.map((question, index) => (
               <div key={question._id} className="question-container">
-                <p className="question-text">{question.questionText}</p>
+                <p className="question-text" style={{ textAlign: 'left' }}>{question.questionText}</p>
                 <select
                   value={formData[index + 10]?.selectedOption}
                   onChange={(e) => handleInputChange(index + 10, e)}
