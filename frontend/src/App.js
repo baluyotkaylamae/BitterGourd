@@ -29,6 +29,7 @@ import CreatePost from './Components/Admin/PostCreate';
 import UpdatePost from './Components/Admin/PostUpdate';
 import PostDetails from './Components/Postdetails';
 import TutorialPage from './Components/categorypages/TutorialsCategory';
+import TypePage from './Components/categorypages/TypesCategory';
 import Tips from './Components/categorypages/TipsCategorypage';
 import Facts from './Components/categorypages/FactsCategory';
 import Video1 from './Components/Videos/video1';
@@ -140,6 +141,7 @@ function App() {
           
            {/* CategoryPages */}
           <Route path="/tutorials" element={<TutorialPage />} />
+          <Route path="/Types" element={<TypePage />} />
           <Route path="/Tips" element={<Tips />} />
           <Route path="/Facts" element={<Facts />} />
 

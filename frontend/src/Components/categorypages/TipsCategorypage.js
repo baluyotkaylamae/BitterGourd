@@ -56,7 +56,7 @@ const TipsPosts = () => {
 
     return (
         <div className="container mt-4">
-            <h1 className='prod-t'style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '40px', fontWeight: 'bold', color: '#333' }}>Tips/Recommendations Posts</h1>
+            <h1 className='prod-t'style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '40px', fontWeight: 'bold', color: '#333' }}>Tips/Recommendations</h1>
             <div className="row">
                 {loading ? (
                     <p>Loading...</p>

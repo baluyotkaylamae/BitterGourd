@@ -61,7 +61,7 @@ const AnswerForm = () => {
   return (
     <div className="survey-container">
       <p className="form-title" style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '20px', fontWeight: 'bold', color: '#333' }}>
-        ANALYTICS QUESTIONS</p>
+        QUESTIONS</p>
       <div className="parts-container">
         {/* Part 1 */}
         <div className="part-container-horizontal">

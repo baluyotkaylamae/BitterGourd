@@ -376,6 +376,7 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
                                     <SendIcon />
                                 </IconButton>
                             </Box>
+                            
                         </Box>
                         <Divider sx={{ mx: 2, }} />
                     </Box>

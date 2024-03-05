@@ -132,7 +132,7 @@ const Dashboard = () => {
       console.error('chartContainerRef.current is not defined or null');
     }
   };
-  
+
 
   const handleConvertToExcel = () => {
     const wb = XLSX.utils.book_new();
@@ -181,18 +181,22 @@ const Dashboard = () => {
 
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1, p: 3 }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 3, p: 3 }}>
 
-      Sidebar and Analytics
-      <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+      {/* Sidebar and Analytics */}
+      <Box sx={{ gridColumn: 'span 2' }}>
         <Sidebar />
+      </Box>
+
+      <Box sx={{ gridColumn: 'span 5' }}>
         <Box ref={chartContainerRef} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography variant="h4" gutterBottom>
             Analytics
           </Typography>
 
           {/* Line Chart */}
-          <Box ref={chartContainerRef} sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Box ref={chartContainerRef} sx={{ borderRadius: '10px', marginBottom: '20px', padding: '20px' }} className="card product-cart-text prodcard-JSON">
             <Typography variant="h5" gutterBottom>
               A. Experience about Bitter Gourd
             </Typography>
@@ -208,8 +212,11 @@ const Dashboard = () => {
               ref={chartRef}
             />
           </Box>
+          </div>
+
           {/* Bar Chart */}
-          <Box ref={chartContainerRef} sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Box ref={chartContainerRef} sx={{ borderRadius: '10px', marginBottom: '20px', padding: '20px' }} className="card product-cart-text prodcard-JSON">
             <Typography variant="h5" gutterBottom>
               B. Bitter Gourd Cultivation Practices
             </Typography>
@@ -224,11 +231,11 @@ const Dashboard = () => {
               {...chartSetting}
               ref={chartRef}
             />
-
-
           </Box>
+          </div>
 
-          <Box ref={chartContainerRef} sx={{ border: '2px solid green', borderRadius: '10px', marginBottom: '20px', padding: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Box ref={chartContainerRef} sx={{ borderRadius: '10px', marginBottom: '20px', padding: '20px' }} className="card product-cart-text prodcard-JSON">
             <Typography variant="h5" gutterBottom>
               C. BitterFloral Guard Platform Expectation
             </Typography>
@@ -245,20 +252,18 @@ const Dashboard = () => {
               ref={chartRef}
             />
           </Box>
+          </div>
 
-
-
+          <div className="submit-button-container">
+            <button className="submit-button" onClick={handleDownload}>Download PDF</button>
+          </div>
+          <div className="submit-button-container">
+            <button className="submit-button" onClick={handleConvertToExcel}>Convert to Excel</button>
+          </div>
         </Box>
-
-        <div className="submit-button-container">
-          <button className="submit-button" onClick={handleDownload}>Download PDF</button>
-        </div>
-        <div className="submit-button-container">
-          <button className="submit-button" onClick={handleConvertToExcel}>Convert to Excel</button>
-        </div>
       </Box>
 
-      <Box sx={{ width: '55%' }}>
+      <Box sx={{ gridColumn: 'span 5'}}>
         <AnswerForm />
       </Box>
     </Box>

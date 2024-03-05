@@ -9,6 +9,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import ForumIcon from '@mui/icons-material/Forum';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import GrassIcon from '@mui/icons-material/Grass';
 import { getUser, logout } from '../../utils/helpers';
 import './FH.css';
 
@@ -110,6 +111,14 @@ const Header = () => {
               <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px'}}>
                 <EmojiObjectsIcon />
                 Facts
+              </IconButton>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="/Types">
+              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px'}}>
+                <GrassIcon />
+                Types
               </IconButton>
             </Link>
           </Grid>

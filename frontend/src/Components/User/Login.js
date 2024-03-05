@@ -94,7 +94,7 @@ const Login = () => {
                           </div>
                           <div className="text-center pt-1 mb-5 pb-1">
                             <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 text-black" type="submit">Log in</button>
-                            <a className="text-muted" href="/password/forgot">Forgot password?</a>
+                            {/* <a className="text-muted" href="/password/forgot">Forgot password?</a> */}
                           </div>
                           <div className="d-flex align-items-center justify-content-center pb-4">
                             <p className="mb-0 me-2">Don't have an account?</p>
