@@ -66,7 +66,8 @@ body {
   font-weight: 700;
   padding: 1px;
   background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
-  background: linear-gradient(to right, #eae4cf, #a9f8a1);
+  /* background: linear-gradient(to right, #eae4cf, #a9f8a1); */
+  
   height: 70vh; /* Cover the entire viewport height */
 }
 .wrapper form {
@@ -75,7 +76,7 @@ body {
   background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background */
 }
 .wrapper form .btn {
-  background-color: #8e5f47;
+  background-color: #66872a;
   border-color: #8e5f47;
   color: white;
   margin-top: 2.5rem;
@@ -120,8 +121,8 @@ body {
 /* Avatar */
 .profile {
   margin: 50px auto;
-  background-color: #fff;
-  border-radius: 40px;
+  background-color: #ffffff;
+  border-radius: 60px;
   width: 800px;
   padding: 50px;
   display: flex;
@@ -134,10 +135,8 @@ body {
 }
 .background-page {
   font-family: "Montserrat", sans-serif;
-  background: #f2994a;
-  background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
-  background: linear-gradient(to right, #eae4cf, #9fef97);
-  padding: 60px;
+  background: linear-gradient(to right, #C1F2B0, #c3fb69,  #9BCF53);
+  padding: 80px;
   color: #000; /* Font color set to black */
 }
 .avatar {
@@ -212,6 +211,7 @@ body {
   /* Add your hover styles for primary button here */
   background-color: #0056b3;
 }
+
 
 /* Header User Profile */
 

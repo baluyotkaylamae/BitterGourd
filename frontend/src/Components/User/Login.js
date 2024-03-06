@@ -17,13 +17,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  let location = useLocation();
-  //   const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : '';
-  // const notify = (error) =>
-  // toast.error(error, {
-  //   position: 'bottom-center',
-  // });
-
 
   const login = async (email, password) => {
     try {

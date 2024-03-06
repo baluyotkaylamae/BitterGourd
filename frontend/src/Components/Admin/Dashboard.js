@@ -7,6 +7,7 @@ import { BarChart, LineChart } from '@mui/x-charts';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
+import './dashboard.css'
 
 
 const chartSetting = {
@@ -181,22 +182,18 @@ const Dashboard = () => {
 
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 3, p: 3 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1, p: 3 }}>
 
-      {/* Sidebar and Analytics */}
-      <Box sx={{ gridColumn: 'span 2' }}>
+      Sidebar and Analytics
+      <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <Sidebar />
-      </Box>
-
-      <Box sx={{ gridColumn: 'span 5' }}>
         <Box ref={chartContainerRef} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography variant="h4" gutterBottom>
             Analytics
           </Typography>
 
           {/* Line Chart */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Box ref={chartContainerRef} sx={{ borderRadius: '10px', marginBottom: '20px', padding: '20px' }} className="card product-cart-text prodcard-JSON">
+          <Box ref={chartContainerRef} className="chart-container" sx={{ marginBottom: '20px' }}>
             <Typography variant="h5" gutterBottom>
               A. Experience about Bitter Gourd
             </Typography>
@@ -212,11 +209,9 @@ const Dashboard = () => {
               ref={chartRef}
             />
           </Box>
-          </div>
 
           {/* Bar Chart */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Box ref={chartContainerRef} sx={{ borderRadius: '10px', marginBottom: '20px', padding: '20px' }} className="card product-cart-text prodcard-JSON">
+          <Box ref={chartContainerRef} className="chart-container" sx={{ marginBottom: '20px' }}>
             <Typography variant="h5" gutterBottom>
               B. Bitter Gourd Cultivation Practices
             </Typography>
@@ -232,10 +227,8 @@ const Dashboard = () => {
               ref={chartRef}
             />
           </Box>
-          </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Box ref={chartContainerRef} sx={{ borderRadius: '10px', marginBottom: '20px', padding: '20px' }} className="card product-cart-text prodcard-JSON">
+          <Box ref={chartContainerRef} className="chart-container" sx={{ marginBottom: '20px' }}>
             <Typography variant="h5" gutterBottom>
               C. BitterFloral Guard Platform Expectation
             </Typography>
@@ -252,22 +245,21 @@ const Dashboard = () => {
               ref={chartRef}
             />
           </Box>
-          </div>
 
-          <div className="submit-button-container">
-            <button className="submit-button" onClick={handleDownload}>Download PDF</button>
-          </div>
-          <div className="submit-button-container">
-            <button className="submit-button" onClick={handleConvertToExcel}>Convert to Excel</button>
-          </div>
         </Box>
+
+        <div className="submit-button-container">
+          <button className="submit-button" onClick={handleDownload}>Download PDF</button>
+        </div>
+        <div className="submit-button-container">
+          <button className="submit-button" onClick={handleConvertToExcel}>Convert to Excel</button>
+        </div>
       </Box>
 
-      <Box sx={{ gridColumn: 'span 5'}}>
+      <Box sx={{ gridColumn: 'span 5' }}>
         <AnswerForm />
       </Box>
     </Box>
   );
 }
-
 export default Dashboard;

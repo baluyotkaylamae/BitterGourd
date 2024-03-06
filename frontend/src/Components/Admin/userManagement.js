@@ -3,7 +3,7 @@ import axios from 'axios';
 import { MDBDataTable } from 'mdbreact';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import Sidebar from './Sidebar';
+import Sidebar from './Sidebar';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
@@ -119,7 +119,7 @@ const UserManagement = () => {
         <div className="container mt-5">
             <div className="row">
                 <div className="col-md-3">
-                    {/* <Sidebar /> */}
+                    <Sidebar />
                 </div>
                 <div className="col-md-9">
                     <div>

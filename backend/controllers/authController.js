@@ -65,16 +65,6 @@ exports.logout = async (req, res, next) => {
     });
 };
 
-exports.forgotPassword = async (req, res, next) => {
-    // Implement forgot password functionality here (if needed).
-    // Remove this function if you don't need it.
-};
-
-exports.resetPassword = async (req, res, next) => {
-    // Implement password reset functionality here (if needed).
-    // Remove this function if you don't need it.
-};
-
 exports.getUserProfile = async (req, res, next) => {
     const user = await User.findById(req.user.id);
     res.status(200).json({

@@ -60,28 +60,29 @@ const Header = () => {
   }, [location]);
 
   return (
-    <AppBar position="static" style={{ background: 'linear-gradient(to right, #93c570, #a5d582)' }}>
+    <AppBar position="static" style={{ background: '#9cc255' }}>
       <Toolbar>
         <Grid container alignItems="center">
           <Grid item>
             <Link to="/">
-              <img src="/images/bitterguard-high-resolution-logo.png" alt="Bitter Gourd Logo" style={{ height: '40px' }} />
+              <img src="/images/bitterguard-high-resolution-logo.png" alt="Bitter Gourd Logo" style={{ height: '60px', width: '80px' }} />
             </Link>
           </Grid>
           <Grid item flexGrow={1}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginLeft: '300px' }}> {/* Increase marginLeft value */}
               <IconButton style={{ color: 'black' }} onClick={handleSearch}>
                 <SearchIcon />
               </IconButton>
               <InputBase
                 placeholder="Search..."
                 inputProps={{ 'aria-label': 'search' }}
-                style={{ marginLeft: '5px', width: '600px', backgroundColor: '#fff', padding: '5px', borderRadius: '5px' }}
+                style={{ width: '600px', backgroundColor: '#fff', padding: '5px', borderRadius: '5px' }}
                 onChange={handleChange}
                 value={searchTerm}
               />
             </div>
           </Grid>
+
           <Grid item>
             <Link to="/statichome">
               <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px' }}>
@@ -92,7 +93,7 @@ const Header = () => {
           </Grid>
           <Grid item>
             <Link to="/Tutorials">
-              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px'}}>
+              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px' }}>
                 <LibraryBooksIcon />
                 Tutorials
               </IconButton>
@@ -108,7 +109,7 @@ const Header = () => {
           </Grid>
           <Grid item>
             <Link to="/Facts">
-              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px'}}>
+              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px' }}>
                 <EmojiObjectsIcon />
                 Facts
               </IconButton>
@@ -116,7 +117,7 @@ const Header = () => {
           </Grid>
           <Grid item>
             <Link to="/Types">
-              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px'}}>
+              <IconButton style={{ color: 'black', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontSize: '18px' }}>
                 <GrassIcon />
                 Types
               </IconButton>

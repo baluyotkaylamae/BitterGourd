@@ -20,6 +20,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FormatListBulleted from '@mui/icons-material/FormatListBulleted';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import SsidChartIcon from '@mui/icons-material/SsidChart';
+import GroupIcon from '@mui/icons-material/Group';
 
 const drawerWidth = 240;
 
@@ -164,6 +165,10 @@ const Sidebar = () => {
                 <ListItemLink to="/post/list" primary="Post List" icon={<FormatListBulleted />} />
               </List>
             </Collapse>
+
+            <List component="div" disablePadding>
+                <ListItemLink to="/admin/users" primary="Users" icon={<GroupIcon />} />
+              </List>
 
 
 

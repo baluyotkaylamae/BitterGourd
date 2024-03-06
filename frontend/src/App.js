@@ -14,7 +14,6 @@ import Login from './Components/User/Login'
 import Register from './Components/User/Register';
 import Profile from './Components/User/Profile'
 import UpdateProfile from './Components/User/UpdateProfile';
-import ForgotPassword from './Components/User/ForgotPassword';
 import NewPassword from './Components/User/NewPassword';
 import UpdatePassword from './Components/User/UpdatePassword';
 import ProtectedRoute from './Components/Route/ProtectedRoute';
@@ -88,6 +87,7 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           } end />
+          
           <Route path="/sidebar" element={
             <ProtectedRoute isAdmin={true}>
               <Sidebar />
@@ -163,7 +163,6 @@ function App() {
           <Route path="/register" element={<Register />} exact="true" />
           <Route path="/me" element={<Profile />} exact="true" />
           <Route path="/me/update" element={<UpdateProfile />} exact="true" />
-          <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
           <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
           <Route path="/password/update" element={<UpdatePassword />} />
           <Route

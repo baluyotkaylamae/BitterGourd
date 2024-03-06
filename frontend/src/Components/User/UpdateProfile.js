@@ -1,226 +1,183 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import MetaData from '../Layouts/Metadata';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
 
 const UpdateProfile = () => {
+    const [user, setUser] = useState({});
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [avatar, setAvatar] = useState('');
     const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg');
-    const [error, setError] = useState('');
-    const [user, setUser] = useState({});
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [isUpdated, setIsUpdated] = useState(false);
-    let navigate = useNavigate();
-
-    const getProfile = async () => {
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${getToken()}`
-            }
-        };
-
-        try {
-            const { data } = await axios.get(`http://localhost:4001/api/me`, config);
-            setName(data.user.name);
-            setEmail(data.user.email);
-            setAvatarPreview(data.user.avatar.url);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching profile:', error);
-            toast.error('Error fetching user profile', {
-                position: 'top-right', 
-            });
-        }
-    };
-
-    const updateProfile = async (userData) => {
-        const config = {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${getToken()}`,
-            },
-        };
-
-        try {
-            const { data } = await axios.put(`http://localhost:4001/api/me/update`, userData, config);
-            setIsUpdated(data.success);
-            setLoading(false);
-            toast.success('User updated', {
-                position: toast,
-            });
-            navigate('/me', { replace: true });
-        } catch (error) {
-            console.error('Error updating profile:', error);
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.error('Server response:', error.response.data);
-                console.error('Status code:', error.response.status);
-                toast.error(error.response.data.message || 'User update failed', {
-                    position: 'top-right',
-                });
-            } else if (error.request) {
-                // The request was made but no response was received
-                console.error('No response received from the server');
-                toast.error('No response received from the server', {
-                    position: 'top-right',
-                });
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                console.error('Error setting up the request:', error.message);
-                toast.error('Error setting up the request', {
-                    position: 'top-right',
-                });
-            }
-        }
-    };
-
-    
-    const goBack = () => {
-        // Navigate back to the previous page
-        navigate(-1);
-    };
 
     useEffect(() => {
+        const getProfile = async () => {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
+            try {
+                const { data } = await axios.get(`http://localhost:4001/api/me`, config);
+                setUser(data.user);
+                setName(data.user.name);
+                setEmail(data.user.email);
+                setAvatarPreview(data.user.avatar.url);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+                toast.error('Error fetching user profile', {
+                    position: 'top-right', 
+                });
+            }
+        };
+
         getProfile();
     }, []); // Empty dependency array ensures the effect runs only once when the component mounts
 
-    //validation of update profile
-    const submitHandler = async (e) => {
-        e.preventDefault();
-    
-        // Check if required fields are empty
-        if (!name || !email || !avatar) {
-            toast.error('All fields are required', {
-                position: 'top-right',
-            });
-            return;
-        }
-    
-        const formData = new FormData();
-        formData.set('name', name);
-        formData.set('email', email);
-        formData.set('avatar', avatar);
-    
-        try {
-            // Clear any previous error messages
-            setError('');
-    
-            // Attempt to update the profile
-            await updateProfile(formData);
-        } catch (error) {
-            // Display the error using toast.error
-            toast.error(error.message || 'User update failed', {
-                position: 'top-right',
-            });
-        }
-    };
-    
-
     const onChange = (e) => {
         const reader = new FileReader();
-
         reader.onload = () => {
             if (reader.readyState === 2) {
                 setAvatarPreview(reader.result);
                 setAvatar(reader.result);
             }
         };
-
         reader.readAsDataURL(e.target.files[0]);
     };
 
-    console.log(user);
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        if (!name || !email || !avatar) {
+            toast.error('All fields are required', {
+                position: 'top-right',
+            });
+            return;
+        }
+        const formData = new FormData();
+        formData.set('name', name);
+        formData.set('email', email);
+        formData.set('avatar', avatar);
+        try {
+            setError('');
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`,
+                },
+            };
+            setLoading(true);
+            const { data } = await axios.put(`http://localhost:4001/api/me/update`, formData, config);
+            setIsUpdated(data.success);
+            setLoading(false);
+            toast.success('Updated Successfully', {
+                position: 'top-right',
+            });
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            toast.error(error.message || 'User update failed', {
+                position: 'top-right',
+            });
+        }
+    };
 
     return (
         <Fragment>
             <MetaData title={'Update Profile'} />
 
-            <div className="row update-profile-bg" >
-                <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" 
-                   style={{ border: '3px solid #8e5f47',
-                borderRadius: '15px'}}
-                    onSubmit={submitHandler} encType="multipart/form-data">
-                        <h2 className="mt-2 mb-5"
-                        style={{
-                            color: '#8e5f47',
-                            textTransform: 'uppercase',
-                            fontFamily: 'Hammersmith One, sans-serif',
-                            textAlign: 'center', 
-                            margin: '0 auto',   
-                           
-                        }}>Update Profile</h2>
-                        <div className="form-group">
-                            <label htmlFor="email_field">Name</label>
-                            <input
-                                type="name"
-                                id="name_field"
-                                className="form-control"
-                                name="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email_field">Email</label>
-                            <input
-                                type="email"
-                                id="email_field"
-                                className="form-control"
-                                name="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="avatar_upload">Avatar</label>
-                            <div className="d-flex align-items-center">
-                                <div>
-                                    <figure className="avatar mr-3 item-rtl">
-                                        <img
-                                            src={avatarPreview}
-                                            className="rounded-circle"
-                                            alt="Avatar Preview"
-                                        />
-                                    </figure>
-                                </div>
-                                <div className="custom-file">
-                                    <input
-                                        type="file"
-                                        name="avatar"
-                                        className="custom-file-input"
-                                        id="customFile"
-                                        accept="image/*"
-                                        onChange={onChange}
-                                    />
-                                    <label className="custom-file-label" htmlFor="customFile">
-                                        Choose Avatar
-                                    </label>
+            <section>
+                <div className="container py-5 h-100">
+                    <div className="row d-flex justify-content-center align-items-center h-100">
+                        <div className="col col-lg-8 mb-4 mb-lg-0">
+                            <div className="card mb-3" style={{ borderRadius: '.5rem', borderColor: '#8e5f47'}}>
+                                <div className="row g-0">
+                                    <div className="col-md-4 gradient-custom text-center text-white"
+                                        style={{
+                                            borderTopLeftRadius: '.5rem',
+                                            borderBottomLeftRadius: '.5rem',
+                                            padding: '40px',
+                                            height: '100%', 
+                                            display: 'flex',
+                                            flexDirection: 'column', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'center' 
+                                            
+                                        }}>
+                                        <img src={avatarPreview || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"}
+                                            alt="Avatar" className="img-fluid my-5" style={{ width: '150px', height: '150px', borderRadius: '50%' }} />
+                                        <h5 style={{ color: '#000', fontSize: '32px', marginBottom: '10px' }}>{name}</h5>
+                                        <p style={{ color: '#000', fontSize: '24px', marginBottom: '20px' }}>{user.role}</p>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-body p-4">
+                                            {isUpdated && (
+                                                <div className="alert alert-success" role="alert">
+                                                    Updated successfully!
+                                                </div>
+                                            )}
+                                            <form onSubmit={submitHandler} encType="multipart/form-data">
+                                                <div className="form-group">
+                                                    <label htmlFor="name_field">Name</label>
+                                                    <input
+                                                        type="name"
+                                                        id="name_field"
+                                                        className="form-control"
+                                                        name="name"
+                                                        value={name}
+                                                        onChange={(e) => setName(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="email_field">Email</label>
+                                                    <input
+                                                        type="email"
+                                                        id="email_field"
+                                                        className="form-control"
+                                                        name="email"
+                                                        value={email}
+                                                        onChange={(e) => setEmail(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="avatar_upload">Avatar</label>
+                                                    <div className="custom-file">
+                                                        <input
+                                                            type="file"
+                                                            name="avatar"
+                                                            className="custom-file-input"
+                                                            id="customFile"
+                                                            accept="image/*"
+                                                            onChange={onChange}
+                                                        />
+                                                        <label className="custom-file-label" htmlFor="customFile">
+                                                            Choose Avatar
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    type="submit"
+                                                    className="btn update-btn btn-block mt-4 mb-3"
+                                                    disabled={loading ? true : false}
+                                                    style={{marginTop: '30%', backgroundColor: '#BFEA7C',
+                                                        borderColor: '#8e5f47'}}
+                                                >
+                                                    Update
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                            <button
-                                type="submit"
-                                className="btn update-btn btn-block mt-4 mb-3"
-                                disabled={loading ? true : false}
-                                style={{marginTop: '30%', backgroundColor: '#8e5f47',
-                                        borderColor: '#8e5f47'}}
-                            >
-                                Update
-                            </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
-         
-            
+            </section>
         </Fragment>
     );
 };
