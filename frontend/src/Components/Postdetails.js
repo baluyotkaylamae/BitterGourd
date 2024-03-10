@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
+import { filterComment } from './Filter';
 
 // import { Dialog } from '@mui/material';
 
@@ -153,8 +153,14 @@ const PostDetails = () => {
                 return;
             }
 
+            const filteredComment = filterComment(comment); // Filter the comment
+            if (!filteredComment) {
+                alert('Comment contains prohibited words.');
+                return;
+            }
+
             const newComment = {
-                text: comment,
+                text: filteredComment, // Use the filtered comment
                 author: currentUser._id,
                 post: postId,
             };
@@ -173,8 +179,14 @@ const PostDetails = () => {
                 return;
             }
 
+            const filteredReply = filterComment(replyText); // Filter the reply
+            if (!filteredReply) {
+                alert('Reply contains prohibited words.');
+                return;
+            }
+
             const newReply = {
-                text: replyText,
+                text: filteredReply, // Use the filtered reply
                 author: currentUser._id,
             };
             await axios.post(`http://localhost:4001/api/posts/${postId}/comments/${selectedCommentId}/replies`, newReply);
@@ -188,7 +200,6 @@ const PostDetails = () => {
         handleMenuClose();
         setReplyTextAreaVisible(false);
     };
-
     // const handleLike = async (commentId) => {
     //     try {
     //         if (!currentUser) {

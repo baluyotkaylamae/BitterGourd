@@ -13,7 +13,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { getToken, getUser } from '../../utils/helpers';
-
+import { filterComment } from './Filter';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
@@ -62,69 +65,64 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
     }
 
     const handleProcess = async () => {
-        setLoading(true)
+        setLoading(true);
         const config = {
             headers: {
                 'Authorization': `Bearer ${getToken()}`
             }
-        }
+        };
 
         try {
-            let response
-            if (proccessType === 'reply') {
-
-                response = await axios.post(`http://localhost:4001/api/ReplyComment`, {
-                    comment,
-                    forumTopicId: Topic._id,
-                    commentId,
-                }, config)
-
-            } else if (proccessType === 'edit-comment') {
-
-                response = await axios.put(`http://localhost:4001/api/CommentUpdate`, {
-                    comment,
-                    forumTopicId: Topic._id,
-                    commentId,
-                }, config)
-
+            // Filtering out bad words from comment
+            const filteredComment = filterComment(comment);
+            if (filteredComment === null) {
+                toast.error("No bad words allowed");
+                setLoading(false);
+                return;
             }
 
-            else if (proccessType === 'edit-reply') {
-
+            let response;
+            if (proccessType === 'reply') {
+                response = await axios.post(`http://localhost:4001/api/ReplyComment`, {
+                    comment: filteredComment,
+                    forumTopicId: Topic._id,
+                    commentId,
+                }, config);
+            } else if (proccessType === 'edit-comment') {
+                response = await axios.put(`http://localhost:4001/api/CommentUpdate`, {
+                    comment: filteredComment,
+                    forumTopicId: Topic._id,
+                    commentId,
+                }, config);
+            } else if (proccessType === 'edit-reply') {
                 response = await axios.put(`http://localhost:4001/api/EditReply`, {
-                    comment,
+                    comment: filteredComment,
                     forumTopicId: Topic._id,
                     commentId,
                     replyId,
-                }, config)
-
+                }, config);
+            } else {
+                response = await axios.post(`http://localhost:4001/api/CreateComment/${Topic._id}`, { comment: filteredComment }, config);
             }
-
-            else {
-
-                response = await axios.post(`http://localhost:4001/api/CreateComment/${Topic._id}`, { comment }, config)
-
-            }
-            setLoading(false)
-
-            console.log(response.data)
-            getForumTopic()
-            setComment('')
-            setReplyId(null)
-            disSelect()
-            setProcessType('')
-            setCommentId(null)
+            setLoading(false);
+            console.log(response.data);
+            getForumTopic();
+            setComment('');
+            setReplyId(null);
+            disSelect();
+            setProcessType('');
+            setCommentId(null);
         } catch (err) {
-            setLoading(false)
-            setComment('')
-            setReplyId(null)
-            disSelect()
-            setProcessType('')
-            setCommentId(null)
-            console.log(err)
-            alert("Error occured")
+            setLoading(false);
+            setComment('');
+            setReplyId(null);
+            disSelect();
+            setProcessType('');
+            setCommentId(null);
+            console.log(err);
+            alert("Error occurred");
         }
-    }
+    };
 
     const handleReply = (id) => {
         setProcessType('reply');
@@ -301,12 +299,14 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
 
     return (
         <>
-       
+
             <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+
                 <Card sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
                     <CardHeader
-                      avatar={
-                        <Avatar src={Topic?.users && Topic.users.avatar.url} />
+                        avatar={
+                            <Avatar src={Topic?.users && Topic.users.avatar.url} />
                         }
                         title={<Typography fontSize={20}>{Topic?.users?.name}</Typography>}
                         subheader={<Typography fontSize={20}>{new Date(Topic.createdAt).toLocaleDateString('en-PH', { month: 'long', day: '2-digit', year: 'numeric' })}</Typography>}
@@ -319,8 +319,8 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
                                     height: '100%',
                                     overflow: 'hidden',
                                     display: 'flex',
-                                    justifyContent: 'center', 
-                                    alignItems: 'center', 
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
                                 }}
                             >
                                 <img
@@ -376,7 +376,7 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
                                     <SendIcon />
                                 </IconButton>
                             </Box>
-                            
+
                         </Box>
                         <Divider sx={{ mx: 2, }} />
                     </Box>
@@ -452,7 +452,7 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
                     })}
                 </Card>
                 <Box p={2} position='sticky'>
-                  
+
                     <Typography variant='h6'>Similar Topics</Typography>
                     <Divider />
                     {TopicRelated?.map(topic => {
@@ -472,6 +472,7 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
                         )
                     })}
                 </Box>
+
             </Container >
         </>
     )
