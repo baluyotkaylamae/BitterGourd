@@ -31,6 +31,11 @@ export const getUser = () => {
     }
 };
 
+export const isAdminUser  = () => {
+    const user = getUser();
+    return user && user.role === 'admin';
+};
+
 // remove token from session storage
 export const logout = next => {
     if (window !== 'undefined') {

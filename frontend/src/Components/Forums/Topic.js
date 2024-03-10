@@ -12,7 +12,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import { getToken, getUser } from '../../utils/helpers';
+import { getToken, getUser, isAdminUser  } from '../../utils/helpers';
 import { filterComment } from './Filter';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
@@ -36,6 +36,8 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
     const [commentId, setCommentId] = useState(null);
     const [replyId, setReplyId] = useState(null)
     const [proccessType, setProcessType] = useState('');
+    const Admin = isAdminUser ();
+
 
     const getForumTopic = async (id = null) => {
         setLoading(true)
@@ -212,80 +214,68 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
     }, [trigger]);
 
     const deleteTopLevelComment = async (id) => {
-
-        if (window.confirm('Are you sure you want to delete this item?')) {
-            setLoading(true)
+        if (isAdminUser() && window.confirm('Are you sure you want to delete this item?')) {
+            setLoading(true);
             const config = {
                 headers: {
                     'Authorization': `Bearer ${getToken()}`
                 }
-            }
+            };
 
             try {
-
-                const { data } = await axios.delete(`http://localhost:4001/api/DeleteComment?forumTopicId=${Topic._id}&commentId=${id}`, config)
-                setLoading(false)
-                console.log(data)
-                getForumTopic()
-                setComment('')
-                setReplyId(null)
-                disSelect()
-                setProcessType('')
-                setCommentId(null)
-
+                const { data } = await axios.delete(`http://localhost:4001/api/DeleteComment?forumTopicId=${Topic._id}&commentId=${id}`, config);
+                setLoading(false);
+                console.log(data);
+                getForumTopic();
+                setComment('');
+                setReplyId(null);
+                disSelect();
+                setProcessType('');
+                setCommentId(null);
             } catch (err) {
-                setLoading(false)
-                setComment('')
-                setComment('')
-                setReplyId(null)
-                disSelect()
-                setProcessType('')
-                setCommentId(null)
-                console.log(err)
-                alert("Error occured")
+                setLoading(false);
+                setComment('');
+                setReplyId(null);
+                disSelect();
+                setProcessType('');
+                setCommentId(null);
+                console.log(err);
+                alert("Error occurred");
             }
-        } else {
-
         }
-    }
+    };
 
     const deleteReplyLevelComment = async (commentId, replyId) => {
-
-        if (window.confirm('Are you sure you want to delete this item?')) {
-            setLoading(true)
+        if (isAdminUser() && window.confirm('Are you sure you want to delete this item?')) {
+            setLoading(true);
             const config = {
                 headers: {
                     'Authorization': `Bearer ${getToken()}`
                 }
-            }
+            };
 
             try {
-
-                const { data } = await axios.delete(`http://localhost:4001/api/DeleteReply?forumTopicId=${Topic._id}&commentId=${commentId}&replyId=${replyId}`, config)
-                setLoading(false)
-                console.log(data)
-                getForumTopic()
-                setComment('')
-                setReplyId(null)
-                disSelect()
-                setProcessType('')
-                setCommentId(null)
-
+                const { data } = await axios.delete(`http://localhost:4001/api/DeleteReply?forumTopicId=${Topic._id}&commentId=${commentId}&replyId=${replyId}`, config);
+                setLoading(false);
+                console.log(data);
+                getForumTopic();
+                setComment('');
+                setReplyId(null);
+                disSelect();
+                setProcessType('');
+                setCommentId(null);
             } catch (err) {
-                setLoading(false)
-                setComment('')
-                setReplyId(null)
-                disSelect()
-                setProcessType('')
-                setCommentId(null)
-                setComment('')
-                console.log(err)
-                alert("Error occured")
+                setLoading(false);
+                setComment('');
+                setReplyId(null);
+                disSelect();
+                setProcessType('');
+                setCommentId(null);
+                console.log(err);
+                alert("Error occurred");
             }
-        } else {
-
         }
-    }
+    };
 
     const gotoSingleTopic = (id) => {
         setTopic(id)
@@ -411,12 +401,12 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
                                             <ReplyIcon fontSize='medium' />
                                         </IconButton>
                                     }
-                                    {comment.user._id === getUser()._id ?
+                                    {(comment.user._id === getUser()._id || isAdminUser() ) &&
                                         <div>
                                             <IconButton sx={{ mt: 2 }} size='small' onClick={() => deleteTopLevelComment(comment._id)}>
                                                 <DeleteIcon fontSize='medium' />
                                             </IconButton>
-                                        </div> : ""
+                                        </div>
                                     }
                                 </Box >
                                 {comment && comment.replies.map(repliedComment => {
@@ -427,7 +417,7 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
                                                 <Typography fontSize={18} color="text.secondary" maxWidth={800}>{repliedComment.user?.name}</Typography>
                                                 <Typography fontSize={20} maxWidth={800} id={`edit-${repliedComment._id}`}>{repliedComment.comment}</Typography>
                                             </Box>
-                                            {repliedComment.user._id === getUser()._id ?
+                                            {(repliedComment.user._id === getUser()._id || isAdminUser())&&
                                                 <>
                                                     {commentId && commentId === comment._id && proccessType === 'edit-reply' && repliedComment._id === replyId ?
                                                         <IconButton sx={{ mt: 2, ml: 2 }} onClick={() => disSelect()} size='small'>
@@ -441,7 +431,7 @@ const SingleTopic = ({ topic, setValue, setTopic, setCategory }) => {
                                                     <IconButton sx={{ mt: 2 }} onClick={() => deleteReplyLevelComment(comment._id, repliedComment._id)}>
                                                         <DeleteIcon fontSize='medium' />
                                                     </IconButton>
-                                                </> : ""
+                                                </>
                                             }
                                         </Box>
                                     )
