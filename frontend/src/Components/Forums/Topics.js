@@ -9,6 +9,8 @@ const AllTopics = memo(({ setTopic, setValue, sortType, setCategory }) => {
     const [loading, setLoading] = useState(false);
     const [topics, setTopics] = useState([]);
     const [error, setError] = useState(null);
+    const [selectedTopic, setSelectedTopic] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const getAllTopics = async () => {
@@ -39,26 +41,26 @@ const AllTopics = memo(({ setTopic, setValue, sortType, setCategory }) => {
         setValue('4');
     };
 
+    const openModal = (topic) => {
+        setSelectedTopic(topic);
+        setIsModalOpen(true);
+    };
+
     return (
-        <div className="container mt-4">
-            <h1 className='prod-t'>All Topics</h1>
+        <div className="container mt-4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {/* <h1 className='prod-t'>Topics</h1> */}
             {loading ? (
                 <p>Loading...</p>
             ) : error ? (
                 <p className="error-message">Error: {error.message}</p>
             ) : topics.length > 0 ? (
-                <Grid container spacing={2}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {topics.map(topic => (
-                        <Grid item key={topic._id} xs={12} sm={6} md={4}>
-                            <Card className="prodcard-Ampalaya" style={{ height: '100%' }}>
+                        <div key={topic._id} style={{ marginBottom: '20px' }}>
+                            <Card className="prodcard-Ampalaya" style={{ width: '800px', maxWidth: '800px', borderRadius: '20px', border: 'none' }}>
                                 {topic.image && (
-                                    <div className="ampalaya-img-container"> {/* Add a container for the card image */}
-                                        <img src={topic.image.url} alt={topic.title} className="ampalaya-image" style={{ maxHeight: '200px', width: '100%' }} />
-                                    </div>
-                                )}
-                                {!topic.image && ( // Render placeholder image if no image is available
                                     <div className="ampalaya-img-container">
-                                        <img src="https://via.placeholder.com/150" alt="Placeholder" className="ampalaya-image" style={{ maxHeight: '200px', width: '100%' }} />
+                                        <img src={topic.image.url} alt={topic.title} className="ampalaya-image" style={{ maxHeight: '400px', width: '100%'}} />
                                     </div>
                                 )}
                                 <CardContent className="ampalaya-body ampalaya-card-des" style={{ overflow: 'hidden' }}>
@@ -87,14 +89,16 @@ const AllTopics = memo(({ setTopic, setValue, sortType, setCategory }) => {
                                     </Box>
                                 </CardContent>
                             </Card>
-                        </Grid>
+                        </div>
                     ))}
-                </Grid>
+                </div>
             ) : (
                 <p className="no-products-message">No topics found.</p>
             )}
         </div>
     );
+    
+    
 });
 
 const getTotalComments = (comments) => {

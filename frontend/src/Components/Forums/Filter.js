@@ -56,7 +56,8 @@ const filteredWords = [
     'panget',
     'bading',
     'tanga',
-    'amputa'
+    'amputa',
+    'tite'
 ];
 
 export const filterComment = (comment) => {

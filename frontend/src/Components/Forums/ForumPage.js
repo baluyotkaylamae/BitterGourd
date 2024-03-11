@@ -118,7 +118,7 @@ const ForumPage = () => {
     }
 
     return (
-        <>
+        <div style={{ backgroundColor: '#f0f0f0' }}>
             <NewTopic
                 handleClose={handleClose}
                 open={open}
@@ -128,7 +128,7 @@ const ForumPage = () => {
                 setSuccess={setSuccess}
             />
             <ThemeProvider theme={theme}>
-                <Container maxWidth='xl' sx={{ backgroundColor: 'FFFFFF', overflow: 'auto' }}>
+                <Container maxWidth='xl' sx={{ backgroundColor: '#f0f0f0', overflow: 'auto' }}>
                     <Box sx={{ width: '100%', typography: 'body1' }} mt={5} mb={20}>
                         <TabContext value={value}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', }} px={2}>
@@ -192,7 +192,7 @@ const ForumPage = () => {
                     </Box>
                 </Container>
             </ThemeProvider >
-        </>
+        </div>
     )
 }
 
