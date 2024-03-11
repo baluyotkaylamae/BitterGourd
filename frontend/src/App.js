@@ -9,6 +9,7 @@ import UpdateQuestion from './Components/Admin/updateQuestions';
 import Createcategorypost from './Components/Admin/Createcategorypost';
 import Listcategorypost from './Components/Admin/Listcategorypost';
 import Updatecategorypost from './Components/Admin/Updatecategorypost';
+import ForumList from './Components/Admin/ForumList';
 import AnswerForm from './Components/SurveyForm'; // Import the new component
 import Login from './Components/User/Login'
 import Register from './Components/User/Register';
@@ -47,7 +48,7 @@ import Forum from './Components/Forums/ForumPage';
 // import UpdateTopic from './Components/Forums/UpdateTopic';
 // import TopicDetail from './TopicDetail';
 import UpdateTopic from './Components/Forums/UpdateTopic';
-import SearchPage from './Components/Layouts/Searchpage'; 
+import SearchPage from './Components/Layouts/Searchpage';
 
 import './fonts.css';
 
@@ -87,7 +88,7 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           } end />
-          
+
           <Route path="/sidebar" element={
             <ProtectedRoute isAdmin={true}>
               <Sidebar />
@@ -129,11 +130,17 @@ function App() {
             </ProtectedRoute>
           } end />
 
-          <Route path="/search" element={<SearchPage/>} />
+          <Route path="/search" element={<SearchPage />} />
           {/* forum */}
 
           <Route path='/forums' element={<Forum />} />
           <Route path='/edit/topic/:id' element={<UpdateTopic />} />
+          
+          <Route path="/forum/list" element={
+            <ProtectedRoute isAdmin={true}>
+              <ForumList />
+            </ProtectedRoute>
+          } end />
 
 
           <Route path="/posts/:postId" element={<PostDetails />} />

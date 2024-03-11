@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MDBDataTable } from 'mdbreact';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Sidebar from './Sidebar';
 
 const UserManagement = () => {
@@ -91,21 +91,21 @@ const UserManagement = () => {
                                 className="btn btn-warning"
                                 onClick={() => handleUpdateRole(user._id, 'user')}
                             >
-                                Update Role to User
+                                Role to User
                             </button>
                         ) : (
                             <button
                                 className="btn btn-success"
                                 onClick={() => handleUpdateRole(user._id, 'admin')}
                             >
-                                Update Role to Admin
+                                Role to Admin
                             </button>
                         )}
                         <button
                             className="btn btn-danger ml-2"
                             onClick={() => handleDeleteUser(user._id)}
                         >
-                            Delete User
+                            <DeleteIcon />
                         </button>
                     </div>
                 ),

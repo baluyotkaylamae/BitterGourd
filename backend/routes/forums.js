@@ -4,6 +4,9 @@ const upload = require('../utils/multer');
 const forumController = require('../controllers/ForumController');
 const {isAuthenticatedUser} = require('../middlewares/auth')
 
+
+router.get('/forum', forumController.getAllForum);
+router.delete('/forum/:id', forumController.deleteForum);
 router.post('/create-topic', upload.single('image'), isAuthenticatedUser, forumController.createForumPost);
 router.get('/topics', isAuthenticatedUser, forumController.getAllForumPosts);
 router.get('/topic/:id', isAuthenticatedUser,forumController.getForumPostById);

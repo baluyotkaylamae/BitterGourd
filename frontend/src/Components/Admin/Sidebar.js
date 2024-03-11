@@ -21,6 +21,7 @@ import FormatListBulleted from '@mui/icons-material/FormatListBulleted';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import SsidChartIcon from '@mui/icons-material/SsidChart';
 import GroupIcon from '@mui/icons-material/Group';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 const drawerWidth = 240;
 
@@ -70,14 +71,14 @@ const Sidebar = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar  
+      <AppBar
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
       />
-     
+
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -118,10 +119,10 @@ const Sidebar = () => {
         >
           <List>
             <ListItem disablePadding>
-            <img src="/images/bitterguard-high-resolution-logo.png" alt="Bitterguard Logo" style={{ width: '100%' }} />
+              <img src="/images/bitterguard-high-resolution-logo.png" alt="Bitterguard Logo" style={{ width: '100%' }} />
             </ListItem>
             <ListItemLink to="/" primary="Home" icon={<HomeIcon />} />
-            <ListItemLink to="/dashboard" primary="Analytics" icon={<SsidChartIcon/>} />
+            <ListItemLink to="/dashboard" primary="Analytics" icon={<SsidChartIcon />} />
             <ListItem disablePadding onClick={handleQuestionToggle}>
               <ListItemButton>
                 <ListItemIcon><QuestionMarkIcon /></ListItemIcon>
@@ -138,7 +139,7 @@ const Sidebar = () => {
 
             <ListItem disablePadding onClick={handleCategoryToggle}>
               <ListItemButton>
-                <ListItemIcon><CategoryIcon  /></ListItemIcon>
+                <ListItemIcon><CategoryIcon /></ListItemIcon>
                 <ListItemText primary="Categorypost" />
                 {isCategoryOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
@@ -153,7 +154,7 @@ const Sidebar = () => {
 
             <ListItem disablePadding onClick={handlePostToggle}>
               <ListItemButton>
-                <ListItemIcon><PostAddIcon  /></ListItemIcon>
+                <ListItemIcon><PostAddIcon /></ListItemIcon>
                 <ListItemText primary="Posts" />
                 {isPostOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
@@ -167,10 +168,12 @@ const Sidebar = () => {
             </Collapse>
 
             <List component="div" disablePadding>
-                <ListItemLink to="/admin/users" primary="Users" icon={<GroupIcon />} />
-              </List>
+              <ListItemLink to="/admin/users" primary="Users" icon={<GroupIcon />} />
+            </List>
 
-
+            <List component="div" disablePadding>
+              <ListItemLink to="/forum/list" primary="Forum" icon={<QuestionAnswerIcon />} />
+            </List>
 
           </List>
         </Drawer>
