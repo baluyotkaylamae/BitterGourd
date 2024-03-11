@@ -182,10 +182,12 @@ const Dashboard = () => {
 
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1, p: 3 }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '10px' }}>
+      {/* Sidebar and Analytics */}
+      <Box sx={{ gridColumn: 'span 2' }}/>
 
-      Sidebar and Analytics
-      <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+      {/* Graph */}
+      <Box sx={{ gridColumn: 'span 5', marginTop: '0.5in' }}>
         <Sidebar />
         <Box ref={chartContainerRef} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography variant="h4" gutterBottom>
@@ -256,10 +258,12 @@ const Dashboard = () => {
         </div>
       </Box>
 
+      {/* Survey */}
       <Box sx={{ gridColumn: 'span 5' }}>
         <AnswerForm />
       </Box>
     </Box>
   );
+
 }
 export default Dashboard;
