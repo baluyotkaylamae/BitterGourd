@@ -44,6 +44,11 @@ const CategoryDataTable = () => {
                     sort: 'asc',
                 },
                 {
+                    label: 'User',
+                    field: 'user',
+                    sort: 'asc',
+                },
+                {
                     label: 'Title',
                     field: 'title',
                     sort: 'asc',
@@ -54,11 +59,17 @@ const CategoryDataTable = () => {
                     sort: 'asc',
                 },
                 {
+                    label: 'Category',
+                    field: 'category',
+                    sort: 'asc',
+                },
+
+                {
                     label: 'Actions',
                     field: 'actions',
                     sort: 'asc',
                 },
-                
+
             ],
             rows: [],
         };
@@ -66,8 +77,10 @@ const CategoryDataTable = () => {
         forums?.forEach((forum) => {
             data.rows.push({
                 _id: forum._id,
+                user: forum.users.name,
                 title: forum.title, // Include title field
                 content: forum.content, // Include content field
+                category: forum.categories.name, // Assuming 'name' is the field for category name
                 actions: (
                     <div>
                         <button

@@ -42,12 +42,16 @@ exports.createForumPost = async (req, res) => {
 }
 exports.getAllForum = async (req, res) => {
     try {
-        const forum = await Forum.find();
-        res.json({ forum });
+        const forums = await Forum.find()
+            .populate('categories')
+            .populate('users');
+        
+        res.json({ forum: forums });
     } catch (error) {
         res.status(500).json({ error: 'Unable to retrieve forum' });
     }
 };
+
 
 exports.deleteForum = async (req, res) => {
     try {
@@ -84,10 +88,7 @@ exports.getAllForumPosts = async (req, res) => {
 
         const Topic = await Forum.find(filters)
             .populate('categories')
-            .populate({
-                path: 'user', // Assuming the field referencing the user in your Forum model is called 'user'
-                select: 'name avatar', // Select only necessary fields from the user document
-            })
+            .populate('users')
             .sort(sortOptions)
 
         if (!Topic?.length > 0) {
