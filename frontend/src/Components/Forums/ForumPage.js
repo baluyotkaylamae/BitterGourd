@@ -152,15 +152,15 @@ const ForumPage = () => {
                                 </Box>
 
                                 <TabList onChange={handleChange} indicatorColor='dark' textColor='secondary'>
-                                    <Tab label="Own Topic" value="3" sx={{ fontWeight: 400, textTransform: 'capitalize', fontSize: 16 }} />
-                                    <Tab label="Topics" value="2" sx={{ fontWeight: 400, textTransform: 'capitalize', fontSize: 16 }} />
-                                    <Tab label="Categories" value="1" sx={{ fontWeight: 400, textTransform: 'capitalize', fontSize: 16 }} />
+                                    <Tab label="Topics" value="3" sx={{ fontWeight: 400, textTransform: 'capitalize', fontSize: 16 }} />
+                                    <Tab label="Own Topic" value="1" sx={{ fontWeight: 400, textTransform: 'capitalize', fontSize: 16 }} />
+                                    <Tab label="Categories" value="2" sx={{ fontWeight: 400, textTransform: 'capitalize', fontSize: 16 }} />
 
 
                                 </TabList>
 
                             </Box>
-                            {value !== '1' && value !== '4' && value !== '5' ?
+                            {value !== '2' && value !== '4' && value !== '5' ?
                                 <Container maxWidth='xl' sx={{ my: 3, mt: 5 }}>
                                     <Box component={'div'} sx={{ display: 'flex', px: 3 }}>
                                         <Button
@@ -173,13 +173,13 @@ const ForumPage = () => {
                                 </Container> : ''
                             }
                             <Divider />
-                            <TabPanel value="1">
+                            <TabPanel value="2">
                                 <Categories setValue={setValue} setCategory={setCategory} />
                             </TabPanel>
-                            <TabPanel value="2" sx={{ pt: 1 }}>
+                            <TabPanel value="3" sx={{ pt: 1 }}>
                                 <AllTopics key={success} setTopic={setTopic} setValue={setValue} sortType={sortType} setCategory={setCategory} />
                             </TabPanel>
-                            <TabPanel value="3">
+                            <TabPanel value="1">
                                 <MyTopics key={success} setValue={setValue} setTopic={setTopic} />
                             </TabPanel>
                             <TabPanel value="4">

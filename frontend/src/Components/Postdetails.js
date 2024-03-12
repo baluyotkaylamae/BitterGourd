@@ -303,7 +303,7 @@ const PostDetails = () => {
 
     const handleReplyCancel = () => {
         setReplyModalVisible(false); // Hide modal
-         // Hide reply textarea
+        // Hide reply textarea
         handleMenuClose();
         setReplyTextAreaVisible(false);
     };
@@ -501,10 +501,22 @@ const PostDetails = () => {
                                                                 {/* Render edit form if the comment is being edited */}
                                                                 {editingCommentId === comment._id ? (
                                                                     <div>
-                                                                        <textarea value={editedCommentText} onChange={(e) => setEditedCommentText(e.target.value)} />
-                                                                        <button onClick={() => saveEditedComment(comment._id)}>Save</button>
-                                                                        <button onClick={cancelEditingComment}>Cancel</button>
+                                                                        <textarea
+                                                                            value={editedCommentText}
+                                                                            onChange={(e) => setEditedCommentText(e.target.value)}
+                                                                            style={{
+                                                                                width: '100%',
+                                                                                height: '100px',
+                                                                                padding: '10px',
+                                                                                marginBottom: '10px',
+                                                                                borderRadius: '5px',
+                                                                                border: '1px solid #ccc'
+                                                                            }}
+                                                                        />
+                                                                        <button className="save-button" onClick={() => saveEditedComment(comment._id)}>Save</button>
+                                                                        <button className="cancel-button" onClick={cancelEditingComment}>Cancel</button>
                                                                     </div>
+
                                                                 ) : (
                                                                     // Render comment text
                                                                     <p>{comment.text}</p>

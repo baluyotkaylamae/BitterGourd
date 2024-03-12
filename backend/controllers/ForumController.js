@@ -84,7 +84,10 @@ exports.getAllForumPosts = async (req, res) => {
 
         const Topic = await Forum.find(filters)
             .populate('categories')
-            .populate('users')
+            .populate({
+                path: 'user', // Assuming the field referencing the user in your Forum model is called 'user'
+                select: 'name avatar', // Select only necessary fields from the user document
+            })
             .sort(sortOptions)
 
         if (!Topic?.length > 0) {

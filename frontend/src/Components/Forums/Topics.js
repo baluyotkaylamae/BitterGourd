@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Box, Card, CardContent, Typography, Grid } from '@mui/material';
+import { Box, Card, CardContent, Typography, Grid, Avatar } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
 import { getToken } from '../../utils/helpers';
@@ -56,23 +56,29 @@ const AllTopics = memo(({ setTopic, setValue, sortType, setCategory }) => {
             ) : topics.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {topics.map(topic => (
-                        <div key={topic._id} style={{ marginBottom: '20px' }}>
+                        <div key={topic._id} style={{ marginBottom: '5px' }}>
                             <Card className="prodcard-Ampalaya" style={{ width: '800px', maxWidth: '800px', borderRadius: '20px', border: 'none' }}>
                                 {topic.image && (
-                                    <div className="ampalaya-img-container">
-                                        <img src={topic.image.url} alt={topic.title} className="ampalaya-image" style={{ maxHeight: '400px', width: '100%'}} />
+                                    <div className="ampalaya-img-container" style={{ width: '100%', height: '400px', position: 'relative', overflow: 'hidden', backgroundColor: 'black' }}>
+                                        <img src={topic.image.url} alt={topic.title} className="ampalaya-image" style={{ width: '100%', height: 'auto', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', objectFit: 'contain' }} />
                                     </div>
                                 )}
                                 <CardContent className="ampalaya-body ampalaya-card-des" style={{ overflow: 'hidden' }}>
-                                    <Typography className="ampalaya-title ampalaya-title-des" onClick={() => handleTopic(topic._id)} style={{ fontWeight: 'bold', marginBottom: '1rem' }}>
+                                    {topic.users && topic.users.avatar && (
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <Avatar src={topic.users.avatar.url} alt={topic.users.name} />
+                                            <Typography variant="body2" style={{ marginLeft: '0.5rem', fontFamily: 'Helvetica Neue, Arial, sans-serif', fontWeight: 'bold' }}>
+                                                {topic.users.name}
+                                            </Typography>
+                                        </div>
+                                    )}
+                                    <Typography className="ampalaya-title ampalaya-title-des" onClick={() => handleTopic(topic._id)} style={{ fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Helvetica Neue, Arial, sans-serif' }}>
                                         {topic.title}
                                     </Typography>
-                                    <Typography className="card-text" style={{ marginBottom: '1rem' }}>
+                                    <Typography className="card-text" style={{ fontFamily: 'Helvetica Neue, Arial, sans-serif' }}>
                                         {topic.content.slice(0, 100) + '...'}
                                     </Typography>
-                                    <Typography className="btn Ampalaya-button text-black" onClick={() => handleTopic(topic._id)}>
-                                        See More
-                                    </Typography>
+
                                     <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'} mt={1}>
                                         <Typography className="ampalaya-footer-timestamps" fontSize={'16px'} style={{ marginTop: '-0.6rem' }}>
                                             Published Date: {new Date(topic.createdAt).toLocaleDateString('en-PH', { month: 'long', day: '2-digit', year: 'numeric' })}
@@ -81,6 +87,11 @@ const AllTopics = memo(({ setTopic, setValue, sortType, setCategory }) => {
                                             Recent Activity: {new Date(topic.updatedAt).toLocaleDateString('en-PH', { month: 'long', day: '2-digit', year: 'numeric' })}
                                         </Typography>
                                     </Box>
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <Typography className="Ampalaya-button text-black" style={{ width: '150px' }} onClick={() => handleTopic(topic._id)}>
+                                            See More
+                                        </Typography>
+                                    </div>
                                     <Box display={'flex'} alignItems={'center'} flex={'row'} mt={1}>
                                         <Typography fontSize={'20px'} style={{ marginTop: '-0.6rem' }}>
                                             {getTotalComments(topic?.Comments)}
@@ -97,8 +108,8 @@ const AllTopics = memo(({ setTopic, setValue, sortType, setCategory }) => {
             )}
         </div>
     );
-    
-    
+
+
 });
 
 const getTotalComments = (comments) => {
